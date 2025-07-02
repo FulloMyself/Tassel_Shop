@@ -5,9 +5,12 @@ const nodemailer = require("nodemailer");
 require("dotenv").config();
 
 const app = express();
+const cors = require("cors");
 app.use(cors({
-  origin: ["http://localhost:5173",
-  "https://FulloMyself.github.io"
+  origin: [
+    "http://localhost:5173",
+    "https://FulloMyself.github.io",
+    "https://FulloMyself.github.io/Tassel_Shop/"
   ]
 }));
 app.use(express.json());
