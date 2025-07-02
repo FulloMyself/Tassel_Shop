@@ -89,7 +89,7 @@ const products = [
     id: 13,
     name: "Tassel Vitamin E Day Moisturising Cream",
     price: 299,
-    image: `${import.meta.env.BASE_URL}public/images/products/Tassel_Vitamin_E_Day_Moisturising_Cream.jpg`,
+    image: `${import.meta.env.BASE_URL}images/products/Tassel_Vitamin_E_Day_Moisturising_Cream.jpg`,
     description: "Nourish your skin with our signature spa facial cream.",
   },
   {
