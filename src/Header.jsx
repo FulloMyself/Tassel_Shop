@@ -9,7 +9,7 @@ export default function Header({ cartCount, toggleCart }) {
             <p className="sliding-text">55 True North Road, Mulbarton, Gauteng.</p>
           </div>
           <a href="https://tasselgroup.co.za/shop">
-            <img src="/images/products/Tassel_LOGO.png" alt="Tassel Logo" className="logo" />
+            <img src="/images/Tassel_LOGO.png" alt="Tassel Logo" className="logo" />
           </a>
           <div>
             <h1>Tassel Beauty And Wellness Studio - Online Store</h1>
