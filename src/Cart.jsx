@@ -11,6 +11,8 @@ export default function Cart({
   const [error, setError] = useState("");
   const [success, setSuccess] = useState("");
   const [email, setEmail] = useState("");
+  const emailServer = import.meta.env.VITE_EMAIL_SERVER_URL;
+  const paymentPortal = import.meta.env.VITE_PAYMENT_PORTAL_URL;
 
   const total = items.reduce((sum, item) => sum + item.price * item.quantity, 0);
 
@@ -20,7 +22,7 @@ export default function Cart({
     setError("");
     setSuccess("");
     try {
-      const res = await fetch("https://your-email-server.onrender.com/send-order", {
+      const res = await fetch(`${emailServer}/send-order`, {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({ items, total, email }),
@@ -40,11 +42,10 @@ export default function Cart({
     setError("");
     setSuccess("");
     try {
-      // Optionally, create an order first and get an orderId
-      const res = await fetch("https://your-payment-portal.onrender.com/create-order", {
+      const res = await fetch(`${paymentPortal}/create-order`, {
         method: "POST",
         headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ items, total }),
+        body: JSON.stringify({ items, total, email }),
       });
       if (!res.ok) throw new Error("Failed to initiate payment.");
       const { paymentUrl } = await res.json();
