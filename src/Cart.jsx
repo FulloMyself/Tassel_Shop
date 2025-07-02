@@ -49,9 +49,10 @@ export default function Cart({
       });
       if (!res.ok) throw new Error("Failed to initiate payment.");
       const { paymentUrl } = await res.json();
-      window.location.href = paymentUrl; // Redirect to payment portal
+      window.location.href = paymentUrl; // Redirect to Yoco payment page
     } catch (err) {
       setError("Could not start payment. Please try again.");
+    } finally {
       setLoading(false);
     }
   };

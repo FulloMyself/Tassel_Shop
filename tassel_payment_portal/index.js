@@ -9,7 +9,7 @@ app.use(cors({
     "http://localhost:5173",
     "https://fullomyself.github.io"
   ],
-  methods: ["POST", "OPTIONS"],
+  methods: ["GET", "POST", "OPTIONS"],
   allowedHeaders: ["Content-Type"]
 }));
 app.use(express.json());
