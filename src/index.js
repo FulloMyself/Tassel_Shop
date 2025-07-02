@@ -4,7 +4,7 @@ const nodemailer = require("nodemailer");
 
 require("dotenv").config();
 
-const cors = require("cors");
+const app = express();
 app.use(cors({
   origin: [
     "http://localhost:5173",
