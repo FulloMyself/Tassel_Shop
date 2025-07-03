@@ -36,7 +36,7 @@ export default function Cart({
     }
   };
 
-  // Handler for "Buy Now" (redirect to payment portal)
+  // Handler for "Buy Now" (redirect to PayFast)
   const handleBuyNow = async () => {
     setLoading(true);
     setError("");
@@ -48,14 +48,34 @@ export default function Cart({
         body: JSON.stringify({ items, total, email }),
       });
       if (!res.ok) throw new Error("Failed to initiate payment.");
-      const { paymentUrl } = await res.json();
-      window.location.href = paymentUrl; // Redirect to Yoco payment page
+      const payfastFields = await res.json();
+      submitPayFastForm(payfastFields); // Submit to PayFast
     } catch (err) {
       setError("Could not start payment. Please try again.");
     } finally {
       setLoading(false);
     }
   };
+
+  // Helper to submit a hidden form to PayFast
+  function submitPayFastForm(fields) {
+    const form = document.createElement("form");
+    form.method = "POST";
+    form.action = fields.payfast_url;
+    form.style.display = "none";
+
+    Object.entries(fields).forEach(([key, value]) => {
+      if (key === "payfast_url") return;
+      const input = document.createElement("input");
+      input.type = "hidden";
+      input.name = key;
+      input.value = value;
+      form.appendChild(input);
+    });
+
+    document.body.appendChild(form);
+    form.submit();
+  }
 
   return (
     <aside className={`cart spa-cart ${className}`}>
