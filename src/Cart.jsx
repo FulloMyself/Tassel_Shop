@@ -129,7 +129,7 @@ export default function Cart({
             className="checkout-btn"
             style={{ background: "#bfa18c", marginTop: 8 }}
             onClick={handleBuyNow}
-            disabled={items.length === 0 || loading}
+            disabled={items.length === 0 || loading || !email || !email.includes("@")}
           >
             {loading ? "Processing..." : "Buy Now"}
           </button>
