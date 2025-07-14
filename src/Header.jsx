@@ -8,7 +8,7 @@ export default function Header({ cartCount, toggleCart }) {
           <div className="sliding-text-container">
             <p className="sliding-text">55 True North Road, Mulbarton, Gauteng.</p>
           </div>
-          <a href="https://tasselgroup.co.za/shop">
+          <a href="https://tasselgroup.co.za/">
             <img src={`${import.meta.env.BASE_URL}images/products/Tassel_LOGO.png`} alt="Tassel Logo" className="logo" />
           </a>
           <div>
