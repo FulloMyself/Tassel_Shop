@@ -50,28 +50,31 @@ header {
   padding: 10px 0;
 }
 
-.hero-section {
+.hero-section-img {
+  position: relative;
   width: 100%;
-  min-height: 80vh;
-  background-image: url('/public/images/products/Tassel_Retinol_A_&E_Night_Cream_Anti_Wrinkle.jpg');
-  background-size: contain; /* ✅ shows full image */
-  background-repeat: no-repeat; /* ✅ no tiling */
-  background-position: center top; /* ✅ centers image */
-  background-color: #f7f3f1; /* ✅ fallback behind transparent areas */
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  padding: 3rem 1rem;
-  color: #fff;
-  text-align: center;
+  height: 80vh;
+  overflow: hidden;
 }
 
-.hero-content {
-  background-color: rgba(0, 0, 0, 0.4);
+.hero-image {
+  width: 100%;
+  height: 100%;
+  object-fit: contain; /* ✅ shows entire image */
+  object-position: center top;
+}
+
+.hero-content-img {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  color: #fff;
+  text-align: center;
+  background-color: rgba(0, 0, 0, 0.4); /* subtle dark overlay */
   padding: 2rem;
   border-radius: 12px;
   max-width: 600px;
-  width: 100%;
 }
 
 .hero-title {
@@ -94,6 +97,30 @@ header {
   text-decoration: none;
   border-radius: 8px;
   transition: background-color 0.3s ease;
+}
+
+
+.hero-section {
+  width: 100%;
+  min-height: 80vh;
+  background-size: contain; /* ✅ shows full image */
+  background-repeat: no-repeat; /* ✅ no tiling */
+  background-position: center top; /* ✅ centers image */
+  background-color: #f7f3f1; /* ✅ fallback behind transparent areas */
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 3rem 1rem;
+  color: #fff;
+  text-align: center;
+}
+
+.hero-content {
+  background-color: rgba(0, 0, 0, 0.4);
+  padding: 2rem;
+  border-radius: 12px;
+  max-width: 600px;
+  width: 100%;
 }
 
 .hero-cta:hover {
