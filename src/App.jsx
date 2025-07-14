@@ -1,5 +1,6 @@
 import { useState } from "react";
 import Header from "./Header";
+import HeroSection from "./HeroSection";
 import Products from "./Products";
 import Cart from "./Cart";
 import Footer from "./Footer";
@@ -55,6 +56,7 @@ function App() {
     <div>
       <Header cartCount={cartCount} toggleCart={toggleCart} />
       <main>
+        <HeroSection />
         <Products onAddToCart={handleAddToCart} />
         {cartOpen && (
           <Cart
