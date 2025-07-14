@@ -89,14 +89,14 @@ header {
 }
 
 .hero-cta {
-  display: inline-block;
-  padding: 0.75rem 2rem;
-  font-size: 1rem;
-  background-color: #bfa18c;
-  color: white;
-  text-decoration: none;
-  border-radius: 8px;
-  transition: background-color 0.3s ease;
+  background: #bfa18c;
+  color: #fff;
+  border: none;
+  border-radius: 6px;
+  padding: 0.5rem 1.2rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: background 0.2s;
 }
 
 
@@ -124,7 +124,7 @@ header {
 }
 
 .hero-cta:hover {
-  background-color: #a78975;
+  background-color: #a67c52;
 }
 
 /* Hide on small screens */
@@ -397,6 +397,8 @@ header {
   cursor: pointer;
   transition: background 0.2s;
 }
+
+
 
 .add-to-cart-btn:hover {
   background: #a67c52;
