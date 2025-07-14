@@ -54,8 +54,10 @@ header {
   width: 100%;
   min-height: 80vh;
   background-image: url('/public/images/products/Tassel_Vitamin_E_Day_Moisturising_Cream.jpg');
-  background-size: cover;
-  background-position: center;
+  background-size: contain; /* ✅ shows full image */
+  background-repeat: no-repeat; /* ✅ no tiling */
+  background-position: center top; /* ✅ centers image */
+  background-color: #f7f3f1; /* ✅ fallback behind transparent areas */
   display: flex;
   align-items: center;
   justify-content: center;
