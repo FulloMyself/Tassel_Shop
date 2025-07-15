@@ -99,10 +99,13 @@ header {
   transition: background 0.2s;
 }
 
+.hero-cta:hover {
+  background-color: #a67c52;
+}
 
 .hero-section {
   width: 100%;
-  min-height: 80vh;
+  min-height: 100vh;
   background-size: contain; /* ✅ shows full image */
   background-repeat: no-repeat; /* ✅ no tiling */
   background-position: center top; /* ✅ centers image */
@@ -121,10 +124,6 @@ header {
   border-radius: 12px;
   max-width: 600px;
   width: 100%;
-}
-
-.hero-cta:hover {
-  background-color: #a67c52;
 }
 
 /* Hide on small screens */
