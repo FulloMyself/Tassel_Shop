@@ -14,6 +14,7 @@ const products = [
     id: 2,
     name: "Tassel Beard & Hair Oil",
     price: 199,
+    salePrice: 0,
     category: "wellness",
     image: `${import.meta.env.BASE_URL}images/products/Tassel_Beard_&_Hair_Oil.jpg`,
     description: "Relax and unwind with our soothing aromatic massage oil.",
@@ -22,6 +23,7 @@ const products = [
     id: 3,
     name: "Tassel Deep Cleanse Face Wash",
     price: 299,
+    salePrice: 0,
     category: "skincare",
     image: `${import.meta.env.BASE_URL}images/products/Tassel_Deep_Cleanse_Face_Wash.jpg`,
     description: "Nourish your skin with our signature spa facial cream.",
@@ -39,6 +41,7 @@ const products = [
     id: 5,
     name: "Tassel Hand Made Heel Wax",
     price: 299,
+    salePrice: 0,
     category: "bodycare",
     image: `${import.meta.env.BASE_URL}images/products/Tassel_Hand_Made_Heel_Wax.jpg`,
     description: "Nourish your skin with our signature spa facial cream.",
@@ -47,6 +50,7 @@ const products = [
     id: 6,
     name: "Tassel Hyaluric Acid And Vitamin C Serum",
     price: 199,
+    salePrice: 0,
     category: "skincare",
     image: `${import.meta.env.BASE_URL}images/products/Tassel_Hyaluric_Acid_And_Vitamin_C_Serum.jpg`,
     description: "Relax and unwind with our soothing aromatic massage oil.",
@@ -55,6 +59,7 @@ const products = [
     id: 7,
     name: "Tassel Menthol Body Rub",
     price: 299,
+    salePrice: 0,
     category: "bodycare",
     image: `${import.meta.env.BASE_URL}images/products/Tassel_Menthol_Body_Rub.jpg`,
     description: "Nourish your skin with our signature spa facial cream.",
@@ -71,6 +76,7 @@ const products = [
     id: 9,
     name: "Tassel Retinol A & E Night Cream Anti-Wrinkle",
     price: 299,
+    salePrice: 0,
     category: "skincare",
     image: `${import.meta.env.BASE_URL}images/products/Tassel_Retinol_A_&E_Night_Cream_Anti_Wrinkle.jpg`,
     description: "Nourish your skin with our signature spa facial cream.",
@@ -79,6 +85,7 @@ const products = [
     id: 10,
     name: "Tassel Sensitive Milk Cleanser & Make Up Remover",
     price: 199,
+    salePrice: 0,
     category: "skincare",
     image: `${import.meta.env.BASE_URL}images/products/Tassel_Sensitive_Milk_Cleanser_&_Make_Up_Remover.jpg`,
     description: "Relax and unwind with our soothing aromatic massage oil.",
@@ -87,6 +94,7 @@ const products = [
     id: 11,
     name: "Tassel Skin Brightening Serum",
     price: 299,
+    salePrice: 0,
     category: "skincare",
     image: `${import.meta.env.BASE_URL}images/products/Tassel_Skin_Brightening_Serum.jpg`,
     description: "Nourish your skin with our signature spa facial cream.",
@@ -95,6 +103,7 @@ const products = [
     id: 12,
     name: "Tassel Therapeutic Muscle Soothing Cream",
     price: 199,
+    salePrice: 0,
     category: "bodycare",
     image: `${import.meta.env.BASE_URL}images/products/Tassel_Therapeutic_Muscle_Soothing_Cream.jpg`,
     description: "Relax and unwind with our soothing aromatic massage oil.",
@@ -103,6 +112,7 @@ const products = [
     id: 13,
     name: "Tassel Vitamin E Day Moisturising Cream",
     price: 299,
+    salePrice: 0,
     category: "skincare",
     image: `${import.meta.env.BASE_URL}images/products/Tassel_Vitamin_E_Day_Moisturising_Cream.jpg`,
     description: "Nourish your skin with our signature spa facial cream.",
@@ -111,6 +121,7 @@ const products = [
     id: 14,
     name: "Tassel Vitamin E Oil",
     price: 199,
+    salePrice: 0,
     category: "wellness",
     image: `${import.meta.env.BASE_URL}images/products/Tassel_Vitamin_E_Oil.jpg`,
     description: "Relax and unwind with our soothing aromatic massage oil.",
@@ -119,6 +130,7 @@ const products = [
     id: 15,
     name: "Tassel Hydrating Mist",
     price: 199,
+    salePrice: 0,
     category: "wellness",
     image: `${import.meta.env.BASE_URL}images/products/Tassel_Hydrating_Mist.jpg`,
     description: "Relax and unwind with our soothing aromatic massage oil.",
@@ -127,6 +139,7 @@ const products = [
     id: 16,
     name: "Esse Sensitive Serum",
     price: 199,
+    salePrice: 0,
     category: "wellness",
     image: `${import.meta.env.BASE_URL}images/products/Esse_Sensitive_Serum.jpg`,
     description: "Relax and unwind with our soothing aromatic massage oil.",
@@ -135,6 +148,7 @@ const products = [
     id: 17,
     name: "Esse Hydro Moisturiser",
     price: 199,
+    salePrice: 0,
     category: "wellness",
     image: `${import.meta.env.BASE_URL}images/products/Esse_Hydro_Moisturiser.jpg`,
     description: "Relax and unwind with our soothing aromatic massage oil.",
@@ -143,6 +157,7 @@ const products = [
     id: 18,
     name: "Esse Package",
     price: 199,
+    salePrice: 0,
     category: "wellness",
     image: `${import.meta.env.BASE_URL}images/products/Esse_Package.jpg`,
     description: "Relax and unwind with our soothing aromatic massage oil.",
@@ -151,6 +166,7 @@ const products = [
     id: 19,
     name: "Esse Protect Oil",
     price: 199,
+    salePrice: 0,
     category: "wellness",
     image: `${import.meta.env.BASE_URL}images/products/Esse_Protect_Oil.jpg`,
     description: "Relax and unwind with our soothing aromatic massage oil.",
@@ -159,6 +175,7 @@ const products = [
     id: 20,
     name: "Esse Resurrect Serum",
     price: 199,
+    salePrice: 0,
     category: "wellness",
     image: `${import.meta.env.BASE_URL}images/products/Esse_Resurrect_Serum.jpg`,
     description: "Relax and unwind with our soothing aromatic massage oil.",
@@ -167,6 +184,7 @@ const products = [
     id: 21,
     name: "Esse Sensitive Cleanser",
     price: 199,
+    salePrice: 0,
     category: "wellness",
     image: `${import.meta.env.BASE_URL}images/products/Esse_Sensitive_Cleanser.jpg`,
     description: "Relax and unwind with our soothing aromatic massage oil.",
@@ -175,6 +193,7 @@ const products = [
     id: 22,
     name: "Esse Sensitive Eye Cream",
     price: 199,
+    salePrice: 0,
     category: "wellness",
     image: `${import.meta.env.BASE_URL}images/products/Esse_Sensitive_Eye_Cream.jpg`,
     description: "Relax and unwind with our soothing aromatic massage oil.",
@@ -183,6 +202,7 @@ const products = [
     id: 23,
     name: "Esse Sensitive Mist",
     price: 199,
+    salePrice: 0,
     category: "wellness",
     image: `${import.meta.env.BASE_URL}images/products/Esse_Sensitive_Mist.jpg`,
     description: "Relax and unwind with our soothing aromatic massage oil.",
@@ -196,7 +216,6 @@ export default function Products({ onAddToCart }) {
   const [maxPrice, setMaxPrice] = useState("");
   const [sortBy, setSortBy] = useState("");
   const [filteredProducts, setFilteredProducts] = useState(products);
-
   const [selectedProduct, setSelectedProduct] = useState(null);
 
   // ✅ Pagination State
@@ -205,13 +224,13 @@ export default function Products({ onAddToCart }) {
 
   useEffect(() => {
     applyFilters();
-    setCurrentPage(1); // Reset to first page after filters change
+    setCurrentPage(1);
   }, [search, category, minPrice, maxPrice, sortBy]);
 
   const applyFilters = () => {
     let filtered = products.filter((product) => {
       const priceToCheck =
-        product.salePrice && product.salePrice < product.price
+        product.salePrice > 0 && product.salePrice < product.price
           ? product.salePrice
           : product.price;
 
@@ -230,12 +249,16 @@ export default function Products({ onAddToCart }) {
     switch (sortBy) {
       case "priceLowHigh":
         filtered.sort(
-          (a, b) => (a.salePrice || a.price) - (b.salePrice || b.price)
+          (a, b) =>
+            (a.salePrice > 0 && a.salePrice < a.price ? a.salePrice : a.price) -
+            (b.salePrice > 0 && b.salePrice < b.price ? b.salePrice : b.price)
         );
         break;
       case "priceHighLow":
         filtered.sort(
-          (a, b) => (b.salePrice || b.price) - (a.salePrice || a.price)
+          (a, b) =>
+            (b.salePrice > 0 && b.salePrice < b.price ? b.salePrice : b.price) -
+            (a.salePrice > 0 && a.salePrice < a.price ? a.salePrice : a.price)
         );
         break;
       case "nameAZ":
@@ -261,7 +284,7 @@ export default function Products({ onAddToCart }) {
   const changePage = (page) => {
     if (page >= 1 && page <= totalPages) {
       setCurrentPage(page);
-      window.scrollTo({ top: 500, behavior: "smooth" }); // scroll to products elegantly
+      window.scrollTo({ top: 500, behavior: "smooth" });
     }
   };
 
@@ -308,7 +331,7 @@ export default function Products({ onAddToCart }) {
       <div className="products-grid">
         {paginatedProducts.map((product) => {
           const onSale =
-            product.salePrice && product.salePrice < product.price;
+            product.salePrice > 0 && product.salePrice < product.price;
           const displayPrice = onSale ? product.salePrice : product.price;
 
           return (
@@ -376,7 +399,7 @@ export default function Products({ onAddToCart }) {
         </div>
       )}
 
-      {/* ✅ Popup Overlay (unchanged) */}
+      {/* ✅ Popup Overlay */}
       {selectedProduct && (
         <div
           className="product-popup-overlay"
@@ -389,13 +412,10 @@ export default function Products({ onAddToCart }) {
             >
               ✕
             </button>
-            <img
-              src={selectedProduct.image}
-              alt={selectedProduct.name}
-            />
+            <img src={selectedProduct.image} alt={selectedProduct.name} />
             <h3>{selectedProduct.name}</h3>
             <p>{selectedProduct.description}</p>
-            {selectedProduct.salePrice &&
+            {selectedProduct.salePrice > 0 &&
             selectedProduct.salePrice < selectedProduct.price ? (
               <div>
                 <span className="original-price">
