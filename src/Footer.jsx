@@ -10,7 +10,6 @@ export default function Footer() {
           className="footer-logo"
         />
       </a>
-      <p>&copy; {new Date().getFullYear()} Tassel Beauty And Wellness Studio</p>
       <div className="social-icons">
         <a href="https://facebook.com/tasselbeautyandwellnessstudio" target="_blank" title="Facebook"><i className="fab fa-facebook-f"></i></a>
         <a href="https://instagram.com/tasselbeautyandwellnessstudio" target="_blank" title="Instagram"><i className="fab fa-instagram"></i></a>
@@ -18,6 +17,7 @@ export default function Footer() {
         <a href="https://tiktok.com/@tasselgroup" target="_blank" title="TikTok"><i className="fab fa-tiktok"></i></a>
         <a href="mailto:info@tasselgroup.co.za" title="Email"><i className="fas fa-envelope"></i></a>
       </div>
+      <p>&copy; {new Date().getFullYear()} Tassel Beauty And Wellness Studio</p>
     </footer>
   );
 }
