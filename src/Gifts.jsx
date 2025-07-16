@@ -4,9 +4,9 @@ import { toast, ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 
 const images = [
-  "https://via.placeholder.com/300x300?text=Gift+Box+1",
-  "https://via.placeholder.com/300x300?text=Gift+Box+2",
-  "https://via.placeholder.com/300x300?text=Gift+Box+3",
+ `${import.meta.env.BASE_URL}images/products/Slippers.jpg`,
+ `${import.meta.env.BASE_URL}images/products/Gown.jpg`,
+ `${import.meta.env.BASE_URL}images/products/Mug.jpg`,
 ];
 
 export default function Gifts() {
