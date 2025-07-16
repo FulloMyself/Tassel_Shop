@@ -17,7 +17,7 @@ export default function Footer() {
         <a href="https://tiktok.com/@tasselgroup" target="_blank" title="TikTok"><i className="fab fa-tiktok"></i></a>
         <a href="mailto:info@tasselgroup.co.za" title="Email"><i className="fas fa-envelope"></i></a>
       </div>
-      <p className="footer-logo"> &copy; {new Date().getFullYear()} Tassel Beauty And Wellness Studio</p>
+      <p className="social-icons"> &copy; {new Date().getFullYear()} Tassel Beauty And Wellness Studio</p>
     </footer>
   );
 }
