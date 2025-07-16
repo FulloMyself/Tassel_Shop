@@ -199,8 +199,13 @@ export default function Products({ onAddToCart }) {
 
   const [selectedProduct, setSelectedProduct] = useState(null);
 
+  // ✅ Pagination State
+  const [currentPage, setCurrentPage] = useState(1);
+  const itemsPerPage = 6;
+
   useEffect(() => {
     applyFilters();
+    setCurrentPage(1); // Reset to first page after filters change
   }, [search, category, minPrice, maxPrice, sortBy]);
 
   const applyFilters = () => {
@@ -225,14 +230,12 @@ export default function Products({ onAddToCart }) {
     switch (sortBy) {
       case "priceLowHigh":
         filtered.sort(
-          (a, b) =>
-            (a.salePrice || a.price) - (b.salePrice || b.price)
+          (a, b) => (a.salePrice || a.price) - (b.salePrice || b.price)
         );
         break;
       case "priceHighLow":
         filtered.sort(
-          (a, b) =>
-            (b.salePrice || b.price) - (a.salePrice || a.price)
+          (a, b) => (b.salePrice || b.price) - (a.salePrice || a.price)
         );
         break;
       case "nameAZ":
@@ -248,23 +251,26 @@ export default function Products({ onAddToCart }) {
     setFilteredProducts(filtered);
   };
 
-  return (
-    <section id="products" className="products">
-      <h2 className="products-title" style={{ textAlign: "center" }}>
-        Our Products
-      </h2>
+  // ✅ Pagination Logic
+  const totalPages = Math.ceil(filteredProducts.length / itemsPerPage);
+  const paginatedProducts = filteredProducts.slice(
+    (currentPage - 1) * itemsPerPage,
+    currentPage * itemsPerPage
+  );
 
-      {/* ✅ Filters - Centered */}
-      <div
-        className="filter-bar"
-        style={{
-          display: "flex",
-          justifyContent: "center",
-          gap: "10px",
-          margin: "20px 0",
-          flexWrap: "wrap",
-        }}
-      >
+  const changePage = (page) => {
+    if (page >= 1 && page <= totalPages) {
+      setCurrentPage(page);
+      window.scrollTo({ top: 500, behavior: "smooth" }); // scroll to products elegantly
+    }
+  };
+
+  return (
+    <section className="products" id="products">
+      <h2 className="products-title">Our Products</h2>
+
+      {/* ✅ Filters */}
+      <div className="filter-bar">
         <input
           type="text"
           placeholder="Search products by brand..."
@@ -300,12 +306,10 @@ export default function Products({ onAddToCart }) {
 
       {/* ✅ Product Grid */}
       <div className="products-grid">
-        {filteredProducts.map((product) => {
+        {paginatedProducts.map((product) => {
           const onSale =
             product.salePrice && product.salePrice < product.price;
-          const displayPrice = onSale
-            ? product.salePrice
-            : product.price;
+          const displayPrice = onSale ? product.salePrice : product.price;
 
           return (
             <div
@@ -345,16 +349,40 @@ export default function Products({ onAddToCart }) {
         })}
       </div>
 
-      {/* ✅ Popup Overlay */}
+      {/* ✅ Pagination Controls */}
+      {totalPages > 1 && (
+        <div className="pagination">
+          <button
+            onClick={() => changePage(currentPage - 1)}
+            disabled={currentPage === 1}
+          >
+            « Prev
+          </button>
+          {[...Array(totalPages)].map((_, i) => (
+            <button
+              key={i}
+              onClick={() => changePage(i + 1)}
+              className={currentPage === i + 1 ? "active" : ""}
+            >
+              {i + 1}
+            </button>
+          ))}
+          <button
+            onClick={() => changePage(currentPage + 1)}
+            disabled={currentPage === totalPages}
+          >
+            Next »
+          </button>
+        </div>
+      )}
+
+      {/* ✅ Popup Overlay (unchanged) */}
       {selectedProduct && (
         <div
           className="product-popup-overlay"
           onClick={() => setSelectedProduct(null)}
         >
-          <div
-            className="product-popup"
-            onClick={(e) => e.stopPropagation()}
-          >
+          <div className="product-popup" onClick={(e) => e.stopPropagation()}>
             <button
               className="popup-close"
               onClick={() => setSelectedProduct(null)}

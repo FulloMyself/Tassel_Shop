@@ -519,6 +519,40 @@ header {
   margin-right: 5px;
 }
 
+.pagination {
+  display: flex;
+  justify-content: center;
+  gap: 0.5rem;
+  margin: 1.5rem 0;
+}
+
+.pagination button {
+  background: #fff8f4;
+  border: 1px solid #e9cfc3;
+  padding: 0.5rem 0.8rem;
+  border-radius: 6px;
+  cursor: pointer;
+  font-weight: 500;
+  color: #5a3e36;
+  transition: all 0.3s ease;
+}
+
+.pagination button:hover {
+  background: #e9cfc3;
+  color: #5a3e36;
+}
+
+.pagination button.active {
+  background: #bfa18c;
+  color: #fff;
+  font-weight: 600;
+}
+
+.pagination button:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+}
+
 
 /* Cart */
 /* Cart Slide-In Panel */
