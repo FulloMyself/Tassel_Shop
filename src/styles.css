@@ -17,7 +17,7 @@ body {
 
 header {
   background: #ffe7eb;
-  color: #bfa18c;
+  color: #a67c52;
   padding: 20px;
   position: relative;
 }
@@ -382,7 +382,7 @@ header {
   padding: 0.5rem;
   border: 1px solid #e9cfc3;
   border-radius: 6px;
-  background: #f0aeae;
+  background: #a67c52;
 }
 
 /* ✅ Product Cards */
@@ -834,7 +834,7 @@ header {
 
 .social-icons a {
   margin: 0 8px;
-  color: #bfa18c; /* Default spa theme */
+  color: #a67c52; /* Default spa theme */
   font-size: 1.3rem;
   transition: color 0.3s ease, transform 0.2s ease;
 }
