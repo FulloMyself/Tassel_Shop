@@ -391,6 +391,7 @@ header {
 }
 
 .product-card {
+  text-align: center;
   position: relative;
   border: 1px solid #eee;
   border-radius: 8px;
@@ -409,10 +410,12 @@ header {
 }
 
 .product-info h3 {
+  text-align: center;
   margin: 0.5rem 0;
 }
 
 .product-price {
+  text-align: center;
   margin: 0.5rem 0;
 }
 
@@ -508,6 +511,7 @@ header {
 }
 
 .product-popup .product-price {
+  text-align: center;
   color: #bfa18c;
   font-weight: bold;
   margin: 0.5rem 0;
