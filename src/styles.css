@@ -346,6 +346,25 @@ header {
 
 
 /* Product Section */
+.products-title {
+  text-align: center;
+  font-size: 2rem;
+  font-weight: 600;
+  margin: 1rem 0 2rem;
+  color: #5a3e36;
+  position: relative;
+}
+
+.products-title::after {
+  content: "";
+  display: block;
+  width: 60px;
+  height: 3px;
+  background-color: #bfa18c; /* Your shop’s theme color */
+  margin: 0.5rem auto 0;
+  border-radius: 2px;
+}
+
 /* ✅ Filters */
 .filter-bar {
   display: flex;
@@ -417,7 +436,6 @@ header {
   font-size: 0.75rem;
   border-radius: 4px;
 }
-
 
 .add-to-cart-btn {
   background: #bfa18c;

@@ -257,7 +257,7 @@ export default function Products({ onAddToCart }) {
       <div className="filter-bar">
         <input
           type="text"
-          placeholder="Search products..."
+          placeholder="Search products by brand..."
           value={search}
           onChange={(e) => setSearch(e.target.value)}
         />
