@@ -14,12 +14,16 @@ function App() {
 
   const toggleCart = () => setCartOpen((open) => !open);
 
+  // ✅ Load from LocalStorage
   useEffect(() => {
     const savedCart = localStorage.getItem("cart");
-    if (savedCart) {
-      setCartItems(JSON.parse(savedCart));
-    }
+    if (savedCart) setCartItems(JSON.parse(savedCart));
   }, []);
+
+  // ✅ Save to LocalStorage
+  useEffect(() => {
+    localStorage.setItem("cart", JSON.stringify(cartItems));
+  }, [cartItems]);
 
   const handleAddToCart = (product) => {
     setCartItems((prev) => {
@@ -54,7 +58,7 @@ function App() {
   };
 
   return (
-    <Router basename={import.meta.env.BASE_URL}>
+    <Router>
       <Header
         cartCount={cartItems.reduce((sum, item) => sum + item.quantity, 0)}
         toggleCart={toggleCart}
