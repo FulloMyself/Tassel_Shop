@@ -96,12 +96,14 @@ header {
   padding: 0.5rem 1.2rem;
   font-weight: 600;
   cursor: pointer;
-  transition: background 0.2s;
+  transition: background 0.3s ease, transform 0.2s ease;
 }
 
 .hero-cta:hover {
-  background-color: #a67c52;
+  background-color: #a67c52; /* Slightly darker on hover */
+  transform: scale(1.05);
 }
+
 
 .hero-section {
   width: 100%;
@@ -811,12 +813,18 @@ header {
 
 
 /* Footer */
-footer {
+/* ✅ Footer Styling */
+.site-footer {
   text-align: center;
   padding: 20px;
-  background-color: #fce4ec;
+  background-color: #ffe7eb; /* Matches header */
+  color: #000;
   font-size: 0.9rem;
-  color: #333;
+}
+
+.footer-logo {
+  display: block;
+  margin: 0 auto 8px auto;
 }
 
 .social-icons {
@@ -824,15 +832,17 @@ footer {
 }
 
 .social-icons a {
-  margin: 0 10px;
-  color: #d81b60;
-  font-size: 1.2rem;
-  transition: color 0.3s ease;
+  margin: 0 8px;
+  color: #000; /* Default spa theme */
+  font-size: 1.3rem;
+  transition: color 0.3s ease, transform 0.2s ease;
 }
 
 .social-icons a:hover {
-  color: #ad1457;
+  color: #bfa18c; /* Subtle spa gold/brown */
+  transform: scale(1.1);
 }
+
 
 /* Responsive */
 @media (max-width: 768px) {
