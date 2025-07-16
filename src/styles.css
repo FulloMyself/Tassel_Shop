@@ -105,7 +105,7 @@ header {
 
 .hero-section {
   width: 100%;
-  min-height: 100vh;
+  min-height: 60vh;
   background-size: contain; /* ✅ shows full image */
   background-repeat: no-repeat; /* ✅ no tiling */
   background-position: center top; /* ✅ centers image */
@@ -273,7 +273,7 @@ header {
 .hero {
   position: relative;
   background: url('TasselHeroSection.png') center center/cover no-repeat;
-  height: 100vh;
+  height: 60vh;
   display: flex;
   align-items: center;
   justify-content: center;
