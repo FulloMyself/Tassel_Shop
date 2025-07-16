@@ -14,7 +14,6 @@ function App() {
 
   const toggleCart = () => setCartOpen((open) => !open);
 
-  // ✅ Load from LocalStorage on mount
   useEffect(() => {
     const savedCart = localStorage.getItem("cart");
     if (savedCart) {
@@ -54,11 +53,12 @@ function App() {
     );
   };
 
-  const cartCount = cartItems.reduce((sum, item) => sum + item.quantity, 0);
-
   return (
-    <Router basename="/Tassel_Shop">
-      <Header cartCount={cartItems.reduce((sum, item) => sum + item.quantity, 0)} toggleCart={toggleCart} />
+    <Router basename={import.meta.env.BASE_URL}>
+      <Header
+        cartCount={cartItems.reduce((sum, item) => sum + item.quantity, 0)}
+        toggleCart={toggleCart}
+      />
       <main>
         <Routes>
           <Route
@@ -74,7 +74,7 @@ function App() {
                     onIncrement={handleIncrement}
                     onDecrement={handleDecrement}
                     onClose={toggleCart}
-                    setCartItems={setCartItems} // ✅ new
+                    setCartItems={setCartItems}
                   />
                 )}
               </>
