@@ -115,7 +115,6 @@ const products = [
     image: `${import.meta.env.BASE_URL}images/products/Tassel_Vitamin_E_Oil.jpg`,
     description: "Relax and unwind with our soothing aromatic massage oil.",
   },
-
   {
     id: 15,
     name: "Tassel Hydrating Mist",
@@ -250,11 +249,22 @@ export default function Products({ onAddToCart }) {
   };
 
   return (
-    <section className="products">
-      <h2 className="products-title">Our Products</h2>
+    <section id="products" className="products">
+      <h2 className="products-title" style={{ textAlign: "center" }}>
+        Our Products
+      </h2>
 
-      {/* ✅ Filters */}
-      <div className="filter-bar">
+      {/* ✅ Filters - Centered */}
+      <div
+        className="filter-bar"
+        style={{
+          display: "flex",
+          justifyContent: "center",
+          gap: "10px",
+          margin: "20px 0",
+          flexWrap: "wrap",
+        }}
+      >
         <input
           type="text"
           placeholder="Search products by brand..."
@@ -301,7 +311,7 @@ export default function Products({ onAddToCart }) {
             <div
               className="product-card"
               key={product.id}
-              onClick={() => setSelectedProduct(product)} // ✅ Opens popup
+              onClick={() => setSelectedProduct(product)}
             >
               <img
                 src={product.image}
@@ -319,11 +329,10 @@ export default function Products({ onAddToCart }) {
                 <span className="product-price">
                   R{displayPrice.toFixed(2)}
                 </span>
-                {/* ✅ Add to Cart Button (restored) */}
                 <button
                   className="add-to-cart-btn"
                   onClick={(e) => {
-                    e.stopPropagation(); // prevent opening popup
+                    e.stopPropagation();
                     onAddToCart(product);
                   }}
                 >

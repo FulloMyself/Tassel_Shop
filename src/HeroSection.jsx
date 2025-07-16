@@ -3,6 +3,14 @@ import React from "react";
 import "./styles.css";
 
 export default function HeroSection() {
+  const handleScrollToProducts = (e) => {
+    e.preventDefault();
+    const productsSection = document.getElementById("products");
+    if (productsSection) {
+      productsSection.scrollIntoView({ behavior: "smooth" });
+    }
+  };
+
   return (
     <section className="hero-section-img">
       <img
@@ -13,7 +21,13 @@ export default function HeroSection() {
       <div className="hero-content-img">
         <h1 className="hero-title">Glow Starts Here</h1>
         <p className="hero-subtitle">Discover our natural skincare essentials.</p>
-        <a href="#products" className="hero-cta">Shop Now</a>
+        <a
+          href="#products"
+          onClick={handleScrollToProducts}
+          className="hero-cta"
+        >
+          Shop Now
+        </a>
       </div>
     </section>
   );
