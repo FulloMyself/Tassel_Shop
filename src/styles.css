@@ -641,6 +641,158 @@ header {
   display: inline-block;
 }
 
+/* === CART SPA STYLE === */
+.spa-cart {
+  background: #f9f6f5;
+  border-left: 2px solid #e9cfc3;
+  box-shadow: -4px 0 10px rgba(0,0,0,0.05);
+  padding: 1rem;
+  max-width: 360px;
+  position: fixed;
+  top: 0;
+  right: 0;
+  height: 100%;
+  overflow-y: auto;
+  transition: transform 0.3s ease;
+}
+
+.cart-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  border-bottom: 1px solid #e9cfc3;
+  margin-bottom: 1rem;
+}
+
+.cart-title {
+  color: #6d4c41;
+  font-size: 1.4rem;
+  font-weight: 600;
+}
+
+.cart-close-btn {
+  background: none;
+  border: none;
+  font-size: 1.5rem;
+  color: #6d4c41;
+  cursor: pointer;
+}
+
+.cart-items ul {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+
+.cart-item {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 0.5rem 0;
+  border-bottom: 1px solid #eee;
+}
+
+.cart-item-name {
+  font-weight: 500;
+  color: #444;
+}
+
+.cart-qty-controls {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+.qty-btn {
+  background: #f1e2da;
+  border: 1px solid #e0c9bb;
+  border-radius: 4px;
+  padding: 0.2rem 0.5rem;
+  cursor: pointer;
+  transition: background 0.3s;
+}
+
+.qty-btn:hover {
+  background: #e9d6c8;
+}
+
+.cart-item-price {
+  font-weight: bold;
+  color: #bfa18c;
+}
+
+.cart-footer {
+  margin-top: 1rem;
+  border-top: 1px solid #e9cfc3;
+  padding-top: 1rem;
+}
+
+.cart-total {
+  display: flex;
+  justify-content: space-between;
+  font-weight: bold;
+  margin-bottom: 0.5rem;
+}
+
+.cart-total-amount {
+  color: #bfa18c;
+}
+
+.cart-email-input {
+  padding: 0.5rem;
+  width: 100%;
+  border: 1px solid #e9cfc3;
+  border-radius: 6px;
+  margin-bottom: 0.5rem;
+  font-size: 0.9rem;
+}
+
+.cart-error {
+  color: #b71c1c;
+  font-size: 0.85rem;
+  margin-bottom: 0.5rem;
+}
+
+.cart-success {
+  color: #2e7d32;
+  font-size: 0.85rem;
+  margin-bottom: 0.5rem;
+}
+
+.payment-options {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+}
+
+.checkout-btn {
+  padding: 0.6rem;
+  border: none;
+  border-radius: 6px;
+  font-size: 1rem;
+  cursor: pointer;
+  transition: background 0.3s;
+}
+
+.order-btn {
+  background: #e9cfc3;
+  color: #5d4037;
+}
+
+.order-btn:hover {
+  background: #dec1b5;
+}
+
+.buy-btn {
+  background: #bfa18c;
+  color: white;
+}
+
+.buy-btn:hover {
+  background: #a88e7a;
+}
+
+
 /* Footer */
 footer {
   text-align: center;
