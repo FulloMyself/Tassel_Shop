@@ -101,6 +101,8 @@ header {
 
 .hero-cta:hover {
   background-color: #a67c52; /* Slightly darker on hover */
+  color: #fff !important; /* Ensures text stays white */
+  transform: scale(1.05);
 }
 
 
