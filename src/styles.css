@@ -164,27 +164,20 @@ header {
   gap: 10px;
 }
 
-.logo {
-  height: 70px; /* increased from 50px */
-  width: 70px;  /* increased from 50px */
-  object-fit: cover;
-  border-radius: 50%;
-  transition: transform 0.3s ease, box-shadow 0.3s ease;
-  box-shadow: 0 2px 8px rgba(0,0,0,0.15);
-  vertical-align: middle;
-}
-
-.logo:hover {
-  transform: scale(1.05) rotate(-2deg);
-}
-
+.logo,
 .footer-logo {
-  display: block;
-  margin: 0 auto 8px auto;
-  height: 70px; /* match header size */
-  width: 70px;
-  object-fit: cover;
-  border-radius: 50%;
+  height: 80px; /* Slightly larger for clarity */
+  width: auto;  /* Keeps original aspect ratio */
+  border-radius: 0; /* No forced circular cropping */
+  object-fit: contain; /* Ensures full logo is visible */
+  background: transparent;
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+  box-shadow: none; /* Clean, professional look */
+}
+
+.logo:hover,
+.footer-logo:hover {
+  transform: scale(1.05);
 }
 
 
