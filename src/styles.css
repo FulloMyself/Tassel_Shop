@@ -17,7 +17,7 @@ body {
 
 header {
   background: #ffe7eb;
-  color: #000000;
+  color: #bfa18c;
   padding: 20px;
   position: relative;
 }
@@ -834,7 +834,7 @@ header {
 
 .social-icons a {
   margin: 0 8px;
-  color: #000; /* Default spa theme */
+  color: #bfa18c; /* Default spa theme */
   font-size: 1.3rem;
   transition: color 0.3s ease, transform 0.2s ease;
 }
