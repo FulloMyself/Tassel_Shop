@@ -125,18 +125,25 @@ export default function Products({ onAddToCart }) {
   const [sortBy, setSortBy] = useState("");
   const [filteredProducts, setFilteredProducts] = useState(products);
 
+  // ✅ Popup state
+  const [selectedProduct, setSelectedProduct] = useState(null);
+
   useEffect(() => {
     applyFilters();
   }, [search, category, minPrice, maxPrice, sortBy]);
 
   const applyFilters = () => {
     let filtered = products.filter((product) => {
-      const priceToCheck = product.salePrice && product.salePrice < product.price
-        ? product.salePrice
-        : product.price;
+      const priceToCheck =
+        product.salePrice && product.salePrice < product.price
+          ? product.salePrice
+          : product.price;
 
-      const matchesSearch = product.name.toLowerCase().includes(search.toLowerCase());
-      const matchesCategory = category === "all" || product.category === category;
+      const matchesSearch = product.name
+        .toLowerCase()
+        .includes(search.toLowerCase());
+      const matchesCategory =
+        category === "all" || product.category === category;
       const min = parseFloat(minPrice) || 0;
       const max = parseFloat(maxPrice) || Infinity;
       const matchesPrice = priceToCheck >= min && priceToCheck <= max;
@@ -146,10 +153,16 @@ export default function Products({ onAddToCart }) {
 
     switch (sortBy) {
       case "priceLowHigh":
-        filtered.sort((a, b) => (a.salePrice || a.price) - (b.salePrice || b.price));
+        filtered.sort(
+          (a, b) =>
+            (a.salePrice || a.price) - (b.salePrice || b.price)
+        );
         break;
       case "priceHighLow":
-        filtered.sort((a, b) => (b.salePrice || b.price) - (a.salePrice || a.price));
+        filtered.sort(
+          (a, b) =>
+            (b.salePrice || b.price) - (a.salePrice || a.price)
+        );
         break;
       case "nameAZ":
         filtered.sort((a, b) => a.name.localeCompare(b.name));
@@ -206,31 +219,90 @@ export default function Products({ onAddToCart }) {
       {/* ✅ Product Grid */}
       <div className="products-grid">
         {filteredProducts.map((product) => {
-          const onSale = product.salePrice && product.salePrice < product.price;
-          const displayPrice = onSale ? product.salePrice : product.price;
+          const onSale =
+            product.salePrice && product.salePrice < product.price;
+          const displayPrice = onSale
+            ? product.salePrice
+            : product.price;
 
           return (
-            <div className="product-card" key={product.id}>
-              <img src={product.image} alt={product.name} className="product-image" />
+            <div
+              className="product-card"
+              key={product.id}
+              onClick={() => setSelectedProduct(product)} // ✅ Open popup
+            >
+              <img
+                src={product.image}
+                alt={product.name}
+                className="product-image"
+              />
               <h3>{product.name}</h3>
               <p className="product-desc">{product.description}</p>
               <div className="product-footer">
                 {onSale && (
-                  <span className="original-price">R{product.price.toFixed(2)}</span>
+                  <span className="original-price">
+                    R{product.price.toFixed(2)}
+                  </span>
                 )}
-                <span className="product-price">R{displayPrice.toFixed(2)}</span>
-                <button
-                  className="add-to-cart-btn"
-                  onClick={() => onAddToCart(product)}
-                >
-                  Add to Cart
-                </button>
+                <span className="product-price">
+                  R{displayPrice.toFixed(2)}
+                </span>
               </div>
               {onSale && <div className="sale-badge">SALE</div>}
             </div>
           );
         })}
       </div>
+
+      {/* ✅ Popup Overlay */}
+      {selectedProduct && (
+        <div
+          className="product-popup-overlay"
+          onClick={() => setSelectedProduct(null)}
+        >
+          <div
+            className="product-popup"
+            onClick={(e) => e.stopPropagation()}
+          >
+            <button
+              className="popup-close"
+              onClick={() => setSelectedProduct(null)}
+            >
+              ✕
+            </button>
+            <img
+              src={selectedProduct.image}
+              alt={selectedProduct.name}
+            />
+            <h3>{selectedProduct.name}</h3>
+            <p>{selectedProduct.description}</p>
+            {selectedProduct.salePrice && selectedProduct.salePrice <
+            selectedProduct.price ? (
+              <div>
+                <span className="original-price">
+                  R{selectedProduct.price.toFixed(2)}
+                </span>{" "}
+                <span className="product-price">
+                  R{selectedProduct.salePrice.toFixed(2)}
+                </span>
+              </div>
+            ) : (
+              <div className="product-price">
+                R{selectedProduct.price.toFixed(2)}
+              </div>
+            )}
+            <button
+              className="add-to-cart-btn"
+              onClick={() => {
+                onAddToCart(selectedProduct);
+                setSelectedProduct(null);
+              }}
+            >
+              Add to Cart
+            </button>
+          </div>
+        </div>
+      )}
     </section>
   );
 }
