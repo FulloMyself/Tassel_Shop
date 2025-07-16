@@ -323,7 +323,7 @@ header {
 
 .shop-now-btn {
   background: #ffe7eb;
-  color: #000000;
+  color: #b89b9b;
   padding: 0.8rem 2rem;
   border: none;
   border-radius: 25px;
@@ -333,7 +333,7 @@ header {
 }
 
 .shop-now-btn:hover {
-  background-color: #333;
+  background-color: #7e4b4b;
 }
 
 .shop-now-btn:focus {
