@@ -1,9 +1,11 @@
 import { useState } from "react";
+import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 import Header from "./Header";
 import HeroSection from "./HeroSection";
 import Products from "./Products";
 import Cart from "./Cart";
 import Footer from "./Footer";
+import Gifts from "./Gifts"; // ✅ New page
 import "./styles.css";
 
 function App() {
@@ -12,7 +14,6 @@ function App() {
 
   const toggleCart = () => setCartOpen((open) => !open);
 
-  // Add product to cart or increase quantity if already in cart
   const handleAddToCart = (product) => {
     setCartItems((prev) => {
       const existing = prev.find((item) => item.id === product.id);
@@ -47,30 +48,37 @@ function App() {
 
   const cartCount = cartItems.reduce((sum, item) => sum + item.quantity, 0);
 
-  const handleCheckout = () => {
-    // Handle checkout logic here
-    console.log("Checkout clicked");
-  };
-
   return (
-    <div>
+    <Router>
       <Header cartCount={cartCount} toggleCart={toggleCart} />
       <main>
-        <HeroSection />
-        <Products onAddToCart={handleAddToCart} />
-        {cartOpen && (
-          <Cart
-            className="open"
-            items={cartItems}
-            onIncrement={handleIncrement}
-            onDecrement={handleDecrement}
-            onCheckout={handleCheckout}
-            onClose={toggleCart}
+        <Routes>
+          {/* ✅ Home/Shop */}
+          <Route
+            path="/"
+            element={
+              <>
+                <HeroSection />
+                <Products onAddToCart={handleAddToCart} />
+                {cartOpen && (
+                  <Cart
+                    className="open"
+                    items={cartItems}
+                    onIncrement={handleIncrement}
+                    onDecrement={handleDecrement}
+                    onClose={toggleCart}
+                  />
+                )}
+              </>
+            }
           />
-        )}
+
+          {/* ✅ Gifts */}
+          <Route path="/gifts" element={<Gifts />} />
+        </Routes>
       </main>
       <Footer />
-    </div>
+    </Router>
   );
 }
 
