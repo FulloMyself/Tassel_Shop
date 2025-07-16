@@ -349,18 +349,20 @@ header {
 /* ✅ Filters */
 .filter-bar {
   display: flex;
-  flex-wrap: wrap;
+  justify-content: center;
   gap: 0.5rem;
-  margin: 1rem 0;
+  flex-wrap: wrap;
+  margin-bottom: 1.5rem;
 }
 
 .filter-bar input,
 .filter-bar select {
   padding: 0.5rem;
-  border: 1px solid #ccc;
-  border-radius: 4px;
-  font-size: 0.9rem;
+  border: 1px solid #e9cfc3;
+  border-radius: 6px;
+  background: #fff8f5;
 }
+
 
 /* ✅ Product Cards */
 .products-grid {

@@ -14,6 +14,14 @@ function App() {
 
   const toggleCart = () => setCartOpen((open) => !open);
 
+  // ✅ Load from LocalStorage on mount
+  useEffect(() => {
+    const savedCart = localStorage.getItem("cart");
+    if (savedCart) {
+      setCartItems(JSON.parse(savedCart));
+    }
+  }, []);
+
   const handleAddToCart = (product) => {
     setCartItems((prev) => {
       const existing = prev.find((item) => item.id === product.id);
@@ -49,8 +57,8 @@ function App() {
   const cartCount = cartItems.reduce((sum, item) => sum + item.quantity, 0);
 
   return (
-    <Router>
-      <Header cartCount={cartCount} toggleCart={toggleCart} />
+    <Router basename="/Tassel_Shop">
+      <Header cartCount={cartItems.reduce((sum, item) => sum + item.quantity, 0)} toggleCart={toggleCart} />
       <main>
         <Routes>
           <Route
@@ -66,6 +74,7 @@ function App() {
                     onIncrement={handleIncrement}
                     onDecrement={handleDecrement}
                     onClose={toggleCart}
+                    setCartItems={setCartItems} // ✅ new
                   />
                 )}
               </>

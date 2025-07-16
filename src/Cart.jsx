@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 
 export default function Cart({
   items = [],
@@ -6,6 +6,7 @@ export default function Cart({
   onDecrement,
   onClose,
   className = "",
+  setCartItems, // ✅ new: we'll pass this from App.jsx for Clear Cart
 }) {
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState("");
@@ -17,19 +18,34 @@ export default function Cart({
 
   const total = items.reduce((sum, item) => sum + item.price * item.quantity, 0);
 
+  // ✅ Persist cart on every update
+  useEffect(() => {
+    localStorage.setItem("cart", JSON.stringify(items));
+  }, [items]);
+
+  // ✅ Clear Cart handler
+  const handleClearCart = () => {
+    if (window.confirm("Are you sure you want to remove all items?")) {
+      setCartItems([]); // Clears from App state
+      localStorage.removeItem("cart");
+    }
+  };
+
   const handleOrderNow = async () => {
     setLoading(true);
     setError("");
     setSuccess("");
+
     try {
       const res = await fetch(`${emailServer}/send-order`, {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({ items, total, email }),
       });
+
       if (!res.ok) throw new Error("Failed to send order email.");
       setSuccess("Order sent! We'll contact you soon.");
-    } catch {
+    } catch (err) {
       setError("Could not send order. Please try again.");
     } finally {
       setLoading(false);
@@ -40,16 +56,18 @@ export default function Cart({
     setLoading(true);
     setError("");
     setSuccess("");
+
     try {
       const res = await fetch(`${paymentPortal}/create-order`, {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({ items, total, email }),
       });
+
       if (!res.ok) throw new Error("Failed to initiate payment.");
       const payfastFields = await res.json();
       submitPayFastForm(payfastFields);
-    } catch {
+    } catch (err) {
       setError("Could not start payment. Please try again.");
     } finally {
       setLoading(false);
@@ -76,13 +94,24 @@ export default function Cart({
   }
 
   return (
-    <aside className={`cart spa-cart ${className}`} role="complementary" aria-label="Shopping cart">
+    <aside
+      className={`cart spa-cart ${className}`}
+      role="complementary"
+      aria-label="Shopping cart"
+    >
       <div className="cart-header">
-        <h2 className="cart-title">
-          <span role="img" aria-label="Lotus" style={{ marginRight: 8 }}>🪷</span>
+        <h2>
+          <span role="img" aria-label="Lotus" style={{ marginRight: 8 }}>
+            🪷
+          </span>
           Your Cart
         </h2>
-        <button className="cart-close-btn" onClick={onClose} aria-label="Close cart" type="button">
+        <button
+          className="cart-close-btn"
+          onClick={onClose}
+          aria-label="Close cart"
+          type="button"
+        >
           &times;
         </button>
       </div>
@@ -104,14 +133,18 @@ export default function Cart({
                       onClick={() => onDecrement(item.id)}
                       aria-label={`Decrease quantity of ${item.name}`}
                       type="button"
-                    >−</button>
+                    >
+                      −
+                    </button>
                     <span className="cart-item-qty">{item.quantity}</span>
                     <button
                       className="qty-btn"
                       onClick={() => onIncrement(item.id)}
                       aria-label={`Increase quantity of ${item.name}`}
                       type="button"
-                    >+</button>
+                    >
+                      +
+                    </button>
                   </div>
                 </div>
                 <span className="cart-item-price">
@@ -130,26 +163,49 @@ export default function Cart({
         </div>
 
         {items.length > 0 && (
-          <input
-            type="email"
-            className="cart-email-input"
-            placeholder="Your email for order confirmation"
-            value={email}
-            onChange={(e) => setEmail(e.target.value)}
-            disabled={loading}
-            required
-            autoComplete="email"
-            aria-label="Customer email"
-          />
+          <>
+            <input
+              type="email"
+              className="cart-email-input"
+              placeholder="Your email for order confirmation"
+              value={email}
+              onChange={(e) => setEmail(e.target.value)}
+              disabled={loading}
+              required
+              autoComplete="email"
+              aria-label="Customer email"
+              style={{
+                margin: "1rem 0",
+                width: "100%",
+                padding: "0.5rem",
+                borderRadius: "6px",
+                border: "1px solid #e9cfc3",
+              }}
+            />
+
+            <button
+              type="button"
+              className="checkout-btn"
+              style={{
+                background: "#eee",
+                color: "#333",
+                marginBottom: "0.5rem",
+              }}
+              onClick={handleClearCart}
+              disabled={loading}
+            >
+              Clear Cart
+            </button>
+          </>
         )}
 
-        {error && <div className="cart-error">{error}</div>}
-        {success && <div className="cart-success">{success}</div>}
+        {error && <div className="cart-error" role="alert">{error}</div>}
+        {success && <div className="cart-success" role="status">{success}</div>}
 
         <div className="payment-options">
           <button
             type="button"
-            className="checkout-btn order-btn"
+            className="checkout-btn"
             onClick={handleOrderNow}
             disabled={items.length === 0 || loading || !email}
           >
@@ -158,9 +214,13 @@ export default function Cart({
 
           <button
             type="button"
-            className="checkout-btn buy-btn"
+            className="checkout-btn"
+            style={{ background: "#bfa18c", marginTop: 8 }}
             onClick={handleBuyNow}
-            disabled={items.length === 0 || loading || !email || !email.includes("@")}
+            disabled={
+              items.length === 0 || loading || !email || !email.includes("@")
+            }
+            aria-label="Buy now using PayFast"
           >
             {loading ? "Processing..." : "Buy Now"}
           </button>
