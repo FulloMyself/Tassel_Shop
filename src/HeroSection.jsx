@@ -21,13 +21,12 @@ export default function HeroSection() {
       <div className="hero-content-img">
         <h1 className="hero-title">Glow Starts Here</h1>
         <p className="hero-subtitle">Discover our natural skincare essentials.</p>
-        <a
-          href="#products"
-          onClick={handleScrollToProducts}
+        <button
           className="hero-cta"
-        >
+          onClick={() => document.querySelector("#products")?.scrollIntoView({ behavior: "smooth" })}
+      >
           Shop Now
-        </a>
+      </button>
       </div>
     </section>
   );
