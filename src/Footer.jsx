@@ -2,7 +2,13 @@ import React from "react";
 
 export default function Footer() {
   return (
-    <footer style={{ textAlign: "center", padding: "20px 10px", background: "#f8f5f0" }}>
+    <footer
+      style={{
+        textAlign: "center",
+        padding: "20px",
+        backgroundColor: "#ffe7eb", // ✅ Same as Header
+      }}
+    >
       {/* ✅ Logo */}
       <a href="https://tasselgroup.co.za/">
         <img
@@ -14,13 +20,13 @@ export default function Footer() {
       </a>
 
       {/* ✅ Social Media Icons */}
-      <div className="social-icons" style={{ margin: "10px 0" }}>
+      <div className="social-icons" style={{ marginTop: 10 }}>
         <a
           href="https://facebook.com/tasselbeautyandwellnessstudio"
           target="_blank"
           rel="noopener noreferrer"
           title="Facebook"
-          style={{ margin: "0 8px", color: "#8b6f4e", fontSize: 18 }}
+          style={{ margin: "0 8px", color: "#000", fontSize: "1.2rem" }}
         >
           <i className="fab fa-facebook-f"></i>
         </a>
@@ -29,7 +35,7 @@ export default function Footer() {
           target="_blank"
           rel="noopener noreferrer"
           title="Instagram"
-          style={{ margin: "0 8px", color: "#8b6f4e", fontSize: 18 }}
+          style={{ margin: "0 8px", color: "#000", fontSize: "1.2rem" }}
         >
           <i className="fab fa-instagram"></i>
         </a>
@@ -38,7 +44,7 @@ export default function Footer() {
           target="_blank"
           rel="noopener noreferrer"
           title="WhatsApp"
-          style={{ margin: "0 8px", color: "#8b6f4e", fontSize: 18 }}
+          style={{ margin: "0 8px", color: "#000", fontSize: "1.2rem" }}
         >
           <i className="fab fa-whatsapp"></i>
         </a>
@@ -47,21 +53,21 @@ export default function Footer() {
           target="_blank"
           rel="noopener noreferrer"
           title="TikTok"
-          style={{ margin: "0 8px", color: "#8b6f4e", fontSize: 18 }}
+          style={{ margin: "0 8px", color: "#000", fontSize: "1.2rem" }}
         >
           <i className="fab fa-tiktok"></i>
         </a>
         <a
           href="mailto:info@tasselgroup.co.za"
           title="Email"
-          style={{ margin: "0 8px", color: "#8b6f4e", fontSize: 18 }}
+          style={{ margin: "0 8px", color: "#000", fontSize: "1.2rem" }}
         >
           <i className="fas fa-envelope"></i>
         </a>
       </div>
 
       {/* ✅ Footer Text */}
-      <p style={{ fontSize: 14, color: "#777" }}>
+      <p style={{ fontSize: "0.9rem", marginTop: "8px" }}>
         &copy; {new Date().getFullYear()} Tassel Beauty And Wellness Studio
       </p>
     </footer>
