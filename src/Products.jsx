@@ -5,7 +5,7 @@ const products = [
     id: 1,
     name: "Tassel 12 Hour Concentrated Skin Balm",
     price: 299,
-    salePrice: 249, // ✅ Example sale
+    salePrice: 249,
     category: "skincare",
     image: `${import.meta.env.BASE_URL}images/products/Tassel_12_Hour_Concentrated_Skin_Balm.jpg`,
     description: "Nourish your skin with our signature spa facial cream.",
@@ -30,7 +30,7 @@ const products = [
     id: 4,
     name: "Tassel Eye Serum",
     price: 199,
-    salePrice: 159, // ✅ Example sale
+    salePrice: 159,
     category: "skincare",
     image: `${import.meta.env.BASE_URL}images/products/Tassel_Eye_Serum.jpg`,
     description: "Relax and unwind with our soothing aromatic massage oil.",
@@ -114,7 +114,7 @@ const products = [
     category: "wellness",
     image: `${import.meta.env.BASE_URL}images/products/Tassel_Vitamin_E_Oil.jpg`,
     description: "Relax and unwind with our soothing aromatic massage oil.",
-  }
+  },
 ];
 
 export default function Products({ onAddToCart }) {
@@ -125,7 +125,6 @@ export default function Products({ onAddToCart }) {
   const [sortBy, setSortBy] = useState("");
   const [filteredProducts, setFilteredProducts] = useState(products);
 
-  // ✅ Popup state
   const [selectedProduct, setSelectedProduct] = useState(null);
 
   useEffect(() => {
@@ -229,7 +228,7 @@ export default function Products({ onAddToCart }) {
             <div
               className="product-card"
               key={product.id}
-              onClick={() => setSelectedProduct(product)} // ✅ Open popup
+              onClick={() => setSelectedProduct(product)} // ✅ Opens popup
             >
               <img
                 src={product.image}
@@ -247,6 +246,16 @@ export default function Products({ onAddToCart }) {
                 <span className="product-price">
                   R{displayPrice.toFixed(2)}
                 </span>
+                {/* ✅ Add to Cart Button (restored) */}
+                <button
+                  className="add-to-cart-btn"
+                  onClick={(e) => {
+                    e.stopPropagation(); // prevent opening popup
+                    onAddToCart(product);
+                  }}
+                >
+                  Add to Cart
+                </button>
               </div>
               {onSale && <div className="sale-badge">SALE</div>}
             </div>
@@ -276,8 +285,8 @@ export default function Products({ onAddToCart }) {
             />
             <h3>{selectedProduct.name}</h3>
             <p>{selectedProduct.description}</p>
-            {selectedProduct.salePrice && selectedProduct.salePrice <
-            selectedProduct.price ? (
+            {selectedProduct.salePrice &&
+            selectedProduct.salePrice < selectedProduct.price ? (
               <div>
                 <span className="original-price">
                   R{selectedProduct.price.toFixed(2)}
