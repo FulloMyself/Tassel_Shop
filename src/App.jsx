@@ -1,11 +1,11 @@
 import { useState } from "react";
-import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
+import { HashRouter as Router, Routes, Route } from "react-router-dom";
 import Header from "./Header";
 import HeroSection from "./HeroSection";
 import Products from "./Products";
 import Cart from "./Cart";
 import Footer from "./Footer";
-import Gifts from "./Gifts"; // ✅ New page
+import Gifts from "./Gifts";
 import "./styles.css";
 
 function App() {
@@ -53,7 +53,6 @@ function App() {
       <Header cartCount={cartCount} toggleCart={toggleCart} />
       <main>
         <Routes>
-          {/* ✅ Home/Shop */}
           <Route
             path="/"
             element={
@@ -72,8 +71,6 @@ function App() {
               </>
             }
           />
-
-          {/* ✅ Gifts */}
           <Route path="/gifts" element={<Gifts />} />
         </Routes>
       </main>
