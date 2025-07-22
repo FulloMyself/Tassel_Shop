@@ -1,10 +1,13 @@
 import React, { useState, useEffect } from "react";
 import axios from "axios";
+import servicesData from "./services.json"; // ✅ Import JSON file
+import "./styles.css"; // ✅ You're already using styles.css
 
-export default function Bookings() {
   // ✅ FORM STATES
+  export default function Bookings() {
   const [forWhom, setForWhom] = useState("myself");
   const [services, setServices] = useState([]);
+  const [availableServices, setAvailableServices] = useState([]);
   const [showServiceSelector, setShowServiceSelector] = useState(false);
   const [selectedTime, setSelectedTime] = useState("");
   const [email, setEmail] = useState("");
@@ -13,11 +16,9 @@ export default function Bookings() {
   const [error, setError] = useState("");
 
   // ✅ DYNAMIC SERVICES (edit here later or load from JSON)
-  const availableServices = [
-    { name: "Swedish Massage", duration: 60, price: 500 },
-    { name: "Deep Tissue Massage", duration: 90, price: 700 },
-    { name: "Hot Stone Massage", duration: 75, price: 650 },
-  ];
+   useEffect(() => {
+    setAvailableServices(servicesData);
+  }, []);
 
   // ✅ BUSINESS HOURS for Time Picker
   const businessHours = {

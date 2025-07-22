@@ -1,0 +1,5 @@
+[
+  { "name": "Swedish Massage", "duration": 60, "price": 500 },
+  { "name": "Deep Tissue Massage", "duration": 90, "price": 700 },
+  { "name": "Hot Stone Massage", "duration": 75, "price": 650 }
+]
