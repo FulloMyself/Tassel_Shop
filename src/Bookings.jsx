@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useRef } from "react";
 import axios from "axios";
 import servicesData from "./services.json";
 import "./styles.css";
@@ -13,13 +13,12 @@ export default function Bookings() {
   const [loading, setLoading] = useState(false);
   const [success, setSuccess] = useState("");
   const [error, setError] = useState("");
+  const formRef = useRef(null);
 
-  // ✅ Load Dynamic Services
   useEffect(() => {
     setAvailableServices(servicesData);
   }, []);
 
-  // ✅ Business Hours for Time Picker
   const businessHours = {
     Tuesday: { start: "08:30", end: "17:00" },
     Wednesday: { start: "08:30", end: "17:00" },
@@ -29,12 +28,10 @@ export default function Bookings() {
     Sunday: { start: "09:00", end: "14:00" },
   };
 
-  // ✅ Generate Available Slots (every 30 min)
   const generateTimeSlots = () => {
     const today = new Date().toLocaleDateString("en-US", { weekday: "long" });
     const hours = businessHours[today];
     if (!hours) return [];
-
     const slots = [];
     let [h, m] = hours.start.split(":").map(Number);
     const [endH, endM] = hours.end.split(":").map(Number);
@@ -52,7 +49,6 @@ export default function Bookings() {
 
   const timeSlots = generateTimeSlots();
 
-  // ✅ Add / Remove Services
   const addService = (service) => {
     if (!services.find((s) => s.name === service.name)) {
       setServices([...services, service]);
@@ -64,14 +60,11 @@ export default function Bookings() {
     setServices(services.filter((s) => s.name !== name));
   };
 
-  // ✅ Total Price
   const total = services.reduce((sum, s) => sum + s.price, 0);
 
-  // ✅ Environment Variables
   const emailServer = import.meta.env.VITE_EMAIL_SERVER_URL;
   const paymentPortal = import.meta.env.VITE_PAYMENT_PORTAL_URL;
 
-  // ✅ Book Now (Email Only)
   const handleBookNow = async () => {
     setLoading(true);
     setError("");
@@ -85,9 +78,6 @@ export default function Bookings() {
         email,
       });
       setSuccess("Booking request sent successfully!");
-      setServices([]);
-      setSelectedTime("");
-      setEmail("");
     } catch (err) {
       console.error(err);
       setError("Error sending booking. Try again.");
@@ -96,13 +86,7 @@ export default function Bookings() {
     }
   };
 
-  // ✅ Pay Now (PayFast)
   const handlePayNow = async () => {
-    if (!email || services.length === 0) {
-      setError("Please select services and enter your email before paying.");
-      return;
-    }
-
     setLoading(true);
     setError("");
     setSuccess("");
@@ -122,7 +106,6 @@ export default function Bookings() {
     }
   };
 
-  // ✅ Submit PayFast Form (Same logic from Cart.jsx)
   function submitPayFastForm(fields) {
     const form = document.createElement("form");
     form.method = "POST";
@@ -142,139 +125,158 @@ export default function Bookings() {
     form.submit();
   }
 
+  const scrollToForm = () => {
+    formRef.current?.scrollIntoView({ behavior: "smooth" });
+  };
+
   return (
-    <div className="booking-container">
-      {/* LEFT PANEL */}
-      <div className="booking-left">
-        <div className="for-who">
-          <h3>I want to book for:</h3>
-          <div className="who-buttons">
+    <div className="booking-page">
+      {/* ✅ HERO SECTION */}
+      <section className="booking-hero">
+        <div className="hero-overlay">
+          <h1 className="hero-title">Relax. Refresh. Rejuvenate.</h1>
+          <p className="hero-subtitle">
+            Book your massage at Tassel Beauty & Wellness Studio today.
+          </p>
+          <button className="hero-button" onClick={scrollToForm}>
+            Book Now
+          </button>
+        </div>
+      </section>
+
+      {/* ✅ BOOKING CONTAINER */}
+      <div className="booking-container" ref={formRef}>
+        {/* LEFT PANEL */}
+        <div className="booking-left">
+          <div className="for-who">
+            <h3>I want to book for:</h3>
+            <div className="who-buttons">
+              <button
+                className={forWhom === "myself" ? "active" : ""}
+                onClick={() => setForWhom("myself")}
+              >
+                👤 Just myself
+              </button>
+              <button
+                className={forWhom === "others" ? "active" : ""}
+                onClick={() => setForWhom("others")}
+              >
+                👥 Me and others
+              </button>
+            </div>
+          </div>
+
+          {/* Services */}
+          <div className="selected-services">
+            <h3>Your Selected Services</h3>
+            {services.length === 0 ? (
+              <p>No services selected yet.</p>
+            ) : (
+              services.map((s, i) => (
+                <div key={i} className="service-card">
+                  <div>
+                    <strong>{s.name}</strong>
+                    <p>⏱ {s.duration} mins | R{s.price}.00</p>
+                  </div>
+                  <button className="remove-btn" onClick={() => removeService(s.name)}>
+                    ✖ Remove
+                  </button>
+                </div>
+              ))
+            )}
+          </div>
+
+          <div className="actions">
             <button
-              className={forWhom === "myself" ? "active" : ""}
-              onClick={() => setForWhom("myself")}
+              className="choose-staff-time"
+              onClick={() => alert("Staff selection coming soon!")}
             >
-              👤 Just myself
+              📅 Choose Staff & Time
             </button>
-            <button
-              className={forWhom === "others" ? "active" : ""}
-              onClick={() => setForWhom("others")}
-            >
-              👥 Me and others
+            <button className="add-service" onClick={() => setShowServiceSelector(true)}>
+              ➕ Add Another Service
             </button>
           </div>
-        </div>
 
-        {/* Selected Services */}
-        <div className="selected-services">
-          <h3>Your Selected Services</h3>
-          {services.length === 0 ? (
-            <p>No services selected yet.</p>
-          ) : (
-            services.map((s, i) => (
-              <div key={i} className="service-card">
-                <div>
-                  <strong>{s.name}</strong>
-                  <p>⏱ {s.duration} mins | R{s.price}.00</p>
-                </div>
-                <button className="remove-btn" onClick={() => removeService(s.name)}>
-                  ✖ Remove
+          {/* Time Picker */}
+          <div className="time-picker">
+            <h4>Select Time:</h4>
+            <select
+              value={selectedTime}
+              onChange={(e) => setSelectedTime(e.target.value)}
+              className="time-select"
+            >
+              <option value="">Choose a time slot</option>
+              {timeSlots.map((t, i) => (
+                <option key={i} value={t}>
+                  {t}
+                </option>
+              ))}
+            </select>
+          </div>
+
+          {/* Email Input */}
+          <input
+            type="email"
+            placeholder="Your email"
+            className="email-input"
+            value={email}
+            onChange={(e) => setEmail(e.target.value)}
+          />
+
+          {/* Payment Buttons */}
+          <div className="payment-buttons">
+            <button
+              onClick={handleBookNow}
+              disabled={!email || services.length === 0 || loading}
+            >
+              {loading ? "Processing..." : "📩 Book Now"}
+            </button>
+
+            <button
+              className="pay-btn"
+              onClick={handlePayNow}
+              disabled={!email || services.length === 0 || loading}
+            >
+              {loading ? "Processing..." : "💳 Pay Now"}
+            </button>
+          </div>
+
+          {error && <div className="error">{error}</div>}
+          {success && <div className="success">{success}</div>}
+
+          {showServiceSelector && (
+            <div className="service-selector">
+              <h4>Select a Service</h4>
+              {availableServices.map((service, i) => (
+                <button
+                  key={i}
+                  onClick={() => addService(service)}
+                  className="service-option"
+                >
+                  {service.name} - R{service.price}.00
                 </button>
-              </div>
-            ))
+              ))}
+            </div>
           )}
         </div>
 
-        <div className="actions">
-          <button
-            className="choose-staff-time"
-            onClick={() => alert("Staff selection coming soon!")}
-          >
-            📅 Choose Staff & Time
-          </button>
-          <button className="add-service" onClick={() => setShowServiceSelector(true)}>
-            ➕ Add Another Service
-          </button>
-        </div>
-
-        {/* Time Picker */}
-        <div className="time-picker">
-          <h4>Select Time:</h4>
-          <select
-            value={selectedTime}
-            onChange={(e) => setSelectedTime(e.target.value)}
-            className="time-select"
-          >
-            <option value="">Choose a time slot</option>
-            {timeSlots.map((t, i) => (
-              <option key={i} value={t}>
-                {t}
-              </option>
-            ))}
-          </select>
-        </div>
-
-        {/* Email Input */}
-        <input
-          type="email"
-          placeholder="Your email"
-          className="email-input"
-          value={email}
-          onChange={(e) => setEmail(e.target.value)}
-        />
-
-        {/* Payment Buttons */}
-        <div className="payment-buttons">
-          <button
-            onClick={handleBookNow}
-            disabled={!email || services.length === 0 || loading}
-          >
-            {loading ? "Processing..." : "📩 Book Now"}
-          </button>
-
-          <button
-            className="pay-btn"
-            onClick={handlePayNow}
-            disabled={!email || services.length === 0 || loading}
-          >
-            {loading ? "Processing..." : "💳 Pay Now"}
-          </button>
-        </div>
-
-        {error && <div className="error">{error}</div>}
-        {success && <div className="success">{success}</div>}
-
-        {/* Service Selector Modal */}
-        {showServiceSelector && (
-          <div className="service-selector">
-            <h4>Select a Service</h4>
-            {availableServices.map((service, i) => (
-              <button
-                key={i}
-                onClick={() => addService(service)}
-                className="service-option"
-              >
-                {service.name} - R{service.price}.00
-              </button>
-            ))}
+        {/* RIGHT PANEL */}
+        <div className="booking-right">
+          <h2>Tassel Beauty & Wellness</h2>
+          <button className="visit-btn">Visit Us</button>
+          <div className="business-hours">
+            <h4>Business Hours</h4>
+            <ul>
+              <li>Monday: Closed</li>
+              <li>Tuesday: 8:30 am – 5:00 pm</li>
+              <li>Wednesday: 8:30 am – 5:00 pm</li>
+              <li>Thursday: 8:30 am – 5:00 pm</li>
+              <li>Friday: 8:30 am – 5:00 pm</li>
+              <li>Saturday: 8:30 am – 4:00 pm</li>
+              <li>Sunday: 9:00 am – 2:00 pm</li>
+            </ul>
           </div>
-        )}
-      </div>
-
-      {/* RIGHT PANEL */}
-      <div className="booking-right">
-        <h2>Tassel Beauty & Wellness</h2>
-        <button className="visit-btn">Visit Us</button>
-        <div className="business-hours">
-          <h4>Business Hours</h4>
-          <ul>
-            <li>Monday: Closed</li>
-            <li>Tuesday: 8:30 am – 5:00 pm</li>
-            <li>Wednesday: 8:30 am – 5:00 pm</li>
-            <li>Thursday: 8:30 am – 5:00 pm</li>
-            <li>Friday: 8:30 am – 5:00 pm</li>
-            <li>Saturday: 8:30 am – 4:00 pm</li>
-            <li>Sunday: 9:00 am – 2:00 pm</li>
-          </ul>
         </div>
       </div>
     </div>
