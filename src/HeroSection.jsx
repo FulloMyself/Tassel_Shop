@@ -14,7 +14,7 @@ export default function HeroSection() {
   return (
     <section className="hero-section-img">
       <img
-        src={`${import.meta.env.BASE_URL}images/products/Tassel_Retinol_A_&E_Night_Cream_Anti_Wrinkle.jpg`}
+        src={`${import.meta.env.BASE_URL}images/products/Hero_Tassel.png`}
         alt="Tassel Beauty background"
         className="hero-image"
       />
