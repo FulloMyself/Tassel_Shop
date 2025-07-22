@@ -4,9 +4,9 @@ import { toast, ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 
 const images = [
- `${import.meta.env.BASE_URL}images/products/Slippers.jpg`,
- `${import.meta.env.BASE_URL}images/products/Gown.jpg`,
- `${import.meta.env.BASE_URL}images/products/Mug.jpg`,
+  `${import.meta.env.BASE_URL}images/products/Slippers.jpg`,
+  `${import.meta.env.BASE_URL}images/products/Gown.jpg`,
+  `${import.meta.env.BASE_URL}images/products/Mug.jpg`,
 ];
 
 export default function Gifts() {
@@ -18,6 +18,9 @@ export default function Gifts() {
     message: "",
   });
 
+  // ✅ Use environment variable for server URL
+  const emailServer = import.meta.env.VITE_EMAIL_SERVER_URL;
+
   const handleChange = (e) => {
     setFormData((prev) => ({ ...prev, [e.target.name]: e.target.value }));
   };
@@ -27,15 +30,10 @@ export default function Gifts() {
     setIsSubmitting(true);
 
     try {
-      const res = await fetch("https://email-server-5l9g.onrender.com/send-manufacturing-booking", {
+      const res = await fetch(`${emailServer}/send-gift-inquiry`, {
         method: "POST",
         headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({
-          name: formData.name,
-          email: formData.email,
-          phone: formData.phone + " (Gift Inquiry)",
-          message: formData.message,
-        }),
+        body: JSON.stringify(formData),
       });
 
       if (res.ok) {
