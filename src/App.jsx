@@ -6,6 +6,7 @@ import Products from "./Products";
 import Cart from "./Cart";
 import Footer from "./Footer";
 import Gifts from "./Gifts";
+import Bookings from "./Bookings";  // ✅ Just import directly
 import "./styles.css";
 
 function App() {
@@ -85,6 +86,7 @@ function App() {
             }
           />
           <Route path="/gifts" element={<Gifts />} />
+          <Route path="/bookings" element={<Bookings />} />
         </Routes>
       </main>
       <Footer />
