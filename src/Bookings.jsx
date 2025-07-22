@@ -12,19 +12,22 @@ export default function Bookings() {
   });
 
   const [loading, setLoading] = useState(false);
+  const [error, setError] = useState("");
+  const [success, setSuccess] = useState("");
+
+  // ✅ Use the same env variables as Cart.jsx
+  const emailServer = import.meta.env.VITE_EMAIL_SERVER_URL;
+  const paymentPortal = import.meta.env.VITE_PAYMENT_PORTAL_URL;
 
   const handleChange = (e) => {
     setFormData({ ...formData, [e.target.name]: e.target.value });
   };
 
-  // ✅ Existing Booking Submission (Email Only)
+  // ✅ Existing Email Booking Logic
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
-      await axios.post(
-        "https://email-server-5l9g.onrender.com/send-manufacturing-booking",
-        formData
-      );
+      await axios.post(`${emailServer}/send-manufacturing-booking`, formData);
       window.location.href = `/#/shop?payFor=${formData.service}`;
       alert("Booking request sent! Redirecting to payment...");
     } catch (error) {
@@ -33,14 +36,17 @@ export default function Bookings() {
     }
   };
 
-  // ✅ New Payment Button Logic (Direct PayFast Payment)
+  // ✅ New Direct Payment Logic (same as Cart.jsx)
   const handlePayment = async () => {
-    if (!formData.email || !formData.service) {
-      alert("Please complete the form before paying.");
+    if (!formData.email || !formData.email.includes("@")) {
+      alert("Please enter a valid email.");
+      return;
+    }
+    if (!formData.service) {
+      alert("Please select a massage service.");
       return;
     }
 
-    // Determine price based on selected service
     const prices = {
       "Swedish Massage": 500,
       "Deep Tissue Massage": 700,
@@ -48,54 +54,55 @@ export default function Bookings() {
     const total = prices[formData.service] || 0;
 
     if (total === 0) {
-      alert("Please select a valid service.");
+      alert("Invalid service selected.");
       return;
     }
 
+    setLoading(true);
+    setError("");
+    setSuccess("");
+
     try {
-      setLoading(true);
-      const response = await fetch(
-        "https://your-payment-portal-url.onrender.com/create-order",
-        {
-          method: "POST",
-          headers: { "Content-Type": "application/json" },
-          body: JSON.stringify({
-            items: [{ name: formData.service, quantity: 1, price: total }],
-            total,
-            email: formData.email,
-          }),
-        }
-      );
+      const res = await fetch(`${paymentPortal}/create-order`, {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({
+          items: [{ name: formData.service, quantity: 1, price: total }],
+          total,
+          email: formData.email,
+        }),
+      });
 
-      const data = await response.json();
+      if (!res.ok) throw new Error("Failed to initiate payment.");
+      const payfastFields = await res.json();
 
-      if (data.payfast_url) {
-        const payForm = document.createElement("form");
-        payForm.method = "POST";
-        payForm.action = data.payfast_url;
-
-        Object.keys(data).forEach((key) => {
-          if (key !== "payfast_url") {
-            const input = document.createElement("input");
-            input.type = "hidden";
-            input.name = key;
-            input.value = data[key];
-            payForm.appendChild(input);
-          }
-        });
-
-        document.body.appendChild(payForm);
-        payForm.submit();
-      } else {
-        alert("Payment portal error. Try again.");
-      }
-    } catch (error) {
-      console.error(error);
-      alert("Error connecting to payment portal.");
+      submitPayFastForm(payfastFields);
+    } catch (err) {
+      console.error(err);
+      setError("Could not start payment. Try again.");
     } finally {
       setLoading(false);
     }
   };
+
+  function submitPayFastForm(fields) {
+    const form = document.createElement("form");
+    form.method = "POST";
+    form.action = fields.payfast_url;
+    form.style.display = "none";
+
+    Object.entries(fields).forEach(([key, value]) => {
+      if (key === "payfast_url") return;
+      const input = document.createElement("input");
+      input.type = "hidden";
+      input.name = key;
+      input.value = value;
+      form.appendChild(input);
+    });
+
+    document.body.appendChild(form);
+    form.submit();
+  }
 
   return (
     <div className="min-h-screen flex flex-col items-center justify-center bg-gradient-to-br from-pink-100 to-yellow-100 p-6">
@@ -158,15 +165,16 @@ export default function Bookings() {
           required
         />
 
-        {/* ✅ Existing Booking Button */}
+        {/* ✅ Existing Booking Email Button */}
         <button
           type="submit"
           className="bg-gold text-white p-3 w-full rounded-lg font-bold"
+          disabled={loading}
         >
           Book Now
         </button>
 
-        {/* ✅ New Direct Payment Button */}
+        {/* ✅ New Payment Button */}
         <button
           type="button"
           onClick={handlePayment}
@@ -175,6 +183,9 @@ export default function Bookings() {
         >
           {loading ? "Redirecting to PayFast..." : "Pay Now"}
         </button>
+
+        {error && <div className="text-red-600 text-sm mt-2">{error}</div>}
+        {success && <div className="text-green-600 text-sm mt-2">{success}</div>}
       </form>
     </div>
   );
