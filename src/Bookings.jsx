@@ -1,10 +1,9 @@
 import React, { useState, useEffect } from "react";
 import axios from "axios";
-import servicesData from "./services.json"; // ✅ Import JSON file
-import "./styles.css"; // ✅ You're already using styles.css
+import servicesData from "./services.json";
+import "./styles.css";
 
-  // ✅ FORM STATES
-  export default function Bookings() {
+export default function Bookings() {
   const [forWhom, setForWhom] = useState("myself");
   const [services, setServices] = useState([]);
   const [availableServices, setAvailableServices] = useState([]);
@@ -15,12 +14,12 @@ import "./styles.css"; // ✅ You're already using styles.css
   const [success, setSuccess] = useState("");
   const [error, setError] = useState("");
 
-  // ✅ DYNAMIC SERVICES (edit here later or load from JSON)
-   useEffect(() => {
+  // ✅ Load Dynamic Services
+  useEffect(() => {
     setAvailableServices(servicesData);
   }, []);
 
-  // ✅ BUSINESS HOURS for Time Picker
+  // ✅ Business Hours for Time Picker
   const businessHours = {
     Tuesday: { start: "08:30", end: "17:00" },
     Wednesday: { start: "08:30", end: "17:00" },
@@ -30,7 +29,7 @@ import "./styles.css"; // ✅ You're already using styles.css
     Sunday: { start: "09:00", end: "14:00" },
   };
 
-  // ✅ Generate available slots (every 30 min)
+  // ✅ Generate Available Slots (every 30 min)
   const generateTimeSlots = () => {
     const today = new Date().toLocaleDateString("en-US", { weekday: "long" });
     const hours = businessHours[today];
@@ -53,7 +52,7 @@ import "./styles.css"; // ✅ You're already using styles.css
 
   const timeSlots = generateTimeSlots();
 
-  // ✅ ADD / REMOVE SERVICES
+  // ✅ Add / Remove Services
   const addService = (service) => {
     if (!services.find((s) => s.name === service.name)) {
       setServices([...services, service]);
@@ -65,27 +64,30 @@ import "./styles.css"; // ✅ You're already using styles.css
     setServices(services.filter((s) => s.name !== name));
   };
 
-  // ✅ TOTAL
+  // ✅ Total Price
   const total = services.reduce((sum, s) => sum + s.price, 0);
 
-  // ✅ ENV VARIABLES
+  // ✅ Environment Variables
   const emailServer = import.meta.env.VITE_EMAIL_SERVER_URL;
   const paymentPortal = import.meta.env.VITE_PAYMENT_PORTAL_URL;
 
-  // ✅ BOOK NOW (Email Only)
+  // ✅ Book Now (Email Only)
   const handleBookNow = async () => {
     setLoading(true);
     setError("");
     setSuccess("");
 
     try {
-      await axios.post(`${emailServer}//send-booking`, {
+      await axios.post(`${emailServer}/send-massage-booking`, {
         forWhom,
         services,
         selectedTime,
         email,
       });
       setSuccess("Booking request sent successfully!");
+      setServices([]);
+      setSelectedTime("");
+      setEmail("");
     } catch (err) {
       console.error(err);
       setError("Error sending booking. Try again.");
@@ -94,8 +96,13 @@ import "./styles.css"; // ✅ You're already using styles.css
     }
   };
 
-  // ✅ PAY NOW (PayFast)
+  // ✅ Pay Now (PayFast)
   const handlePayNow = async () => {
+    if (!email || services.length === 0) {
+      setError("Please select services and enter your email before paying.");
+      return;
+    }
+
     setLoading(true);
     setError("");
     setSuccess("");
@@ -115,7 +122,7 @@ import "./styles.css"; // ✅ You're already using styles.css
     }
   };
 
-  // ✅ Submit PayFast Form
+  // ✅ Submit PayFast Form (Same logic from Cart.jsx)
   function submitPayFastForm(fields) {
     const form = document.createElement("form");
     form.method = "POST";
@@ -157,7 +164,7 @@ import "./styles.css"; // ✅ You're already using styles.css
           </div>
         </div>
 
-        {/* Services */}
+        {/* Selected Services */}
         <div className="selected-services">
           <h3>Your Selected Services</h3>
           {services.length === 0 ? (
@@ -236,6 +243,7 @@ import "./styles.css"; // ✅ You're already using styles.css
         {error && <div className="error">{error}</div>}
         {success && <div className="success">{success}</div>}
 
+        {/* Service Selector Modal */}
         {showServiceSelector && (
           <div className="service-selector">
             <h4>Select a Service</h4>
