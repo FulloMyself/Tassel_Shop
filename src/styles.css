@@ -83,11 +83,6 @@ header {
   margin-bottom: 1rem;
 }
 
-.hero-subtitle {
-  font-size: 1.2rem;
-  margin-bottom: 2rem;
-}
-
 .hero-cta {
   background: #bfa18c;
   color: #ffffff;
@@ -1117,15 +1112,6 @@ header {
   box-shadow: 0 4px 6px rgba(0,0,0,0.1);
 }
 
-.booking-left {
-  flex: 2;
-}
-
-.booking-right {
-  flex: 1;
-  text-align: center;
-}
-
 .booking-right h2 {
   font-size: 1.5rem;
   font-weight: bold;
@@ -1152,12 +1138,6 @@ header {
 .business-hours h4 {
   margin-bottom: 0.5rem;
   font-weight: bold;
-}
-
-.business-hours ul {
-  list-style: none;
-  padding: 0;
-  margin: 0;
 }
 
 .business-hours li {
@@ -1191,24 +1171,6 @@ header {
   color: white;
 }
 
-.service-card {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  background: #ffc8c8;
-  padding: 0.7rem;
-  border: 1px solid #333;
-  border-radius: 6px;
-  margin-bottom: 0.5rem;
-}
-
-.remove-btn {
-  background: none;
-  border: none;
-  color: red;
-  cursor: pointer;
-}
-
 .actions {
   display: flex;
   justify-content: space-between;
@@ -1227,21 +1189,6 @@ header {
   margin-top: 1rem;
 }
 
-.time-select {
-  width: 100%;
-  padding: 0.5rem;
-  border: 1px solid #ccc;
-  border-radius: 6px;
-}
-
-.email-input {
-  margin-top: 1rem;
-  width: 100%;
-  padding: 0.7rem;
-  border: 1px solid #ccc;
-  border-radius: 6px;
-}
-
 .payment-buttons {
   display: flex;
   flex-direction: column;
@@ -1257,19 +1204,9 @@ header {
   font-weight: bold;
 }
 
-.payment-buttons .pay-btn {
+.payment-buttons {
   background: #bfa18c;
   color: white;
-}
-
-.error {
-  color: red;
-  margin-top: 0.5rem;
-}
-
-.success {
-  color: green;
-  margin-top: 0.5rem;
 }
 
 .service-selector {
@@ -1294,7 +1231,7 @@ header {
 /* ✅ HERO SECTION */
 .booking-hero {
   position: relative;
-  background: url("images/hero-massage.jpg") center/cover no-repeat;
+  background: url("images/products/Hero_Tassel.png") center/cover no-repeat;
   height: 60vh;
   display: flex;
   justify-content: center;
@@ -1334,3 +1271,150 @@ header {
 .hero-button:hover {
   background: #a8856d;
 }
+
+/* ✅ BOOKING PAGE WRAPPER */
+.booking-wrapper {
+  max-width: 1100px;
+  margin: 2rem auto;
+  padding: 1rem;
+}
+
+.booking-card {
+  display: flex;
+  gap: 2rem;
+  background: #fff8f4;
+  border-radius: 16px;
+  padding: 2rem;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
+}
+
+.booking-left {
+  flex: 2;
+}
+
+.booking-right {
+  flex: 1;
+  background: #fdf4ee;
+  border-radius: 12px;
+  padding: 1.5rem;
+  text-align: center;
+}
+
+/* ✅ TITLES */
+.section-title {
+  font-size: 1.8rem;
+  font-weight: bold;
+  color: #5a4634;
+  margin-bottom: 1rem;
+}
+
+.studio-title {
+  font-size: 1.6rem;
+  color: #6d5845;
+  margin-bottom: 0.3rem;
+}
+
+.studio-subtitle {
+  font-size: 0.9rem;
+  color: #8c7a6f;
+  margin-bottom: 1rem;
+}
+
+/* ✅ BUTTONS */
+.spa-btn {
+  background: #bfa18c;
+  color: #fff;
+  border: none;
+  padding: 0.7rem 1.3rem;
+  border-radius: 8px;
+  cursor: pointer;
+  font-weight: 600;
+  transition: 0.3s;
+  margin-right: 0.5rem;
+}
+
+.spa-btn:hover {
+  background: #a8866e;
+}
+
+.spa-btn.active {
+  background: #8b6a54;
+}
+
+.pay-btn {
+  background: #d2b48c;
+}
+
+.remove-btn {
+  background: none;
+  border: none;
+  color: #c77c7c;
+  font-size: 1rem;
+  cursor: pointer;
+}
+
+/* ✅ SERVICE CARDS */
+.service-card {
+  background: #fff;
+  border-radius: 8px;
+  padding: 0.7rem;
+  margin-bottom: 0.5rem;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.05);
+}
+
+.service-details {
+  font-size: 0.8rem;
+  color: #7d6a5b;
+}
+
+.empty-state {
+  color: #a78f83;
+}
+
+/* ✅ FORMS */
+.time-select,
+.email-input {
+  width: 100%;
+  padding: 0.6rem;
+  border: 1px solid #e3d6c9;
+  border-radius: 6px;
+  margin: 0.5rem 0 1rem 0;
+}
+
+.label {
+  color: #5a4634;
+  font-weight: bold;
+  font-size: 0.9rem;
+  margin-bottom: 0.3rem;
+  display: block;
+}
+
+/* ✅ RIGHT PANEL */
+.business-hours ul {
+  list-style: none;
+  padding: 0;
+  color: #7d6a5b;
+  font-size: 0.9rem;
+  line-height: 1.4;
+}
+
+/* ✅ SUCCESS / ERROR */
+.success {
+  color: #4a8f5a;
+  background: #e3f6e9;
+  padding: 0.5rem;
+  border-radius: 6px;
+  margin-top: 0.5rem;
+}
+
+.error {
+  color: #a94c4c;
+  background: #fbeaea;
+  padding: 0.5rem;
+  border-radius: 6px;
+  margin-top: 0.5rem;
+}
+
