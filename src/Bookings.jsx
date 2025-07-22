@@ -1,90 +1,121 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import axios from "axios";
+import "./Bookings.css";
 
 export default function Bookings() {
-  const [formData, setFormData] = useState({
-    name: "",
-    email: "",
-    phone: "",
-    service: "",
-    date: "",
-    time: ""
-  });
-
+  // ✅ FORM STATES
+  const [forWhom, setForWhom] = useState("myself");
+  const [services, setServices] = useState([]);
+  const [showServiceSelector, setShowServiceSelector] = useState(false);
+  const [selectedTime, setSelectedTime] = useState("");
+  const [email, setEmail] = useState("");
   const [loading, setLoading] = useState(false);
-  const [error, setError] = useState("");
   const [success, setSuccess] = useState("");
+  const [error, setError] = useState("");
 
-  // ✅ Use the same env variables as Cart.jsx
+  // ✅ DYNAMIC SERVICES (edit here later or load from JSON)
+  const availableServices = [
+    { name: "Swedish Massage", duration: 60, price: 500 },
+    { name: "Deep Tissue Massage", duration: 90, price: 700 },
+    { name: "Hot Stone Massage", duration: 75, price: 650 },
+  ];
+
+  // ✅ BUSINESS HOURS for Time Picker
+  const businessHours = {
+    Tuesday: { start: "08:30", end: "17:00" },
+    Wednesday: { start: "08:30", end: "17:00" },
+    Thursday: { start: "08:30", end: "17:00" },
+    Friday: { start: "08:30", end: "17:00" },
+    Saturday: { start: "08:30", end: "16:00" },
+    Sunday: { start: "09:00", end: "14:00" },
+  };
+
+  // ✅ Generate available slots (every 30 min)
+  const generateTimeSlots = () => {
+    const today = new Date().toLocaleDateString("en-US", { weekday: "long" });
+    const hours = businessHours[today];
+    if (!hours) return [];
+
+    const slots = [];
+    let [h, m] = hours.start.split(":").map(Number);
+    const [endH, endM] = hours.end.split(":").map(Number);
+
+    while (h < endH || (h === endH && m <= endM)) {
+      slots.push(`${String(h).padStart(2, "0")}:${String(m).padStart(2, "0")}`);
+      m += 30;
+      if (m >= 60) {
+        h++;
+        m = 0;
+      }
+    }
+    return slots;
+  };
+
+  const timeSlots = generateTimeSlots();
+
+  // ✅ ADD / REMOVE SERVICES
+  const addService = (service) => {
+    if (!services.find((s) => s.name === service.name)) {
+      setServices([...services, service]);
+    }
+    setShowServiceSelector(false);
+  };
+
+  const removeService = (name) => {
+    setServices(services.filter((s) => s.name !== name));
+  };
+
+  // ✅ TOTAL
+  const total = services.reduce((sum, s) => sum + s.price, 0);
+
+  // ✅ ENV VARIABLES
   const emailServer = import.meta.env.VITE_EMAIL_SERVER_URL;
   const paymentPortal = import.meta.env.VITE_PAYMENT_PORTAL_URL;
 
-  const handleChange = (e) => {
-    setFormData({ ...formData, [e.target.name]: e.target.value });
-  };
-
-  // ✅ Existing Email Booking Logic
-  const handleSubmit = async (e) => {
-    e.preventDefault();
-    try {
-      await axios.post(`${emailServer}/send-manufacturing-booking`, formData);
-      window.location.href = `/#/shop?payFor=${formData.service}`;
-      alert("Booking request sent! Redirecting to payment...");
-    } catch (error) {
-      console.error(error);
-      alert("Error sending booking. Try again.");
-    }
-  };
-
-  // ✅ New Direct Payment Logic (same as Cart.jsx)
-  const handlePayment = async () => {
-    if (!formData.email || !formData.email.includes("@")) {
-      alert("Please enter a valid email.");
-      return;
-    }
-    if (!formData.service) {
-      alert("Please select a massage service.");
-      return;
-    }
-
-    const prices = {
-      "Swedish Massage": 500,
-      "Deep Tissue Massage": 700,
-    };
-    const total = prices[formData.service] || 0;
-
-    if (total === 0) {
-      alert("Invalid service selected.");
-      return;
-    }
-
+  // ✅ BOOK NOW (Email Only)
+  const handleBookNow = async () => {
     setLoading(true);
     setError("");
     setSuccess("");
 
     try {
-      const res = await fetch(`${paymentPortal}/create-order`, {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({
-          items: [{ name: formData.service, quantity: 1, price: total }],
-          total,
-          email: formData.email,
-        }),
+      await axios.post(`${emailServer}/send-order`, {
+        forWhom,
+        services,
+        selectedTime,
+        email,
       });
-
-      if (!res.ok) throw new Error("Failed to initiate payment.");
-      const payfastFields = await res.json();
-
-      submitPayFastForm(payfastFields);
+      setSuccess("Booking request sent successfully!");
     } catch (err) {
       console.error(err);
-      setError("Could not start payment. Try again.");
+      setError("Error sending booking. Try again.");
     } finally {
       setLoading(false);
     }
   };
 
+  // ✅ PAY NOW (PayFast)
+  const handlePayNow = async () => {
+    setLoading(true);
+    setError("");
+    setSuccess("");
+
+    try {
+      const res = await axios.post(`${paymentPortal}/create-order`, {
+        items: services.map((s) => ({ name: s.name, quantity: 1, price: s.price })),
+        total,
+        email,
+      });
+      submitPayFastForm(res.data);
+    } catch (err) {
+      console.error(err);
+      setError("Payment failed. Try again.");
+    } finally {
+      setLoading(false);
+    }
+  };
+
+  // ✅ Submit PayFast Form
   function submitPayFastForm(fields) {
     const form = document.createElement("form");
     form.method = "POST";
@@ -105,88 +136,139 @@ export default function Bookings() {
   }
 
   return (
-    <div className="min-h-screen flex flex-col items-center justify-center bg-gradient-to-br from-pink-100 to-yellow-100 p-6">
-      <h1 className="text-3xl font-bold mb-6 text-gold">Massage Bookings</h1>
-      <form
-        onSubmit={handleSubmit}
-        className="bg-white shadow-md rounded-lg p-6 space-y-4 w-full max-w-md"
-      >
+    <div className="booking-container">
+      {/* LEFT PANEL */}
+      <div className="booking-left">
+        <div className="for-who">
+          <h3>I want to book for:</h3>
+          <div className="who-buttons">
+            <button
+              className={forWhom === "myself" ? "active" : ""}
+              onClick={() => setForWhom("myself")}
+            >
+              👤 Just myself
+            </button>
+            <button
+              className={forWhom === "others" ? "active" : ""}
+              onClick={() => setForWhom("others")}
+            >
+              👥 Me and others
+            </button>
+          </div>
+        </div>
+
+        {/* Services */}
+        <div className="selected-services">
+          <h3>Your Selected Services</h3>
+          {services.length === 0 ? (
+            <p>No services selected yet.</p>
+          ) : (
+            services.map((s, i) => (
+              <div key={i} className="service-card">
+                <div>
+                  <strong>{s.name}</strong>
+                  <p>⏱ {s.duration} mins | R{s.price}.00</p>
+                </div>
+                <button className="remove-btn" onClick={() => removeService(s.name)}>
+                  ✖ Remove
+                </button>
+              </div>
+            ))
+          )}
+        </div>
+
+        <div className="actions">
+          <button
+            className="choose-staff-time"
+            onClick={() => alert("Staff selection coming soon!")}
+          >
+            📅 Choose Staff & Time
+          </button>
+          <button className="add-service" onClick={() => setShowServiceSelector(true)}>
+            ➕ Add Another Service
+          </button>
+        </div>
+
+        {/* Time Picker */}
+        <div className="time-picker">
+          <h4>Select Time:</h4>
+          <select
+            value={selectedTime}
+            onChange={(e) => setSelectedTime(e.target.value)}
+            className="time-select"
+          >
+            <option value="">Choose a time slot</option>
+            {timeSlots.map((t, i) => (
+              <option key={i} value={t}>
+                {t}
+              </option>
+            ))}
+          </select>
+        </div>
+
+        {/* Email Input */}
         <input
-          name="name"
-          placeholder="Full Name"
-          className="border p-2 w-full"
-          value={formData.name}
-          onChange={handleChange}
-          required
-        />
-        <input
-          name="email"
-          placeholder="Email"
-          className="border p-2 w-full"
-          value={formData.email}
-          onChange={handleChange}
-          required
-        />
-        <input
-          name="phone"
-          placeholder="Phone"
-          className="border p-2 w-full"
-          value={formData.phone}
-          onChange={handleChange}
-          required
+          type="email"
+          placeholder="Your email"
+          className="email-input"
+          value={email}
+          onChange={(e) => setEmail(e.target.value)}
         />
 
-        <select
-          name="service"
-          className="border p-2 w-full"
-          value={formData.service}
-          onChange={handleChange}
-          required
-        >
-          <option value="">Select a Massage</option>
-          <option value="Swedish Massage">Swedish Massage - R500</option>
-          <option value="Deep Tissue Massage">Deep Tissue Massage - R700</option>
-        </select>
+        {/* Payment Buttons */}
+        <div className="payment-buttons">
+          <button
+            onClick={handleBookNow}
+            disabled={!email || services.length === 0 || loading}
+          >
+            {loading ? "Processing..." : "📩 Book Now"}
+          </button>
 
-        <input
-          type="date"
-          name="date"
-          className="border p-2 w-full"
-          value={formData.date}
-          onChange={handleChange}
-          required
-        />
-        <input
-          type="time"
-          name="time"
-          className="border p-2 w-full"
-          value={formData.time}
-          onChange={handleChange}
-          required
-        />
+          <button
+            className="pay-btn"
+            onClick={handlePayNow}
+            disabled={!email || services.length === 0 || loading}
+          >
+            {loading ? "Processing..." : "💳 Pay Now"}
+          </button>
+        </div>
 
-        {/* ✅ Existing Booking Email Button */}
-        <button
-          type="submit"
-          className="bg-gold text-white p-3 w-full rounded-lg font-bold"
-          disabled={loading}
-        >
-          Book Now
-        </button>
+        {error && <div className="error">{error}</div>}
+        {success && <div className="success">{success}</div>}
 
-        {/* ✅ New Payment Button */}
-        <button
-          type="button"
-          onClick={handlePayment}
-          disabled={loading}
-          className="bg-pink-600 text-white p-3 w-full rounded-lg font-bold hover:bg-pink-700 mt-2"
-        >
-          {loading ? "Redirecting to PayFast..." : "Pay Now"}
-        </button>
+        {showServiceSelector && (
+          <div className="service-selector">
+            <h4>Select a Service</h4>
+            {availableServices.map((service, i) => (
+              <button
+                key={i}
+                onClick={() => addService(service)}
+                className="service-option"
+              >
+                {service.name} - R{service.price}.00
+              </button>
+            ))}
+          </div>
+        )}
+      </div>
 
-        {error && <div className="text-red-600 text-sm mt-2">{error}</div>}
-        {success && <div className="text-green-600 text-sm mt-2">{success}</div>}
-      </form>
+      {/* RIGHT PANEL */}
+      <div className="booking-right">
+        <h2>Tassel Beauty & Wellness</h2>
+        <button className="visit-btn">Visit Us</button>
+        <div className="business-hours">
+          <h4>Business Hours</h4>
+          <ul>
+            <li>Monday: Closed</li>
+            <li>Tuesday: 8:30 am – 5:00 pm</li>
+            <li>Wednesday: 8:30 am – 5:00 pm</li>
+            <li>Thursday: 8:30 am – 5:00 pm</li>
+            <li>Friday: 8:30 am – 5:00 pm</li>
+            <li>Saturday: 8:30 am – 4:00 pm</li>
+            <li>Sunday: 9:00 am – 2:00 pm</li>
+          </ul>
+        </div>
+      </div>
     </div>
   );
 }
