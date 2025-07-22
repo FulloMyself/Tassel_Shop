@@ -79,7 +79,7 @@ import "./styles.css"; // ✅ You're already using styles.css
     setSuccess("");
 
     try {
-      await axios.post(`${emailServer}/send-order`, {
+      await axios.post(`${emailServer}//send-booking`, {
         forWhom,
         services,
         selectedTime,
