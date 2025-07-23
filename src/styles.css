@@ -1220,8 +1220,8 @@ header {
 /* ✅ HERO SECTION */
 .booking-hero {
   position: relative;
-  background: url("/images/products/Hero_Tassel.png") contain;
-  height: 80vh;
+  background: url("/images/products/Hero_Tassel.png") center/cover no-repeat;
+  height: 100vh;
   display: flex;
   justify-content: center;
   align-items: center;
