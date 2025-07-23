@@ -1,13 +1,21 @@
 import React, { useState, useEffect, useRef } from "react";
 import axios from "axios";
-import servicesData from "./services.json";
+import servicesData from "./Services.json";
 import "./styles.css";
+
+const categories = [
+  { key: "all", label: "All" },
+  { key: "massage", label: "Massages" },
+  { key: "nail", label: "Nail Services" },
+  { key: "facial", label: "Facials" }
+];
 
 export default function Bookings() {
   const [forWhom, setForWhom] = useState("myself");
   const [services, setServices] = useState([]);
   const [availableServices, setAvailableServices] = useState([]);
   const [showServiceSelector, setShowServiceSelector] = useState(false);
+  const [selectedCategory, setSelectedCategory] = useState("all");
   const [selectedTime, setSelectedTime] = useState("");
   const [email, setEmail] = useState("");
   const [loading, setLoading] = useState(false);
@@ -48,6 +56,10 @@ export default function Bookings() {
   };
 
   const timeSlots = generateTimeSlots();
+
+  const filteredServices = selectedCategory === "all"
+    ? availableServices
+    : availableServices.filter(s => s.category === selectedCategory);
 
   const addService = (service) => {
     if (!services.find((s) => s.name === service.name)) {
@@ -248,18 +260,46 @@ export default function Bookings() {
             {error && <div className="error">{error}</div>}
             {success && <div className="success">{success}</div>}
 
+            {/* Service Selector with Categories */}
             {showServiceSelector && (
               <div className="service-selector">
                 <h4>Select a Service</h4>
-                {availableServices.map((service, i) => (
-                  <button
-                    key={i}
-                    className="spa-btn service-option"
-                    onClick={() => addService(service)}
-                  >
-                    {service.name} - R{service.price}.00
-                  </button>
-                ))}
+                <div className="service-categories">
+                  {categories.map(cat => (
+                    <button
+                      key={cat.key}
+                      className={`spa-btn category-btn${selectedCategory === cat.key ? " active" : ""}`}
+                      onClick={() => setSelectedCategory(cat.key)}
+                    >
+                      {cat.label}
+                    </button>
+                  ))}
+                </div>
+                <div className="service-list">
+                  {filteredServices.map((service, i) => (
+                    <div key={i} className="service-card">
+                      <img
+                        src={service.image}
+                        alt={service.name}
+                        className="service-image"
+                        style={{ width: "80px", height: "80px", objectFit: "cover", borderRadius: "8px", marginRight: "1rem" }}
+                      />
+                      <div>
+                        <strong>{service.name}</strong>
+                        <p className="service-details">
+                          ⏱ {service.duration} mins | R{service.price}.00
+                        </p>
+                        <p className="service-desc">{service.description}</p>
+                        <button
+                          className="spa-btn add-btn"
+                          onClick={() => addService(service)}
+                        >
+                          Add
+                        </button>
+                      </div>
+                    </div>
+                  ))}
+                </div>
               </div>
             )}
           </div>

@@ -1,5 +1,50 @@
 [
-  { "name": "Swedish Massage", "duration": 60, "price": 500 },
-  { "name": "Deep Tissue Massage", "duration": 90, "price": 700 },
-  { "name": "Hot Stone Massage", "duration": 75, "price": 650 }
+  {
+    "name": "Swedish Massage",
+    "category": "massage",
+    "duration": 60,
+    "price": 500,
+    "image": "images/services/swedish_massage.jpg",
+    "description": "A relaxing full-body massage using gentle techniques to relieve tension."
+  },
+  {
+    "name": "Deep Tissue Massage",
+    "category": "massage",
+    "duration": 90,
+    "price": 700,
+    "image": "images/services/deep_tissue_massage.jpg",
+    "description": "Targets deeper layers of muscle and connective tissue for chronic pain relief."
+  },
+  {
+    "name": "Hot Stone Massage",
+    "category": "massage",
+    "duration": 75,
+    "price": 650,
+    "image": "images/services/hot_stone_massage.jpg",
+    "description": "Heated stones are used to relax muscles and improve circulation."
+  },
+  {
+    "name": "Gel Nails",
+    "category": "nail",
+    "duration": 60,
+    "price": 350,
+    "image": "images/services/gel_nails.jpg",
+    "description": "Long-lasting gel polish for beautiful, shiny nails."
+  },
+  {
+    "name": "Acrylic Nails",
+    "category": "nail",
+    "duration": 75,
+    "price": 400,
+    "image": "images/services/acrylic_nails.jpg",
+    "description": "Durable acrylic extensions for added length and strength."
+  },
+  {
+    "name": "Deep Facial Cleanse",
+    "category": "facial",
+    "duration": 60,
+    "price": 450,
+    "image": "images/services/deep_facial_cleanse.jpg",
+    "description": "A thorough facial treatment to cleanse, exfoliate, and rejuvenate your skin."
+  }
 ]

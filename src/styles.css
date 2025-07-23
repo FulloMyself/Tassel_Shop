@@ -1355,23 +1355,28 @@ header {
 
 /* ✅ SERVICE CARDS */
 .service-card {
+  display: flex;
+  align-items: flex-start;
+  margin-bottom: 1rem;
   background: #fff;
   border-radius: 8px;
-  padding: 0.7rem;
-  margin-bottom: 0.5rem;
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.05);
+  box-shadow: 0 2px 8px #eee;
+  padding: 1rem;
 }
 
-.service-details {
-  font-size: 0.8rem;
-  color: #7d6a5b;
+.service-image {
+  margin-right: 1rem;
 }
 
-.empty-state {
-  color: #a78f83;
+.service-desc {
+  font-size: 0.95rem;
+  color: #555;
+  margin: 0.5rem 0;
+}
+
+.category-btn.active {
+  background: #bfa18c;
+  color: #fff;
 }
 
 /* ✅ FORMS */
