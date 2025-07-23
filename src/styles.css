@@ -277,7 +277,6 @@ header {
 
 .hero::before {
   content: '';
-  position: absolute;
   top: 0; left: 0; right: 0; bottom: 0;
   background: linear-gradient(to bottom, rgba(0, 0, 0, 0.4), rgba(0, 0, 0, 0.7));
   z-index: 1;
@@ -1228,7 +1227,7 @@ header {
 /* ✅ HERO SECTION */
 .booking-hero {
   position: relative;
-  background: url("/images/products/Hero_Tassel.png") center/cover no-repeat;
+  background: url("/images/products/Hero_Tassel.png") contain/cover no-repeat;
   height: 80vh;
   display: flex;
   justify-content: center;
