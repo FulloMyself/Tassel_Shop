@@ -13,11 +13,6 @@ export default function HeroSection() {
 
   return (
     <section className="booking-hero">
-      <img
-        src={`${import.meta.env.BASE_URL}images/products/Hero_Tassel.png`}
-        alt="Tassel Beauty background"
-        className="hero-image"
-      />
       <div className="hero-content-img">
         <h1 className="hero-title">Glow Starts Here</h1>
         <p className="hero-subtitle">Discover our natural skincare essentials.</p>
