@@ -3,10 +3,8 @@ import axios from "axios";
 import gsap from "gsap";
 import servicesData from "./Services.json";
 import "./styles.css";
-import toast, { Toaster } from "react-hot-toast";
-
-toast.success("Booking successful!");
-toast.error("Please enter your email.");
+import { toast, ToastContainer } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 
 
 const categories = [
@@ -96,6 +94,13 @@ export default function Bookings() {
   const searchedServices = filteredServices.filter((s) =>
     s.name.toLowerCase().includes(searchTerm.toLowerCase())
   );
+
+  const [toast, setToast] = useState("");
+
+  const showToast = (message) => {
+  setToast(message);
+  setTimeout(() => setToast(""), 3000); // hides toast after 3s
+  };
 
   const totalPages = Math.ceil(searchedServices.length / servicesPerPage);
   const paginatedServices = searchedServices.slice(
@@ -208,13 +213,6 @@ const handlePayNow = async () => {
 
   const scrollToForm = () => {
     formRef.current?.scrollIntoView({ behavior: "smooth" });
-  };
-
-  const [toast, setToast] = useState("");
-
-  const showToast = (message) => {
-  setToast(message);
-  setTimeout(() => setToast(""), 3000); // hides toast after 3s
   };
 
   return (
