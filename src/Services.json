@@ -64,6 +64,30 @@
     "description": "A thorough facial treatment to cleanse, exfoliate, and rejuvenate your skin."
   },
   {
+    "name": "Esse Live Probiotic Facial",
+    "category": "facial",
+    "duration": 60,
+    "price": 980,
+    "image": "images/services/Facials.jpg",
+    "description": "A thorough facial treatment to cleanse, exfoliate, and rejuvenate your skin."
+  },
+  {
+    "name": "Esse Experience Facial",
+    "category": "facial",
+    "duration": 60,
+    "price": 650,
+    "image": "images/services/Facials.jpg",
+    "description": "A thorough facial treatment to cleanse, exfoliate, and rejuvenate your skin."
+  },
+  {
+    "name": "Esse Express Facial",
+    "category": "facial",
+    "duration": 60,
+    "price": 450,
+    "image": "images/services/Facials.jpg",
+    "description": "A thorough facial treatment to cleanse, exfoliate, and rejuvenate your skin."
+  },
+  {
     "name": "Spa Party",
     "category": "event",
     "duration": 180,
