@@ -64,6 +64,38 @@
     "description": "A thorough facial treatment to cleanse, exfoliate, and rejuvenate your skin."
   },
   {
+    "name": "Microneedling - Full Face",
+    "category": "microneedling",
+    "duration": 90,
+    "price": 1100,
+    "image": "images/services/Facials.jpg",
+    "description": "A thorough facial treatment to cleanse, exfoliate, and rejuvenate your skin."
+  },
+  {
+    "name": "Microneedling - Stretchmarks",
+    "category": "microneedling",
+    "duration": 60,
+    "price": 990,
+    "image": "images/services/Facials.jpg",
+    "description": "A thorough facial treatment to cleanse, exfoliate, and rejuvenate your skin."
+  },
+  {
+    "name": "Microneedling - Eye Area",
+    "category": "microneedling",
+    "duration": 60,
+    "price": 770,
+    "image": "images/services/Facials.jpg",
+    "description": "A thorough facial treatment to cleanse, exfoliate, and rejuvenate your skin."
+  },
+  {
+    "name": "Microneedling - Cheeks",
+    "category": "microneedling",
+    "duration": 60,
+    "price": 850,
+    "image": "images/services/Facials.jpg",
+    "description": "A thorough facial treatment to cleanse, exfoliate, and rejuvenate your skin."
+  },
+  {
     "name": "Esse Live Probiotic Facial",
     "category": "facial",
     "duration": 60,

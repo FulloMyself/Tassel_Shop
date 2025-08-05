@@ -9,6 +9,7 @@ const categories = [
   { key: "nail", label: "Nail Services" },
   { key: "facial", label: "Facials" },
   { key: "event", label: "Events" },
+  { key: "microneedling", label:"Microneedling"},
   { key: "wax", label: "Waxes" },
 ];
 
