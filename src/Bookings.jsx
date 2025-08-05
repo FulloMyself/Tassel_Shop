@@ -315,10 +315,8 @@ export default function Bookings() {
             <div className="business-hours">
               <h4>Business Hours</h4>
               <ul>
-                <li>Monday: Closed</li>
-                <li>Tuesday – Friday: 8:30am – 5:00pm</li>
-                <li>Saturday: 8:30am – 4:00pm</li>
-                <li>Sunday: 9:00am – 2:00pm</li>
+                <li>Monday – Saturday: 9am – 5:00pm</li>
+                <li>Sunday: Closed</li>
               </ul>
             </div>
           </div>
