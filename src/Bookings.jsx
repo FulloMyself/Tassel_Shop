@@ -115,49 +115,72 @@ export default function Bookings() {
   const paymentPortal = import.meta.env.VITE_PAYMENT_PORTAL_URL;
 
   const handleBookNow = async () => {
-    setLoading(true);
-    setError("");
-    setSuccess("");
+  if (!selectedTime) {
+    showToast("⏰ Please choose a time slot before booking.");
+    return;
+  }
+  if (!email) {
+    showToast("📧 Please enter your email address.");
+    return;
+  }
+  if (services.length === 0) {
+    showToast("💆‍♀️ Please select at least one service.");
+    return;
+  }
 
-    try {
-      await axios.post(`${emailServer}/send-massage-booking`, {
-        forWhom,
-        services,
-        selectedTime,
-        email,
-      });
-      setSuccess("Booking request sent successfully!");
-    } catch (err) {
-      console.error(err);
-      setError("Error sending booking. Try again.");
-    } finally {
-      setLoading(false);
-    }
-  };
+  setLoading(true);
+  setError("");
+  setSuccess("");
 
-  const handlePayNow = async () => {
-    setLoading(true);
-    setError("");
-    setSuccess("");
+  try {
+    await axios.post(`${emailServer}/send-massage-booking`, {
+      forWhom,
+      services,
+      selectedTime,
+      email,
+    });
+    setSuccess("Booking request sent successfully!");
+  } catch (err) {
+    console.error(err);
+    setError("Error sending booking. Try again.");
+  } finally {
+    setLoading(false);
+  }
+};
 
-    try {
-      const res = await axios.post(`${paymentPortal}/create-order`, {
-        items: services.map((s) => ({
-          name: s.name,
-          quantity: 1,
-          price: s.price,
-        })),
-        total,
-        email,
-      });
-      submitPayFastForm(res.data);
-    } catch (err) {
-      console.error(err);
-      setError("Payment failed. Try again.");
-    } finally {
-      setLoading(false);
-    }
-  };
+const handlePayNow = async () => {
+  if (!selectedTime) {
+    showToast("⏰ Please choose a time slot before paying.");
+    return;
+  }
+  if (!email) {
+    showToast("📧 Please enter your email address.");
+    return;
+  }
+  if (services.length === 0) {
+    showToast("💆‍♀️ Please select at least one service.");
+    return;
+  }
+
+  setLoading(true);
+  setError("");
+  setSuccess("");
+
+  try {
+    const res = await axios.post(`${paymentPortal}/create-order`, {
+      items: services.map((s) => ({ name: s.name, quantity: 1, price: s.price })),
+      total,
+      email,
+    });
+    submitPayFastForm(res.data);
+  } catch (err) {
+    console.error(err);
+    setError("Payment failed. Try again.");
+  } finally {
+    setLoading(false);
+  }
+};
+
 
   function submitPayFastForm(fields) {
     const form = document.createElement("form");
@@ -180,6 +203,13 @@ export default function Bookings() {
 
   const scrollToForm = () => {
     formRef.current?.scrollIntoView({ behavior: "smooth" });
+  };
+
+  const [toast, setToast] = useState("");
+
+  const showToast = (message) => {
+  setToast(message);
+  setTimeout(() => setToast(""), 3000); // hides toast after 3s
   };
 
   return (
@@ -406,6 +436,7 @@ export default function Bookings() {
                 <li>Monday – Saturday: 9am – 5:00pm</li>
                 <li>Sunday: Closed</li>
               </ul>
+              {toast && <div className="toast">{toast}</div>}
             </div>
           </div>
         </div>
