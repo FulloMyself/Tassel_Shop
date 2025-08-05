@@ -1,5 +1,6 @@
 import React, { useState, useEffect, useRef } from "react";
 import axios from "axios";
+import gsap from "gsap";
 import servicesData from "./Services.json";
 import "./styles.css";
 
@@ -32,12 +33,25 @@ export default function Bookings() {
   const [expanded, setExpanded] = useState(null);
   const [currentPage, setCurrentPage] = useState(1);
   const formRef = useRef(null);
+  const selectorRef = useRef(null);
 
   const servicesPerPage = 8;
 
   useEffect(() => {
     setAvailableServices(servicesData);
   }, []);
+
+  useEffect(() => {
+    if (showServiceSelector && selectorRef.current) {
+      gsap.from(selectorRef.current.querySelectorAll(".service-card"), {
+        opacity: 0,
+        y: 30,
+        stagger: 0.1,
+        duration: 0.6,
+        ease: "power2.out",
+      });
+    }
+  }, [showServiceSelector, selectedCategory, currentPage]);
 
   const businessHours = {
     Monday: { start: "09:00", end: "17:00" },
@@ -290,7 +304,7 @@ export default function Bookings() {
 
             {/* Service Selector */}
             {showServiceSelector && (
-              <div className="service-selector">
+              <div className="service-selector" ref={selectorRef}>
                 <h4>Select a Service</h4>
                 {/* Dropdown and Search */}
                 <div className="filter-bar">
