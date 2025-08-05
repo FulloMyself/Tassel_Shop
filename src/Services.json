@@ -4,7 +4,7 @@
     "category": "massage",
     "duration": 60,
     "price": 500,
-    "image": "${import.meta.env.BASE_URL}images/services/Massages.jpeg",
+    "image": "images/services/Massages.jpeg",
     "description": "A relaxing full-body massage using gentle techniques to relieve tension."
   },
   {
@@ -12,7 +12,7 @@
     "category": "massage",
     "duration": 90,
     "price": 700,
-    "image": "images/services/deep_tissue_massage.jpg",
+    "image": "images/services/Massages.jpeg",
     "description": "Targets deeper layers of muscle and connective tissue for chronic pain relief."
   },
   {
