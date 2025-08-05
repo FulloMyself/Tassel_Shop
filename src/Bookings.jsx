@@ -43,6 +43,19 @@ export default function Bookings() {
     setAvailableServices(servicesData);
   }, []);
 
+  const totalRef = useRef(null);
+
+useEffect(() => {
+  if (totalRef.current) {
+    gsap.fromTo(
+      totalRef.current,
+      { scale: 1.1, color: "#ff4081" },
+      { scale: 1, color: "#000", duration: 0.3, ease: "power2.out" }
+    );
+  }
+}, [services]);
+
+
   useEffect(() => {
     if (showServiceSelector && selectorRef.current) {
       gsap.from(selectorRef.current.querySelectorAll(".service-card"), {
@@ -289,9 +302,10 @@ export default function Bookings() {
             </div>
 
             {/* Total */}
-            <div className="total-price">
-              <strong>Total: </strong>R{total}.00
-            </div>
+            <div className="total-price" ref={totalRef}>
+  <strong>Total: </strong>R{total}.00
+</div>
+
 
             {/* Selected Services */}
             <p className="label">Selected Services</p>
@@ -325,12 +339,15 @@ export default function Bookings() {
                         </button>
                       </>
                     )}
-                    <button
-                      className="remove-btn"
-                      onClick={() => removeService(s.name)}
-                    >
-                      ✖
-                    </button>
+<button
+  className="remove-btn"
+  onClick={() => {
+    setServices(services.filter((item) => item.name !== s.name));
+    toast.error(`🗑 ${s.name} removed from booking.`);
+  }}
+>
+  ✖
+</button>
                   </div>
                 </div>
               ))
@@ -421,10 +438,18 @@ export default function Bookings() {
                   {paginatedServices.map((service, i) => (
                     <div key={i} className="service-card">
                       <img
-                        src={service.image}
-                        alt={service.name}
-                        className="service-image"
-                      />
+  src={service.image}
+  alt={service.name}
+  className="service-image"
+  style={{
+    width: "80px",
+    height: "80px",
+    objectFit: "cover",
+    borderRadius: "8px",
+    marginRight: "1rem",
+  }}
+/>
+
                       <div>
                         <strong>{service.name}</strong>
                         <p className="service-details">
