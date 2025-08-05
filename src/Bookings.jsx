@@ -3,6 +3,11 @@ import axios from "axios";
 import gsap from "gsap";
 import servicesData from "./Services.json";
 import "./styles.css";
+import toast, { Toaster } from "react-hot-toast";
+
+toast.success("Booking successful!");
+toast.error("Please enter your email.");
+
 
 const categories = [
   { key: "all", label: "All" },
@@ -440,7 +445,7 @@ const handlePayNow = async () => {
           </div>
         </div>
       </div>
-      
+
       {toast && <div className="toast">{toast}</div>}
     </div>
   );
