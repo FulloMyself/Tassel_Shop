@@ -6,27 +6,10 @@ import Products from "./Products";
 import Cart from "./Cart";
 import Footer from "./Footer";
 import Gifts from "./Gifts";
-import Bookings from "./Bookings";  // ✅ Just import directly
+import Bookings from "./Bookings";
 import "./styles.css";
 
-function App() {
-  const [cartOpen, setCartOpen] = useState(false);
-  const [cartItems, setCartItems] = useState([]);
-
-  const toggleCart = () => setCartOpen((open) => !open);
-
-  // ✅ Load from LocalStorage
-  useEffect(() => {
-    const savedCart = localStorage.getItem("cart");
-    if (savedCart) setCartItems(JSON.parse(savedCart));
-  }, []);
-
-  // ✅ Save to LocalStorage
-  useEffect(() => {
-    localStorage.setItem("cart", JSON.stringify(cartItems));
-  }, [cartItems]);
-
-  function AppHeader({ cartItems, toggleCart }) {
+function AppHeader({ cartItems, toggleCart }) {
   const location = useLocation();
   const hideCart = location.pathname === "/gifts" || location.pathname === "/bookings";
 
@@ -34,10 +17,25 @@ function App() {
     <Header
       cartCount={hideCart ? 0 : cartItems.reduce((sum, item) => sum + item.quantity, 0)}
       toggleCart={hideCart ? null : toggleCart}
-      hideCart={hideCart} // Pass as a prop
+      hideCart={hideCart} // Pass as a prop to Header
     />
   );
 }
+
+function App() {
+  const [cartOpen, setCartOpen] = useState(false);
+  const [cartItems, setCartItems] = useState([]);
+
+  const toggleCart = () => setCartOpen((open) => !open);
+
+  useEffect(() => {
+    const savedCart = localStorage.getItem("cart");
+    if (savedCart) setCartItems(JSON.parse(savedCart));
+  }, []);
+
+  useEffect(() => {
+    localStorage.setItem("cart", JSON.stringify(cartItems));
+  }, [cartItems]);
 
   const handleAddToCart = (product) => {
     setCartItems((prev) => {
@@ -73,10 +71,7 @@ function App() {
 
   return (
     <Router>
-      <Header
-        cartCount={cartItems.reduce((sum, item) => sum + item.quantity, 0)}
-        toggleCart={toggleCart}
-      />
+      <AppHeader cartItems={cartItems} toggleCart={toggleCart} />
       <main>
         <Routes>
           <Route
@@ -98,8 +93,8 @@ function App() {
               </>
             }
           />
-          <Route path="/gifts" element={<><Gifts /><Footer /></>} />
-          <Route path="/bookings" element={<><Bookings /><Footer /></>} />
+          <Route path="/gifts" element={<Gifts />} />
+          <Route path="/bookings" element={<Bookings />} />
         </Routes>
       </main>
       <Footer />
