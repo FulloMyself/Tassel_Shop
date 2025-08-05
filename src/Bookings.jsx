@@ -4,16 +4,16 @@ import servicesData from "./Services.json";
 import "./styles.css";
 
 const categories = [
-  { key: "all", label: "All" },
-  { key: "massage", label: "Massages" },
-  { key: "nail", label: "Nail Services" },
-  { key: "facial", label: "Facials" },
-  { key: "event", label: "Events" },
+  { key: "all", label: "All"},
+  { key: "massage", label: "Massages"},
+  { key: "nail", label: "Nail Services"},
+  { key: "facial", label: "Facials"},
+  { key: "event", label: "Events"},
   { key: "microneedling", label:"Microneedling"},
-  { key: "wax", label: "Waxes" },
-  { key: "chemical_peel", label: "Chemical Peels" },
-  { key: "skin_tag_removals", label: "Skin Tag Removals" },
-   { key: "add_on_treatments", label: "Add On Treatments" },
+  { key: "wax", label: "Waxes"},
+  { key: "chemical_peel", label: "Chemical Peels"},
+  { key: "skin_tag_removals", label: "Skin Tag Removals"},
+  { key: "add_on_treatments", label: "Add On Treatments"},
 ];
 
 export default function Bookings() {

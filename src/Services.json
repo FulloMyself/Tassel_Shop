@@ -1,11 +1,51 @@
 [
   {
-    "name": "Swedish Massage",
+    "name": "Head And Shoulder Massage",
+    "category": "massage",
+    "duration": 30,
+    "price": 300,
+    "image": "images/services/Massages.jpeg",
+    "description": "A relaxing head and shoulder massage using gentle techniques to relieve tension."
+  },
+  {
+    "name": "Pressure Point Foot Massage",
+    "category": "massage",
+    "duration": 30,
+    "price": 400,
+    "image": "images/services/Massages.jpeg",
+    "description": "A pressure point foot massage using gentle techniques to relieve tension."
+  },
+  {
+    "name": "Back, Neck and Shoulder Massage",
+    "category": "massage",
+    "duration": 30,
+    "price": 450,
+    "image": "images/services/Massages.jpeg",
+    "description": "A back, neck and shoulder massage using gentle techniques to relieve tension."
+  },
+  {
+    "name": "Swedish or Pregnancy Massage",
+    "category": "massage",
+    "duration": 45,
+    "price": 570,
+    "image": "images/services/Massages.jpeg",
+    "description": "A soothing Swedish or Pregnancy massage using gentle techniques to relieve tension."
+  },
+  {
+    "name": "Full Body Massage",
     "category": "massage",
     "duration": 60,
-    "price": 500,
+    "price": 710,
     "image": "images/services/Massages.jpeg",
     "description": "A relaxing full-body massage using gentle techniques to relieve tension."
+  },
+  {
+    "name": "Aromatherapy or Hot Stones Massage",
+    "category": "massage",
+    "duration": [90, 180],
+    "price": [850, 1100],
+    "image": "images/services/Massages.jpeg",
+    "description": "An aroma filled hot stones massage using gentle techniques to relieve tension."
   },
   {
     "name": "Deep Tissue Massage",
