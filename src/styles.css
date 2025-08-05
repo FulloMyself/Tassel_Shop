@@ -1637,16 +1637,19 @@ header {
 
 .contact-card {
   margin-top: 2rem;
-  padding: 1rem;
-  background: #fff;
-  border-radius: 10px;
-  box-shadow: 0 3px 10px rgba(0,0,0,0.1);
+  padding: 1.2rem;
+  background: linear-gradient(135deg, #fff8f5, #fde7e0);
+  border-radius: 12px;
+  box-shadow: 0 4px 15px rgba(0,0,0,0.08);
   text-align: center;
+  border: 1px solid rgba(255, 182, 193, 0.3);
 }
 
 .contact-card h4 {
   margin-bottom: 1rem;
-  color: #333;
+  color: #a66b6b;
+  font-weight: bold;
+  font-size: 1.1rem;
 }
 
 .social-icons {
@@ -1656,10 +1659,15 @@ header {
 }
 
 .social-icon svg {
-  transition: transform 0.3s ease;
+  width: 34px;
+  height: 34px;
+  transition: transform 0.3s ease, filter 0.3s ease;
+  filter: drop-shadow(0 2px 4px rgba(0,0,0,0.1));
 }
 
 .social-icon:hover svg {
-  transform: scale(1.2);
+  transform: scale(1.25);
+  filter: drop-shadow(0 4px 6px rgba(0,0,0,0.15));
 }
+
 

@@ -59,15 +59,37 @@ const contactRef = useRef(null);
 
 useEffect(() => {
   if (contactRef.current) {
-    gsap.from(contactRef.current.querySelectorAll(".social-icon"), {
-      opacity: 0,
-      y: 20,
-      duration: 0.6,
-      stagger: 0.15,
-      ease: "back.out(1.7)"
-    });
+    const icons = contactRef.current.querySelectorAll(".social-icon svg");
+
+    gsap.fromTo(
+      icons,
+      { opacity: 0, scale: 0.8, y: 20 },
+      {
+        opacity: 1,
+        scale: 1,
+        y: 0,
+        duration: 0.6,
+        stagger: 0.15,
+        ease: "back.out(1.7)",
+        onComplete: () => {
+          gsap.to(icons, {
+            scale: 1.15,
+            duration: 1.5,
+            yoyo: true,
+            repeat: -1,
+            ease: "easeInOut",
+            stagger: {
+              each: 0.3,
+              repeat: -1,
+              yoyo: true
+            }
+          });
+        }
+      }
+    );
   }
 }, []);
+
 
   useEffect(() => {
     if (showServiceSelector && selectorRef.current) {
@@ -520,39 +542,56 @@ useEffect(() => {
           </div>
 
           {/* Right */}
-          <div className="booking-right">
-            <h2 className="studio-title">Tassel Beauty & Wellness</h2>
-            <p className="studio-subtitle">
-              Indulge in the ultimate relaxation experience.
-            </p>
-            <div className="business-hours">
-  <h4>Business Hours</h4>
-  <ul>
-    <li>Monday – Saturday: 9am – 5:00pm</li>
-    <li>Sunday: Closed</li>
-  </ul>
-</div>
+          {/* Right Column */}
+<div className="booking-right">
+  <h2 className="studio-title">Tassel Beauty & Wellness</h2>
+  <p className="studio-subtitle">
+    Indulge in the ultimate relaxation experience.
+  </p>
 
-{/* ✅ Contact Card */}
-<div className="contact-card" ref={contactRef}>
-  <h4>Contact Us</h4>
-  <div className="social-icons">
-    <a href="https://facebook.com/tasselbeauty" target="_blank" rel="noopener noreferrer" className="social-icon">
-      <svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" fill="#3b5998" viewBox="0 0 24 24"><path d="M22.675 0h-21.35C.597 0 .013.592.013 1.324v21.351c0 .732.584 1.325 1.312 1.325h11.492v-9.282H9.692V9.691h3.125V7.309c0-3.1 1.893-4.788 4.657-4.788 1.325 0 2.464.099 2.797.143v3.244h-1.92c-1.507 0-1.799.717-1.799 1.765v2.318h3.598l-.468 3.327h-3.13V24h6.133c.729 0 1.312-.593 1.312-1.325V1.324C23.988.592 23.404 0 22.675 0z"/></svg>
-    </a>
-    <a href="https://instagram.com/tasselbeauty" target="_blank" rel="noopener noreferrer" className="social-icon">
-      <svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" fill="#E1306C" viewBox="0 0 24 24"><path d="M7.75 2h8.5C19.097 2 21 3.903 21 6.25v8.5C21 18.097 19.097 20 16.25 20h-8.5C4.903 20 3 18.097 3 15.25v-8.5C3 3.903 4.903 2 7.75 2zM12 7.5A4.5 4.5 0 1 0 16.5 12 4.5 4.5 0 0 0 12 7.5zm6.5-.625a1.125 1.125 0 1 1-1.125-1.125A1.126 1.126 0 0 1 18.5 6.875zM12 9a3 3 0 1 1-3 3 3.003 3.003 0 0 1 3-3z"/></svg>
-    </a>
-    <a href="https://wa.me/27679304049" target="_blank" rel="noopener noreferrer" className="social-icon">
-      <svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" fill="#25D366" viewBox="0 0 24 24"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.029-.967-.273-.102-.472-.149-.671.15-.197.297-.768.966-.941 1.164-.174.198-.348.223-.645.075-.297-.149-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.174-.297-.019-.458.13-.606.134-.133.298-.347.447-.52.149-.174.198-.298.298-.497.099-.198.05-.373-.025-.521-.075-.149-.671-1.612-.919-2.207-.242-.579-.487-.5-.671-.51-.174-.007-.373-.009-.572-.009-.199 0-.521.075-.794.373s-1.04 1.016-1.04 2.479 1.065 2.876 1.213 3.074c.149.198 2.099 3.205 5.077 4.492.709.306 1.262.489 1.694.626.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.695.248-1.29.173-1.413-.074-.123-.272-.198-.57-.347zM12.004 2c-5.514 0-9.996 4.482-9.996 9.996 0 1.761.46 3.482 1.337 5.006L2 22l5.121-1.341a9.94 9.94 0 0 0 4.883 1.25h.001c5.514 0 9.996-4.482 9.996-9.996s-4.482-9.996-9.996-9.996z"/></svg>
-    </a>
-    <a href="mailto:info@tasselgroup.co.za" className="social-icon">
-      <svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" fill="#EA4335" viewBox="0 0 24 24"><path d="M12 13.065L0 6.375V19.5A1.5 1.5 0 0 0 1.5 21h21a1.5 1.5 0 0 0 1.5-1.5V6.375l-12 6.69zM12 11l12-6.75H0L12 11z"/></svg>
-    </a>
+  <div className="business-hours">
+    <h4>Business Hours</h4>
+    <ul>
+      <li>Monday – Saturday: 9am – 5:00pm</li>
+      <li>Sunday: Closed</li>
+    </ul>
+  </div>
+
+  {/* Contact Card */}
+  <div className="contact-card" ref={contactRef}>
+    <h4>Connect With Us</h4>
+    <div className="social-icons">
+      {/* Facebook */}
+      <a href="https://facebook.com/tasselbeauty" target="_blank" rel="noopener noreferrer" className="social-icon">
+        <svg xmlns="http://www.w3.org/2000/svg" fill="#88a8d0" viewBox="0 0 24 24">
+          <path d="M22.675 0h-21.35C.597 0 0 .6 0 1.333v21.333C0 23.4.597 24 1.325 24H12.82v-9.294H9.692v-3.622h3.128V8.413c0-3.1 1.893-4.788 4.657-4.788 1.324 0 2.463.097 2.795.141v3.24l-1.918.001c-1.504 0-1.797.716-1.797 1.764v2.314h3.587l-.467 3.622h-3.12V24h6.116C23.403 24 24 23.4 24 22.667V1.333C24 .6 23.403 0 22.675 0z"/>
+        </svg>
+      </a>
+
+      {/* Instagram */}
+      <a href="https://instagram.com/tasselbeauty" target="_blank" rel="noopener noreferrer" className="social-icon">
+        <svg xmlns="http://www.w3.org/2000/svg" fill="#d48aa0" viewBox="0 0 24 24">
+          <path d="M7.75 2h8.5A5.75 5.75 0 0 1 22 7.75v8.5A5.75 5.75 0 0 1 16.25 22h-8.5A5.75 5.75 0 0 1 2 16.25v-8.5A5.75 5.75 0 0 1 7.75 2Zm0 1.5A4.25 4.25 0 0 0 3.5 7.75v8.5A4.25 4.25 0 0 0 7.75 20.5h8.5a4.25 4.25 0 0 0 4.25-4.25v-8.5A4.25 4.25 0 0 0 16.25 3.5h-8.5ZM12 7a5 5 0 1 1 0 10 5 5 0 0 1 0-10Zm0 1.5a3.5 3.5 0 1 0 0 7 3.5 3.5 0 0 0 0-7Zm5.75-.88a.88.88 0 1 1-1.76 0 .88.88 0 0 1 1.76 0Z"/>
+        </svg>
+      </a>
+
+      {/* WhatsApp */}
+      <a href="https://wa.me/27830081064" target="_blank" rel="noopener noreferrer" className="social-icon">
+        <svg xmlns="http://www.w3.org/2000/svg" fill="#8fd1a5" viewBox="0 0 24 24">
+          <path d="M20.52 3.48a11.91 11.91 0 0 0-16.9 0c-4.66 4.66-4.66 12.24 0 16.9A11.91 11.91 0 0 0 12 24c2.02 0 4-.5 5.76-1.46l3.58 1.06a1 1 0 0 0 1.25-1.25l-1.06-3.58A11.91 11.91 0 0 0 24 12c0-3.18-1.24-6.17-3.48-8.52ZM12 21.5c-1.86 0-3.64-.48-5.21-1.39a1 1 0 0 0-.88-.08l-2.63.78.78-2.63a1 1 0 0 0-.08-.88A9.92 9.92 0 0 1 2 12C2 6.48 6.48 2 12 2c2.66 0 5.17 1.04 7.07 2.93A9.93 9.93 0 0 1 22 12c0 5.52-4.48 10-10 10Zm4.3-6.7c-.24-.12-1.4-.7-1.62-.78s-.37-.12-.53.12-.62.78-.76.94-.28.18-.52.06a8.1 8.1 0 0 1-2.4-1.48 9.03 9.03 0 0 1-1.68-2.07c-.18-.3 0-.46.12-.58.12-.12.24-.3.36-.46.12-.18.18-.3.3-.5s.06-.36 0-.5c-.06-.12-.53-1.28-.72-1.76-.18-.44-.36-.38-.53-.38h-.44c-.14 0-.38.06-.58.28s-.76.74-.76 1.8.78 2.08.9 2.22c.12.18 1.54 2.36 3.72 3.3.52.22.92.34 1.24.44.52.16 1 .14 1.38.08.42-.06 1.3-.54 1.48-1.06.18-.54.18-.98.12-1.06-.06-.08-.22-.14-.46-.26Z"/>
+        </svg>
+      </a>
+
+      {/* Email */}
+      <a href="mailto:info@tasselbeauty.co.za" className="social-icon">
+        <svg xmlns="http://www.w3.org/2000/svg" fill="#d4b483" viewBox="0 0 24 24">
+          <path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4a2 2 0 0 1-2-2V6c0-1.1.9-2 2-2Zm0 2v.01L12 13l8-6.99V6H4Zm0 2.2V18h16V8.2l-8 7-8-7Z"/>
+        </svg>
+      </a>
+    </div>
   </div>
 </div>
 
-          </div>
         </div>
       </div>
 
