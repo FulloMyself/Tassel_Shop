@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import { HashRouter as Router, Routes, Route } from "react-router-dom";
+import { HashRouter as Router, Routes, Route, useLocation } from "react-router-dom";
 import Header from "./Header";
 import HeroSection from "./HeroSection";
 import Products from "./Products";
@@ -25,6 +25,19 @@ function App() {
   useEffect(() => {
     localStorage.setItem("cart", JSON.stringify(cartItems));
   }, [cartItems]);
+
+  function AppHeader({ cartItems, toggleCart }) {
+  const location = useLocation();
+  const hideCart = location.pathname === "/gifts" || location.pathname === "/bookings";
+
+  return (
+    <Header
+      cartCount={hideCart ? 0 : cartItems.reduce((sum, item) => sum + item.quantity, 0)}
+      toggleCart={hideCart ? null : toggleCart}
+      hideCart={hideCart} // Pass as a prop
+    />
+  );
+}
 
   const handleAddToCart = (product) => {
     setCartItems((prev) => {
@@ -85,8 +98,8 @@ function App() {
               </>
             }
           />
-          <Route path="/gifts" element={<Gifts />} />
-          <Route path="/bookings" element={<Bookings />} />
+          <Route path="/gifts" element={<><Gifts /><Footer /></>} />
+          <Route path="/bookings" element={<><Bookings /><Footer /></>} />
         </Routes>
       </main>
       <Footer />
