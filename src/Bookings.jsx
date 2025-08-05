@@ -55,6 +55,19 @@ useEffect(() => {
   }
 }, [services]);
 
+const contactRef = useRef(null);
+
+useEffect(() => {
+  if (contactRef.current) {
+    gsap.from(contactRef.current.querySelectorAll(".social-icon"), {
+      opacity: 0,
+      y: 20,
+      duration: 0.6,
+      stagger: 0.15,
+      ease: "back.out(1.7)"
+    });
+  }
+}, []);
 
   useEffect(() => {
     if (showServiceSelector && selectorRef.current) {
@@ -513,12 +526,32 @@ useEffect(() => {
               Indulge in the ultimate relaxation experience.
             </p>
             <div className="business-hours">
-              <h4>Business Hours</h4>
-              <ul>
-                <li>Monday – Saturday: 9am – 5:00pm</li>
-                <li>Sunday: Closed</li>
-              </ul>
-            </div>
+  <h4>Business Hours</h4>
+  <ul>
+    <li>Monday – Saturday: 9am – 5:00pm</li>
+    <li>Sunday: Closed</li>
+  </ul>
+</div>
+
+{/* ✅ Contact Card */}
+<div className="contact-card" ref={contactRef}>
+  <h4>Contact Us</h4>
+  <div className="social-icons">
+    <a href="https://facebook.com/tasselbeauty" target="_blank" rel="noopener noreferrer" className="social-icon">
+      <svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" fill="#3b5998" viewBox="0 0 24 24"><path d="M22.675 0h-21.35C.597 0 .013.592.013 1.324v21.351c0 .732.584 1.325 1.312 1.325h11.492v-9.282H9.692V9.691h3.125V7.309c0-3.1 1.893-4.788 4.657-4.788 1.325 0 2.464.099 2.797.143v3.244h-1.92c-1.507 0-1.799.717-1.799 1.765v2.318h3.598l-.468 3.327h-3.13V24h6.133c.729 0 1.312-.593 1.312-1.325V1.324C23.988.592 23.404 0 22.675 0z"/></svg>
+    </a>
+    <a href="https://instagram.com/tasselbeauty" target="_blank" rel="noopener noreferrer" className="social-icon">
+      <svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" fill="#E1306C" viewBox="0 0 24 24"><path d="M7.75 2h8.5C19.097 2 21 3.903 21 6.25v8.5C21 18.097 19.097 20 16.25 20h-8.5C4.903 20 3 18.097 3 15.25v-8.5C3 3.903 4.903 2 7.75 2zM12 7.5A4.5 4.5 0 1 0 16.5 12 4.5 4.5 0 0 0 12 7.5zm6.5-.625a1.125 1.125 0 1 1-1.125-1.125A1.126 1.126 0 0 1 18.5 6.875zM12 9a3 3 0 1 1-3 3 3.003 3.003 0 0 1 3-3z"/></svg>
+    </a>
+    <a href="https://wa.me/27679304049" target="_blank" rel="noopener noreferrer" className="social-icon">
+      <svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" fill="#25D366" viewBox="0 0 24 24"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.029-.967-.273-.102-.472-.149-.671.15-.197.297-.768.966-.941 1.164-.174.198-.348.223-.645.075-.297-.149-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.174-.297-.019-.458.13-.606.134-.133.298-.347.447-.52.149-.174.198-.298.298-.497.099-.198.05-.373-.025-.521-.075-.149-.671-1.612-.919-2.207-.242-.579-.487-.5-.671-.51-.174-.007-.373-.009-.572-.009-.199 0-.521.075-.794.373s-1.04 1.016-1.04 2.479 1.065 2.876 1.213 3.074c.149.198 2.099 3.205 5.077 4.492.709.306 1.262.489 1.694.626.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.695.248-1.29.173-1.413-.074-.123-.272-.198-.57-.347zM12.004 2c-5.514 0-9.996 4.482-9.996 9.996 0 1.761.46 3.482 1.337 5.006L2 22l5.121-1.341a9.94 9.94 0 0 0 4.883 1.25h.001c5.514 0 9.996-4.482 9.996-9.996s-4.482-9.996-9.996-9.996z"/></svg>
+    </a>
+    <a href="mailto:info@tasselgroup.co.za" className="social-icon">
+      <svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" fill="#EA4335" viewBox="0 0 24 24"><path d="M12 13.065L0 6.375V19.5A1.5 1.5 0 0 0 1.5 21h21a1.5 1.5 0 0 0 1.5-1.5V6.375l-12 6.69zM12 11l12-6.75H0L12 11z"/></svg>
+    </a>
+  </div>
+</div>
+
           </div>
         </div>
       </div>

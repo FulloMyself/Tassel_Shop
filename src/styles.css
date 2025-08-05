@@ -1635,3 +1635,31 @@ header {
   }
 }
 
+.contact-card {
+  margin-top: 2rem;
+  padding: 1rem;
+  background: #fff;
+  border-radius: 10px;
+  box-shadow: 0 3px 10px rgba(0,0,0,0.1);
+  text-align: center;
+}
+
+.contact-card h4 {
+  margin-bottom: 1rem;
+  color: #333;
+}
+
+.social-icons {
+  display: flex;
+  justify-content: center;
+  gap: 1rem;
+}
+
+.social-icon svg {
+  transition: transform 0.3s ease;
+}
+
+.social-icon:hover svg {
+  transform: scale(1.2);
+}
+
