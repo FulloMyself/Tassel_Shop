@@ -7,7 +7,8 @@ const categories = [
   { key: "all", label: "All" },
   { key: "massage", label: "Massages" },
   { key: "nail", label: "Nail Services" },
-  { key: "facial", label: "Facials" }
+  { key: "facial", label: "Facials" },
+  { key: "event", label: "Events" }
 ];
 
 export default function Bookings() {
