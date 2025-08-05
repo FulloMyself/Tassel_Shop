@@ -392,6 +392,166 @@
     "description": "A thorough facial treatment to cleanse, exfoliate, and rejuvenate your skin."
   },
   {
+    "name": "Buff, Shine And Polish",
+    "category": "nail",
+    "duration": 30,
+    "price": 180,
+    "image": "images/services/Nails.jpg",
+    "description": "A high level buff, shine and polish nail service."
+  },
+  {
+    "name": "Express Manicure with Buff And Shine",
+    "category": "nail",
+    "duration": 30,
+    "price": 220,
+    "image": "images/services/Nails.jpg",
+    "description": "A high level buff, shine and polish nail service."
+  },
+  {
+    "name": "Express Manicure with Buff, Shine And Gel Polish",
+    "category": "nail",
+    "duration": 30,
+    "price": 320,
+    "image": "images/services/Nails.jpg",
+    "description": "A high level buff, shine and polish nail service."
+  },
+  {
+    "name": "Gel(Popsicle/ Lola Lee/ Other) Overlay",
+    "category": "nail",
+    "duration": 30,
+    "price": 250,
+    "image": "images/services/Nails.jpg",
+    "description": "A high level buff, shine and polish nail service."
+  },
+  {
+    "name": "Gel Overlay",
+    "category": "nail",
+    "duration": 30,
+    "price": 350,
+    "image": "images/services/Nails.jpg",
+    "description": "A high level buff, shine and polish nail service."
+  },
+  {
+    "name": "Kiddies Gel Overlay",
+    "category": "nail",
+    "duration": 30,
+    "price": 200,
+    "image": "images/services/Nails.jpg",
+    "description": "A high level buff, shine and polish nail service."
+  },
+  {
+    "name": "New Acrylic Set with Gel Colour",
+    "category": "nail",
+    "duration": 30,
+    "price": 400,
+    "image": "images/services/Nails.jpg",
+    "description": "A high level buff, shine and polish nail service."
+  },
+  {
+    "name": "Rubberbase Gel Overlay with Gel Colour",
+    "category": "nail",
+    "duration": 30,
+    "price": 360,
+    "image": "images/services/Nails.jpg",
+    "description": "A high level buff, shine and polish nail service."
+  },
+  {
+    "name": "Soft Tips with Gel(Popsicle/ Lola Lee/ Other)",
+    "category": "nail",
+    "duration": 30,
+    "price": 420,
+    "image": "images/services/Nails.jpg",
+    "description": "A high level buff, shine and polish nail service."
+  },
+  {
+    "name": "Soft Tips with Gel",
+    "category": "nail",
+    "duration": 30,
+    "price": 540,
+    "image": "images/services/Nails.jpg",
+    "description": "A high level buff, shine and polish nail service."
+  },
+  {
+    "name": "Deluxe Mani with Gel Paint",
+    "category": "nail",
+    "duration": 30,
+    "price": 480,
+    "image": "images/services/Nails.jpg",
+    "description": "A high level buff, shine and polish nail service."
+  },
+  {
+    "name": "Gel(Popsicle/ Lola Lee/ Other) Hands And Feet",
+    "category": "nail",
+    "duration": 45,
+    "price": 450,
+    "image": "images/services/Nails.jpg",
+    "description": "A high level buff, shine and polish nail service."
+  },
+  {
+    "name": "Gel Hands And Feet",
+    "category": "nail",
+    "duration": 45,
+    "price": 600,
+    "image": "images/services/Nails.jpg",
+    "description": "A high level buff, shine and polish nail service."
+  },
+  {
+    "name": "Gel(Popsicle/ Lola Lee/ Other) Hands, Feet And Soak Off",
+    "category": "nail",
+    "duration": 60,
+    "price": 600,
+    "image": "images/services/Nails.jpg",
+    "description": "A high level buff, shine and polish nail service."
+  },
+  {
+    "name": "Gel Hands, Feet And Soak Off",
+    "category": "nail",
+    "duration": 60,
+    "price": 750,
+    "image": "images/services/Nails.jpg",
+    "description": "A high level buff, shine and polish nail service."
+  },
+  {
+    "name": "Foot Scrub no Paint",
+    "category": "nail",
+    "duration": 30,
+    "price": 300,
+    "image": "images/services/Nails.jpg",
+    "description": "A high level buff, shine and polish nail service."
+  },
+  {
+    "name": "Express Pedicure with Buff And Shine",
+    "category": "nail",
+    "duration": 30,
+    "price": 200,
+    "image": "images/services/Nails.jpg",
+    "description": "A high level buff, shine and polish nail service."
+  },
+  {
+    "name": "Express Pedicure with Gel(Popsicle/ Lola Lee/ Other) Polish",
+    "category": "nail",
+    "duration": 30,
+    "price": 250,
+    "image": "images/services/Nails.jpg",
+    "description": "A high level buff, shine and polish nail service."
+  },
+  {
+    "name": "Express Pedicure with Gel Polish",
+    "category": "nail",
+    "duration": 30,
+    "price": 350,
+    "image": "images/services/Nails.jpg",
+    "description": "A high level buff, shine and polish nail service."
+  },
+  {
+    "name": "Deluxe Pedicure with Gel Paint",
+    "category": "nail",
+    "duration": 60,
+    "price": 500,
+    "image": "images/services/Nails.jpg",
+    "description": "A high level buff, shine and polish nail service."
+  },
+  {
     "name": "Dermaplaning",
     "category": "add_on_treatments",
     "duration": 30,
