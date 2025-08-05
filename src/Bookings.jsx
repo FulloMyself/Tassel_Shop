@@ -30,7 +30,7 @@ export default function Bookings() {
   }, []);
 
   const businessHours = {
-    Monday: { start: "09:00", end: "17:00"}
+    Monday: { start: "09:00", end: "17:00"},
     Tuesday: { start: "09:00", end: "17:00" },
     Wednesday: { start: "09:00", end: "17:00" },
     Thursday: { start: "09:00", end: "17:00" },
