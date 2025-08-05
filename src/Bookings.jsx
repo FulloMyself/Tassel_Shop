@@ -436,10 +436,10 @@ const handlePayNow = async () => {
                 <li>Monday – Saturday: 9am – 5:00pm</li>
                 <li>Sunday: Closed</li>
               </ul>
-              {toast && <div className="toast">{toast}</div>}
             </div>
           </div>
         </div>
+        {toast && <div className="toast">{toast}</div>}
       </div>
     </div>
   );
