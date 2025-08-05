@@ -65,6 +65,13 @@ export default function Bookings() {
     Saturday: { start: "09:00", end: "17:00" },
   };
 
+  const [toast, setToast] = useState({ message: "", type: "" });
+
+const showToast = (message, type = "success") => {
+  setToast({ message, type });
+  setTimeout(() => setToast({ message: "", type: "" }), 3000);
+};
+
   const today = new Date().toLocaleDateString("en-US", { weekday: "long" });
   const generateTimeSlots = () => {
     const hours = businessHours[today];
@@ -95,13 +102,6 @@ export default function Bookings() {
     s.name.toLowerCase().includes(searchTerm.toLowerCase())
   );
 
-  const [toast, setToast] = useState("");
-
-  const showToast = (message) => {
-  setToast(message);
-  setTimeout(() => setToast(""), 3000); // hides toast after 3s
-  };
-
   const totalPages = Math.ceil(searchedServices.length / servicesPerPage);
   const paginatedServices = searchedServices.slice(
     (currentPage - 1) * servicesPerPage,
@@ -111,9 +111,9 @@ export default function Bookings() {
   const addService = (service) => {
   if (!services.find((s) => s.name === service.name)) {
     setServices([...services, service]);
-    showToast(`✅ ${service.name} has been added to your booking.`);
+    showToast(`✅ ${service.name} has been added!`, "success");
   } else {
-    showToast(`⚠️ ${service.name} is already in your booking.`);
+    showToast(`⚠️ ${service.name} is already selected!`, "warning");
   }
   setShowServiceSelector(false);
 };
@@ -130,15 +130,15 @@ export default function Bookings() {
 
   const handleBookNow = async () => {
   if (!selectedTime) {
-    showToast("⏰ Please choose a time slot before booking.");
+    showToast("⏰ Please choose a time slot.", "warning");
     return;
   }
   if (!email) {
-    showToast("📧 Please enter your email address.");
+    showToast("⚠️ Please enter your email address.", "warning");
     return;
   }
   if (services.length === 0) {
-    showToast("💆‍♀️ Please select at least one service.");
+    showToast("❌💆‍♀️ Please select at least one service.", "error");
     return;
   }
 
@@ -164,15 +164,15 @@ export default function Bookings() {
 
 const handlePayNow = async () => {
   if (!selectedTime) {
-    showToast("⏰ Please choose a time slot before paying.");
+    showToast("⏰ Please choose a time slot before paying.", "warning");
     return;
   }
   if (!email) {
-    showToast("📧 Please enter your email address.");
+    showToast("⚠️ Please enter your email address before making payment.", "warning");
     return;
   }
   if (services.length === 0) {
-    showToast("💆‍♀️ Please select at least one service.");
+    showToast("❌💆‍♀️ Please select at least one service.", "error");
     return;
   }
 
