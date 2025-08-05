@@ -11,6 +11,7 @@ const categories = [
   { key: "event", label: "Events" },
   { key: "microneedling", label:"Microneedling"},
   { key: "wax", label: "Waxes" },
+  { key: "chemical_peel", label: "Chemical Peels" },
 ];
 
 export default function Bookings() {

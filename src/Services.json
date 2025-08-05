@@ -75,7 +75,7 @@
     "name": "Microneedling - Stretchmarks",
     "category": "microneedling",
     "duration": 60,
-    "price": 990,
+    "price": 900,
     "image": "images/services/Facials.jpg",
     "description": "A thorough facial treatment to cleanse, exfoliate, and rejuvenate your skin."
   },
@@ -83,7 +83,7 @@
     "name": "Microneedling - Eye Area",
     "category": "microneedling",
     "duration": 60,
-    "price": 770,
+    "price": 700,
     "image": "images/services/Facials.jpg",
     "description": "A thorough facial treatment to cleanse, exfoliate, and rejuvenate your skin."
   },
@@ -92,6 +92,22 @@
     "category": "microneedling",
     "duration": 60,
     "price": 850,
+    "image": "images/services/Facials.jpg",
+    "description": "A thorough facial treatment to cleanse, exfoliate, and rejuvenate your skin."
+  },
+  {
+    "name": "Chemical Peel - Glycolic Acid Peel",
+    "category": "chemical_peel",
+    "duration": 90,
+    "price": 760,
+    "image": "images/services/Facials.jpg",
+    "description": "A thorough facial treatment to cleanse, exfoliate, and rejuvenate your skin."
+  },
+  {
+    "name": "Chemical Peel - Lactic Acid Peel",
+    "category": "chemical_peel",
+    "duration": 60,
+    "price": 760,
     "image": "images/services/Facials.jpg",
     "description": "A thorough facial treatment to cleanse, exfoliate, and rejuvenate your skin."
   },
