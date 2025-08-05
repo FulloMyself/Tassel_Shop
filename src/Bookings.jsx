@@ -101,92 +101,77 @@ export default function Bookings() {
   );
 
   const addService = (service) => {
-  if (forWhom === "myself") {
-    // Prevent duplicates
-    if (!services.find((s) => s.name === service.name)) {
-      setServices([...services, { ...service, quantity: 1 }]);
-      toast.success(`✅ ${service.name} has been added to your booking.`);
+    if (forWhom === "myself") {
+      if (!services.find((s) => s.name === service.name)) {
+        setServices([...services, { ...service, quantity: 1 }]);
+        toast.success(`✅ ${service.name} has been added to your booking.`);
+      } else {
+        toast.warn(`⚠️ ${service.name} is already in your booking.`);
+      }
     } else {
-      toast.warn(`⚠️ ${service.name} is already in your booking.`);
+      const existingService = services.find((s) => s.name === service.name);
+      if (existingService) {
+        setServices(
+          services.map((s) =>
+            s.name === service.name
+              ? { ...s, quantity: s.quantity + 1 }
+              : s
+          )
+        );
+        toast.info(`➕ Increased quantity for ${service.name}.`);
+      } else {
+        setServices([...services, { ...service, quantity: 1 }]);
+        toast.success(`✅ ${service.name} has been added to your booking.`);
+      }
     }
-  } else {
-    // Me & Others → allow multiple quantities
-    const existingService = services.find((s) => s.name === service.name);
-    if (existingService) {
-      setServices(
-        services.map((s) =>
-          s.name === service.name
-            ? { ...s, quantity: s.quantity + 1 }
-            : s
-        )
-      );
-      toast.info(`➕ Increased quantity for ${service.name}.`);
-    } else {
-      setServices([...services, { ...service, quantity: 1 }]);
-      toast.success(`✅ ${service.name} has been added to your booking.`);
-    }
-  }
-  setShowServiceSelector(false);
-};
+    setShowServiceSelector(false);
+  };
 
-const updateQuantity = (name, change) => {
-  setServices((prev) =>
-    prev.map((s) =>
-      s.name === name
-        ? {
-            ...s,
-            quantity: Math.max(1, s.quantity + change),
-          }
-        : s
-    )
-  );
-
-  if (change > 0) {
-    toast.info(`➕ Increased quantity for ${name}.`);
-  } else {
-    toast.info(`➖ Reduced quantity for ${name}.`);
-  }
-};
-
-
-
-  const removeService = (name) => {
-  const serviceToRemove = services.find((s) => s.name === name);
-
-  if (forWhom === "others" && serviceToRemove?.quantity > 1) {
-    // Reduce quantity instead of removing completely
-    setServices(
-      services.map((s) =>
-        s.name === name ? { ...s, quantity: s.quantity - 1 } : s
+  const updateQuantity = (name, change) => {
+    setServices((prev) =>
+      prev.map((s) =>
+        s.name === name
+          ? { ...s, quantity: Math.max(1, s.quantity + change) }
+          : s
       )
     );
-    toast.info(`➖ Reduced quantity for ${name}.`);
-  } else {
-    // Remove completely
-    setServices(services.filter((s) => s.name !== name));
-    toast.error(`🗑 ${name} removed from booking.`);
-  }
-};
 
-  const total = services.reduce((sum, s) => sum + (s.price * (s.quantity || 1)), 0);
+    toast.info(
+      change > 0
+        ? `➕ Increased quantity for ${name}.`
+        : `➖ Reduced quantity for ${name}.`
+    );
+  };
 
+  const removeService = (name) => {
+    const serviceToRemove = services.find((s) => s.name === name);
+
+    if (forWhom === "others" && serviceToRemove?.quantity > 1) {
+      setServices(
+        services.map((s) =>
+          s.name === name ? { ...s, quantity: s.quantity - 1 } : s
+        )
+      );
+      toast.info(`➖ Reduced quantity for ${name}.`);
+    } else {
+      setServices(services.filter((s) => s.name !== name));
+      toast.error(`🗑 ${name} removed from booking.`);
+    }
+  };
+
+  const total = services.reduce(
+    (sum, s) => sum + s.price * (s.quantity || 1),
+    0
+  );
 
   const emailServer = import.meta.env.VITE_EMAIL_SERVER_URL;
   const paymentPortal = import.meta.env.VITE_PAYMENT_PORTAL_URL;
 
   const handleBookNow = async () => {
-    if (!selectedTime) {
-      toast.warn("⏰ Please choose a time slot before booking.");
-      return;
-    }
-    if (!email) {
-      toast.warn("📧 Please enter your email address.");
-      return;
-    }
-    if (services.length === 0) {
-      toast.error("💆‍♀️ Please select at least one service.");
-      return;
-    }
+    if (!selectedTime) return toast.warn("⏰ Please choose a time slot.");
+    if (!email) return toast.warn("📧 Please enter your email address.");
+    if (services.length === 0)
+      return toast.error("💆‍♀️ Please select at least one service.");
 
     setLoading(true);
     setError("");
@@ -202,7 +187,6 @@ const updateQuantity = (name, change) => {
       setSuccess("Booking request sent successfully!");
       toast.success("📩 Booking request sent successfully!");
     } catch (err) {
-      console.error(err);
       setError("Error sending booking. Try again.");
       toast.error("❌ Error sending booking. Try again.");
     } finally {
@@ -211,18 +195,10 @@ const updateQuantity = (name, change) => {
   };
 
   const handlePayNow = async () => {
-    if (!selectedTime) {
-      toast.warn("⏰ Please choose a time slot before paying.");
-      return;
-    }
-    if (!email) {
-      toast.warn("📧 Please enter your email address.");
-      return;
-    }
-    if (services.length === 0) {
-      toast.error("💆‍♀️ Please select at least one service.");
-      return;
-    }
+    if (!selectedTime) return toast.warn("⏰ Please choose a time slot.");
+    if (!email) return toast.warn("📧 Please enter your email address.");
+    if (services.length === 0)
+      return toast.error("💆‍♀️ Please select at least one service.");
 
     setLoading(true);
     setError("");
@@ -232,7 +208,7 @@ const updateQuantity = (name, change) => {
       const res = await axios.post(`${paymentPortal}/create-order`, {
         items: services.map((s) => ({
           name: s.name,
-          quantity: 1,
+          quantity: s.quantity || 1,
           price: s.price,
         })),
         total,
@@ -240,7 +216,6 @@ const updateQuantity = (name, change) => {
       });
       submitPayFastForm(res.data);
     } catch (err) {
-      console.error(err);
       setError("Payment failed. Try again.");
       toast.error("❌ Payment failed. Try again.");
     } finally {
@@ -255,12 +230,13 @@ const updateQuantity = (name, change) => {
     form.style.display = "none";
 
     Object.entries(fields).forEach(([key, value]) => {
-      if (key === "payfast_url") return;
-      const input = document.createElement("input");
-      input.type = "hidden";
-      input.name = key;
-      input.value = value;
-      form.appendChild(input);
+      if (key !== "payfast_url") {
+        const input = document.createElement("input");
+        input.type = "hidden";
+        input.name = key;
+        input.value = value;
+        form.appendChild(input);
+      }
     });
 
     document.body.appendChild(form);
@@ -273,7 +249,7 @@ const updateQuantity = (name, change) => {
 
   return (
     <div className="booking-page">
-      {/* ✅ HERO SECTION */}
+      {/* Hero */}
       <section className="booking-hero">
         <div className="hero-overlay">
           <h1 className="hero-title">Relax. Refresh. Rejuvenate.</h1>
@@ -286,10 +262,10 @@ const updateQuantity = (name, change) => {
         </div>
       </section>
 
-      {/* ✅ BOOKING FORM */}
+      {/* Booking Form */}
       <div className="booking-wrapper" ref={formRef}>
         <div className="booking-card">
-          {/* Left Column */}
+          {/* Left */}
           <div className="booking-left">
             <h2 className="section-title">Your Booking Details</h2>
 
@@ -312,53 +288,55 @@ const updateQuantity = (name, change) => {
               </div>
             </div>
 
+            {/* Total */}
+            <div className="total-price">
+              <strong>Total: </strong>R{total}.00
+            </div>
+
             {/* Selected Services */}
-            <div className="selected-services">
-              <div className="total-price">
-                      <strong>Total: </strong>R{total}.00
-              </div>
-              <p className="label">Selected Services</p>
-              {services.length === 0 ? (
-  <p className="empty-state">No services selected yet.</p>
-) : (
-  services.map((s, i) => (
-    <div key={i} className="service-card">
-      <div>
-        <strong>{s.name}</strong>
-        <p className="service-details">
-          ⏱ {s.duration} mins | R{s.price}.00  
-          {s.quantity > 1 && <span> × {s.quantity}</span>}
-        </p>
-      </div>
+            <p className="label">Selected Services</p>
+            {services.length === 0 ? (
+              <p className="empty-state">No services selected yet.</p>
+            ) : (
+              services.map((s, i) => (
+                <div key={i} className="service-card">
+                  <div>
+                    <strong>{s.name}</strong>
+                    <p className="service-details">
+                      ⏱ {s.duration} mins | R{s.price}.00{" "}
+                      {s.quantity > 1 && <span> × {s.quantity}</span>}
+                    </p>
+                  </div>
 
-      <div className="quantity-controls">
-        {forWhom === "others" && (
-          <>
-            <button
-              className="qty-btn"
-              onClick={() => updateQuantity(s.name, -1)}
-            >
-              ➖
-            </button>
-            <button
-              className="qty-btn"
-              onClick={() => updateQuantity(s.name, 1)}
-            >
-              ➕
-            </button>
-          </>
-        )}
-        <button
-          className="remove-btn"
-          onClick={() => removeService(s.name)}
-        >
-          ✖
-        </button>
-      </div>
-    </div>
-  ))
-)}
+                  <div className="quantity-controls">
+                    {forWhom === "others" && (
+                      <>
+                        <button
+                          className="qty-btn"
+                          onClick={() => updateQuantity(s.name, -1)}
+                        >
+                          ➖
+                        </button>
+                        <button
+                          className="qty-btn"
+                          onClick={() => updateQuantity(s.name, 1)}
+                        >
+                          ➕
+                        </button>
+                      </>
+                    )}
+                    <button
+                      className="remove-btn"
+                      onClick={() => removeService(s.name)}
+                    >
+                      ✖
+                    </button>
+                  </div>
+                </div>
+              ))
+            )}
 
+            {/* Add Service */}
             <button
               className="spa-btn add-service"
               onClick={() => setShowServiceSelector(true)}
@@ -417,7 +395,6 @@ const updateQuantity = (name, change) => {
             {showServiceSelector && (
               <div className="service-selector" ref={selectorRef}>
                 <h4>Select a Service</h4>
-                {/* Dropdown and Search */}
                 <div className="filter-bar">
                   <select
                     value={selectedCategory}
@@ -440,7 +417,6 @@ const updateQuantity = (name, change) => {
                   />
                 </div>
 
-                {/* Paginated Service List */}
                 <div className="service-list">
                   {paginatedServices.map((service, i) => (
                     <div key={i} className="service-card">
@@ -448,13 +424,6 @@ const updateQuantity = (name, change) => {
                         src={service.image}
                         alt={service.name}
                         className="service-image"
-                        style={{
-                          width: "80px",
-                          height: "80px",
-                          objectFit: "cover",
-                          borderRadius: "8px",
-                          marginRight: "1rem",
-                        }}
                       />
                       <div>
                         <strong>{service.name}</strong>
@@ -505,7 +474,7 @@ const updateQuantity = (name, change) => {
             )}
           </div>
 
-          {/* Right Column */}
+          {/* Right */}
           <div className="booking-right">
             <h2 className="studio-title">Tassel Beauty & Wellness</h2>
             <p className="studio-subtitle">
