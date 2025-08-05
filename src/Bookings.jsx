@@ -30,12 +30,12 @@ export default function Bookings() {
   }, []);
 
   const businessHours = {
-    Tuesday: { start: "08:30", end: "17:00" },
-    Wednesday: { start: "08:30", end: "17:00" },
-    Thursday: { start: "08:30", end: "17:00" },
-    Friday: { start: "08:30", end: "17:00" },
-    Saturday: { start: "08:30", end: "16:00" },
-    Sunday: { start: "09:00", end: "14:00" },
+    Monday: { start: "09:00", end: "17:00"}
+    Tuesday: { start: "09:00", end: "17:00" },
+    Wednesday: { start: "09:00", end: "17:00" },
+    Thursday: { start: "09:00", end: "17:00" },
+    Friday: { start: "09:00", end: "17:00" },
+    Saturday: { start: "09:00", end: "17:00" },
   };
 
   const generateTimeSlots = () => {
