@@ -28,7 +28,7 @@
     "category": "nail",
     "duration": 60,
     "price": 350,
-    "image": "images/services/gel_nails.jpg",
+    "image": "images/services/Nails.jpg",
     "description": "Long-lasting gel polish for beautiful, shiny nails."
   },
   {
@@ -36,7 +36,7 @@
     "category": "nail",
     "duration": 75,
     "price": 400,
-    "image": "images/services/acrylic_nails.jpg",
+    "image": "images/services/Nails.jpg",
     "description": "Durable acrylic extensions for added length and strength."
   },
   {
