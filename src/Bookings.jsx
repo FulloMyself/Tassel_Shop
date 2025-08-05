@@ -6,7 +6,6 @@ import "./styles.css";
 import { toast, ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 
-
 const categories = [
   { key: "all", label: "All" },
   { key: "massage", label: "Massages" },
@@ -101,18 +100,15 @@ export default function Bookings() {
     currentPage * servicesPerPage
   );
 
-  // In addService
-const addService = (service) => {
-  if (!services.find((s) => s.name === service.name)) {
-    setServices([...services, service]);
-    toast.success(`✅ ${service.name} has been added successfully!`);
-  } else {
-    toast.warn(`⚠️ ${service.name} is already added.`);
-  }
-  setShowServiceSelector(false);
-};
-
-
+  const addService = (service) => {
+    if (!services.find((s) => s.name === service.name)) {
+      setServices([...services, service]);
+      toast.success(`✅ ${service.name} has been added to your booking.`);
+    } else {
+      toast.warn(`⚠️ ${service.name} is already in your booking.`);
+    }
+    setShowServiceSelector(false);
+  };
 
   const removeService = (name) => {
     setServices(services.filter((s) => s.name !== name));
@@ -124,73 +120,78 @@ const addService = (service) => {
   const paymentPortal = import.meta.env.VITE_PAYMENT_PORTAL_URL;
 
   const handleBookNow = async () => {
-  if (!selectedTime) {
-    toast.warn("⏰ Please choose a time slot before booking.");
-    return;
-  }
-  if (!email) {
-    toast.warn("📧 Please enter your email address.");
-    return;
-  }
-  if (services.length === 0) {
-    toast.error("💆‍♀️ Please select at least one service.");
-    return;
-  }
+    if (!selectedTime) {
+      toast.warn("⏰ Please choose a time slot before booking.");
+      return;
+    }
+    if (!email) {
+      toast.warn("📧 Please enter your email address.");
+      return;
+    }
+    if (services.length === 0) {
+      toast.error("💆‍♀️ Please select at least one service.");
+      return;
+    }
 
-  setLoading(true);
-  setError("");
-  setSuccess("");
+    setLoading(true);
+    setError("");
+    setSuccess("");
 
-  try {
-    await axios.post(`${emailServer}/send-massage-booking`, {
-      forWhom,
-      services,
-      selectedTime,
-      email,
-    });
-    setSuccess("Booking request sent successfully!");
-  } catch (err) {
-    console.error(err);
-    setError("Error sending booking. Try again.");
-  } finally {
-    setLoading(false);
-  }
-};
+    try {
+      await axios.post(`${emailServer}/send-massage-booking`, {
+        forWhom,
+        services,
+        selectedTime,
+        email,
+      });
+      setSuccess("Booking request sent successfully!");
+      toast.success("📩 Booking request sent successfully!");
+    } catch (err) {
+      console.error(err);
+      setError("Error sending booking. Try again.");
+      toast.error("❌ Error sending booking. Try again.");
+    } finally {
+      setLoading(false);
+    }
+  };
 
-// In handlePayNow
-const handlePayNow = async () => {
-  if (!selectedTime) {
-    toast.warn("⏰ Please choose a time slot before paying.");
-    return;
-  }
-  if (!email) {
-    toast.warn("📧 Please enter your email address.");
-    return;
-  }
-  if (services.length === 0) {
-    toast.error("💆‍♀️ Please select at least one service.");
-    return;
-  }
+  const handlePayNow = async () => {
+    if (!selectedTime) {
+      toast.warn("⏰ Please choose a time slot before paying.");
+      return;
+    }
+    if (!email) {
+      toast.warn("📧 Please enter your email address.");
+      return;
+    }
+    if (services.length === 0) {
+      toast.error("💆‍♀️ Please select at least one service.");
+      return;
+    }
 
-  setLoading(true);
-  setError("");
-  setSuccess("");
+    setLoading(true);
+    setError("");
+    setSuccess("");
 
-  try {
-    const res = await axios.post(`${paymentPortal}/create-order`, {
-      items: services.map((s) => ({ name: s.name, quantity: 1, price: s.price })),
-      total,
-      email,
-    });
-    submitPayFastForm(res.data);
-  } catch (err) {
-    console.error(err);
-    setError("Payment failed. Try again.");
-  } finally {
-    setLoading(false);
-  }
-};
-
+    try {
+      const res = await axios.post(`${paymentPortal}/create-order`, {
+        items: services.map((s) => ({
+          name: s.name,
+          quantity: 1,
+          price: s.price,
+        })),
+        total,
+        email,
+      });
+      submitPayFastForm(res.data);
+    } catch (err) {
+      console.error(err);
+      setError("Payment failed. Try again.");
+      toast.error("❌ Payment failed. Try again.");
+    } finally {
+      setLoading(false);
+    }
+  };
 
   function submitPayFastForm(fields) {
     const form = document.createElement("form");
@@ -319,14 +320,14 @@ const handlePayNow = async () => {
               <button
                 className="spa-btn"
                 onClick={handleBookNow}
-                disabled={!email || services.length === 0 || loading}
+                disabled={loading}
               >
                 {loading ? "Processing..." : "📩 Book Now"}
               </button>
               <button
                 className="spa-btn pay-btn"
                 onClick={handlePayNow}
-                disabled={!email || services.length === 0 || loading}
+                disabled={loading}
               >
                 {loading ? "Processing..." : "💳 Pay Now"}
               </button>
@@ -444,7 +445,8 @@ const handlePayNow = async () => {
         </div>
       </div>
 
-     <ToastContainer position="bottom-right" autoClose={3000} hideProgressBar />
+      {/* Toast Notifications */}
+      <ToastContainer position="bottom-right" autoClose={3000} hideProgressBar />
     </div>
   );
 }
