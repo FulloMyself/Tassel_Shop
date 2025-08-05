@@ -111,9 +111,9 @@ const showToast = (message, type = "success") => {
   const addService = (service) => {
   if (!services.find((s) => s.name === service.name)) {
     setServices([...services, service]);
-    showToast(`✅ ${service.name} has been added!`, "success");
+    showToast(`✅ ${service.name} has been added!`);
   } else {
-    showToast(`⚠️ ${service.name} is already selected!`, "warning");
+    showToast(`⚠️ ${service.name} is already selected!`);
   }
   setShowServiceSelector(false);
 };
