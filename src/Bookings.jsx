@@ -101,20 +101,75 @@ export default function Bookings() {
   );
 
   const addService = (service) => {
+  if (forWhom === "myself") {
+    // Prevent duplicates
     if (!services.find((s) => s.name === service.name)) {
-      setServices([...services, service]);
+      setServices([...services, { ...service, quantity: 1 }]);
       toast.success(`✅ ${service.name} has been added to your booking.`);
     } else {
       toast.warn(`⚠️ ${service.name} is already in your booking.`);
     }
-    setShowServiceSelector(false);
-  };
+  } else {
+    // Me & Others → allow multiple quantities
+    const existingService = services.find((s) => s.name === service.name);
+    if (existingService) {
+      setServices(
+        services.map((s) =>
+          s.name === service.name
+            ? { ...s, quantity: s.quantity + 1 }
+            : s
+        )
+      );
+      toast.info(`➕ Increased quantity for ${service.name}.`);
+    } else {
+      setServices([...services, { ...service, quantity: 1 }]);
+      toast.success(`✅ ${service.name} has been added to your booking.`);
+    }
+  }
+  setShowServiceSelector(false);
+};
+
+const updateQuantity = (name, change) => {
+  setServices((prev) =>
+    prev.map((s) =>
+      s.name === name
+        ? {
+            ...s,
+            quantity: Math.max(1, s.quantity + change),
+          }
+        : s
+    )
+  );
+
+  if (change > 0) {
+    toast.info(`➕ Increased quantity for ${name}.`);
+  } else {
+    toast.info(`➖ Reduced quantity for ${name}.`);
+  }
+};
+
+
 
   const removeService = (name) => {
-    setServices(services.filter((s) => s.name !== name));
-  };
+  const serviceToRemove = services.find((s) => s.name === name);
 
-  const total = services.reduce((sum, s) => sum + s.price, 0);
+  if (forWhom === "others" && serviceToRemove?.quantity > 1) {
+    // Reduce quantity instead of removing completely
+    setServices(
+      services.map((s) =>
+        s.name === name ? { ...s, quantity: s.quantity - 1 } : s
+      )
+    );
+    toast.info(`➖ Reduced quantity for ${name}.`);
+  } else {
+    // Remove completely
+    setServices(services.filter((s) => s.name !== name));
+    toast.error(`🗑 ${name} removed from booking.`);
+  }
+};
+
+  const total = services.reduce((sum, s) => sum + (s.price * (s.quantity || 1)), 0);
+
 
   const emailServer = import.meta.env.VITE_EMAIL_SERVER_URL;
   const paymentPortal = import.meta.env.VITE_PAYMENT_PORTAL_URL;
@@ -259,28 +314,50 @@ export default function Bookings() {
 
             {/* Selected Services */}
             <div className="selected-services">
+              <div className="total-price">
+                      <strong>Total: </strong>R{total}.00
+              </div>
               <p className="label">Selected Services</p>
               {services.length === 0 ? (
-                <p className="empty-state">No services selected yet.</p>
-              ) : (
-                services.map((s, i) => (
-                  <div key={i} className="service-card">
-                    <div>
-                      <strong>{s.name}</strong>
-                      <p className="service-details">
-                        ⏱ {s.duration} mins | R{s.price}.00
-                      </p>
-                    </div>
-                    <button
-                      className="remove-btn"
-                      onClick={() => removeService(s.name)}
-                    >
-                      ✖
-                    </button>
-                  </div>
-                ))
-              )}
-            </div>
+  <p className="empty-state">No services selected yet.</p>
+) : (
+  services.map((s, i) => (
+    <div key={i} className="service-card">
+      <div>
+        <strong>{s.name}</strong>
+        <p className="service-details">
+          ⏱ {s.duration} mins | R{s.price}.00  
+          {s.quantity > 1 && <span> × {s.quantity}</span>}
+        </p>
+      </div>
+
+      <div className="quantity-controls">
+        {forWhom === "others" && (
+          <>
+            <button
+              className="qty-btn"
+              onClick={() => updateQuantity(s.name, -1)}
+            >
+              ➖
+            </button>
+            <button
+              className="qty-btn"
+              onClick={() => updateQuantity(s.name, 1)}
+            >
+              ➕
+            </button>
+          </>
+        )}
+        <button
+          className="remove-btn"
+          onClick={() => removeService(s.name)}
+        >
+          ✖
+        </button>
+      </div>
+    </div>
+  ))
+)}
 
             <button
               className="spa-btn add-service"
