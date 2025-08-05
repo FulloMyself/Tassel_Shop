@@ -4,7 +4,7 @@
     "category": "massage",
     "duration": 60,
     "price": 500,
-    "image": "images/services/swedish_massage.jpg",
+    "image": "${import.meta.env.BASE_URL}images/services/Massages.jpeg",
     "description": "A relaxing full-body massage using gentle techniques to relieve tension."
   },
   {
