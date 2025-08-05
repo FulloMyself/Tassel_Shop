@@ -439,8 +439,8 @@ const handlePayNow = async () => {
             </div>
           </div>
         </div>
-        {toast && <div className="toast">{toast}</div>}
       </div>
+      {toast && <div className="toast">{toast}</div>}
     </div>
   );
 }
