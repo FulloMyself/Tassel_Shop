@@ -42,8 +42,8 @@
   {
     "name": "Aromatherapy or Hot Stones Massage",
     "category": "massage",
-    "duration": [90, 180],
-    "price": [850, 1100],
+    "duration": ["90", "180"],
+    "price": ["850", "1100"],
     "image": "images/services/Massages.jpeg",
     "description": "An aroma filled hot stones massage using gentle techniques to relieve tension."
   },
