@@ -150,5 +150,45 @@
     "price": 550,
     "image": "images/services/Sip_And_Paint.jpg",
     "description": "This ticket admits one(1) person into the Women's Day Sip And Paint Event dated 09 August 2025."
+  },
+  {
+    "name": "Single - Skin Tag Removal",
+    "category": "skin_tag_removals",
+    "duration": 60,
+    "price": 200,
+    "image": "images/services/Facials.jpg",
+    "description": "A thorough facial treatment to cleanse, exfoliate, and rejuvenate your skin."
+  },
+  {
+    "name": "30Minutes - Skin Tag Removal",
+    "category": "skin_tag_removals",
+    "duration": 30,
+    "price": 600,
+    "image": "images/services/Facials.jpg",
+    "description": "A thorough facial treatment to cleanse, exfoliate, and rejuvenate your skin."
+  },
+  {
+    "name": "Dermaplaning",
+    "category": "add_on_treatments",
+    "duration": 30,
+    "price": 350,
+    "image": "images/services/Facials.jpg",
+    "description": "A thorough facial treatment to cleanse, exfoliate, and rejuvenate your skin."
+  },
+  {
+    "name": "LED Light Therapy",
+    "category": "add_on_treatments",
+    "duration": 30,
+    "price": 250,
+    "image": "images/services/Facials.jpg",
+    "description": "A thorough facial treatment to cleanse, exfoliate, and rejuvenate your skin."
+  },
+  {
+    "name": "Acne Extraction",
+    "category": "add_on_treatments",
+    "duration": 20,
+    "price": 200,
+    "image": "images/services/Facials.jpg",
+    "description": "A thorough facial treatment to cleanse, exfoliate, and rejuvenate your skin."
   }
 ]
