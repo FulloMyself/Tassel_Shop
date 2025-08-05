@@ -40,7 +40,23 @@
     "description": "Durable acrylic extensions for added length and strength."
   },
   {
-    "name": "Deep Facial Cleanse",
+    "name": "Tassel Deep Cleanse Facial ",
+    "category": "facial",
+    "duration": 60,
+    "price": 450,
+    "image": "images/services/Facials.jpg",
+    "description": "A thorough facial treatment to cleanse, exfoliate, and rejuvenate your skin."
+  },
+  {
+    "name": "Tassel HydraFacial ",
+    "category": "facial",
+    "duration": 60,
+    "price": 550,
+    "image": "images/services/Facials.jpg",
+    "description": "A thorough facial treatment to cleanse, exfoliate, and rejuvenate your skin."
+  },
+  {
+    "name": "Tassel Hydrajelly Facial",
     "category": "facial",
     "duration": 60,
     "price": 450,
