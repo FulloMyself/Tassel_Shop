@@ -65,13 +65,6 @@ export default function Bookings() {
     Saturday: { start: "09:00", end: "17:00" },
   };
 
-  const [toast, setToast] = useState({ message: "", type: "" });
-
-const showToast = (message, type = "success") => {
-  setToast({ message, type });
-  setTimeout(() => setToast({ message: "", type: "" }), 3000);
-};
-
   const today = new Date().toLocaleDateString("en-US", { weekday: "long" });
   const generateTimeSlots = () => {
     const hours = businessHours[today];
@@ -108,15 +101,17 @@ const showToast = (message, type = "success") => {
     currentPage * servicesPerPage
   );
 
-  const addService = (service) => {
+  // In addService
+const addService = (service) => {
   if (!services.find((s) => s.name === service.name)) {
     setServices([...services, service]);
-    showToast(`✅ ${service.name} has been added!`);
+    toast.success(`✅ ${service.name} has been added successfully!`);
   } else {
-    showToast(`⚠️ ${service.name} is already selected!`);
+    toast.warn(`⚠️ ${service.name} is already added.`);
   }
   setShowServiceSelector(false);
 };
+
 
 
   const removeService = (name) => {
@@ -130,15 +125,15 @@ const showToast = (message, type = "success") => {
 
   const handleBookNow = async () => {
   if (!selectedTime) {
-    showToast("⏰ Please choose a time slot.", "warning");
+    toast.warn("⏰ Please choose a time slot before booking.");
     return;
   }
   if (!email) {
-    showToast("⚠️ Please enter your email address.", "warning");
+    toast.warn("📧 Please enter your email address.");
     return;
   }
   if (services.length === 0) {
-    showToast("❌💆‍♀️ Please select at least one service.", "error");
+    toast.error("💆‍♀️ Please select at least one service.");
     return;
   }
 
@@ -162,17 +157,18 @@ const showToast = (message, type = "success") => {
   }
 };
 
+// In handlePayNow
 const handlePayNow = async () => {
   if (!selectedTime) {
-    showToast("⏰ Please choose a time slot before paying.", "warning");
+    toast.warn("⏰ Please choose a time slot before paying.");
     return;
   }
   if (!email) {
-    showToast("⚠️ Please enter your email address before making payment.", "warning");
+    toast.warn("📧 Please enter your email address.");
     return;
   }
   if (services.length === 0) {
-    showToast("❌💆‍♀️ Please select at least one service.", "error");
+    toast.error("💆‍♀️ Please select at least one service.");
     return;
   }
 
@@ -448,7 +444,7 @@ const handlePayNow = async () => {
         </div>
       </div>
 
-      {toast && <div className="toast">{toast}</div>}
+     <ToastContainer position="bottom-right" autoClose={3000} hideProgressBar />
     </div>
   );
 }
