@@ -20,7 +20,7 @@
     "category": "massage",
     "duration": 75,
     "price": 650,
-    "image": "images/services/hot_stone_massage.jpg",
+    "image": "images/services/Massages.jpeg",
     "description": "Heated stones are used to relax muscles and improve circulation."
   },
   {
@@ -44,7 +44,15 @@
     "category": "facial",
     "duration": 60,
     "price": 450,
-    "image": "images/services/deep_facial_cleanse.jpg",
+    "image": "images/services/Facials.jpg",
     "description": "A thorough facial treatment to cleanse, exfoliate, and rejuvenate your skin."
+  },
+  {
+    "name": "Spa Party",
+    "category": "event",
+    "duration": 180,
+    "price": 1000,
+    "image": "images/services/Spa_Party.jpg",
+    "description": "An experience not to be missed. Facials, massages as well as nails all in one combo."
   }
 ]
