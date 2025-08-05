@@ -1507,3 +1507,131 @@ header {
   margin-top: 0.5rem;
 }
 
+/* Mobile-first styles */
+.booking-wrapper {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 1rem;
+}
+
+/* Stack booking card sections */
+.booking-card {
+  display: flex;
+  flex-wrap: wrap;
+  width: 100%;
+}
+
+/* Left and right columns */
+.booking-left,
+.booking-right {
+  flex: 1;
+  min-width: 300px;
+  padding: 1rem;
+}
+
+/* Service selector adjustments */
+.service-list .service-card {
+  display: flex;
+  flex-direction: row;
+  align-items: flex-start;
+  gap: 0.8rem;
+  padding: 0.8rem;
+  border: 1px solid #eee;
+  border-radius: 8px;
+}
+
+/* Service image scaling */
+.service-image {
+  width: 70px;
+  height: 70px;
+}
+
+/* Buttons full width on mobile */
+@media (max-width: 768px) {
+  .payment-buttons button,
+  .who-buttons button,
+  .add-service,
+  .add-btn {
+    width: 100%;
+    margin-top: 0.5rem;
+  }
+
+  .service-card {
+    flex-direction: column;
+    align-items: flex-start;
+  }
+
+  .service-image {
+    width: 100%;
+    height: auto;
+    max-height: 150px;
+    object-fit: cover;
+  }
+
+  .quantity-controls {
+    display: flex;
+    gap: 0.5rem;
+    margin-top: 0.5rem;
+  }
+
+  .total-price {
+    font-size: 1.2rem;
+    text-align: center;
+    margin-bottom: 1rem;
+  }
+
+  .booking-card {
+    flex-direction: column;
+  }
+}
+
+/* Default desktop/tablet look stays the same */
+
+/* Mobile full-screen service selector */
+@media (max-width: 768px) {
+  .service-selector {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: white;
+    z-index: 1000;
+    overflow-y: auto;
+    padding: 1rem;
+    animation: slideUp 0.3s ease-out;
+  }
+
+  @keyframes slideUp {
+    from {
+      transform: translateY(100%);
+      opacity: 0;
+    }
+    to {
+      transform: translateY(0);
+      opacity: 1;
+    }
+  }
+
+  .service-selector h4 {
+    font-size: 1.5rem;
+    margin-bottom: 1rem;
+  }
+
+  /* Close button for mobile */
+  .close-selector-btn {
+    position: absolute;
+    top: 10px;
+    right: 10px;
+    background: #ff4d4f;
+    color: white;
+    border: none;
+    border-radius: 50%;
+    width: 36px;
+    height: 36px;
+    font-size: 1.2rem;
+    cursor: pointer;
+    z-index: 1001;
+  }
+}
+

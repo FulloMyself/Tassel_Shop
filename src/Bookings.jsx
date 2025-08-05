@@ -411,6 +411,13 @@ useEffect(() => {
             {/* Service Selector */}
             {showServiceSelector && (
               <div className="service-selector" ref={selectorRef}>
+                {/* Mobile close button */}
+    <button
+      className="close-selector-btn"
+      onClick={() => setShowServiceSelector(false)}
+    >
+      ✖
+    </button>
                 <h4>Select a Service</h4>
                 <div className="filter-bar">
                   <select
