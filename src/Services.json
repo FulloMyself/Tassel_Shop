@@ -70,5 +70,13 @@
     "price": 1000,
     "image": "images/services/Spa_Party.jpg",
     "description": "An experience not to be missed. Facials, massages as well as nails all in one combo."
+  },
+  {
+    "name": "Women's Day, Saturday 09 August 2025 Sip And Paint Event Ticket",
+    "category": "event",
+    "duration": 300,
+    "price": 550,
+    "image": "images/services/Sip_And_Paint.jpg",
+    "description": "This ticket admits one(1) person into the Women's Day Sip And Paint Event dated 09 August 2025."
   }
 ]
