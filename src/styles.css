@@ -1242,7 +1242,7 @@ header {
 .booking-hero {
   position: relative;
   background: url("/images/products/Hero_Tassel.png") center/cover no-repeat;
-  height: 70vh;
+  height: 80vh;
   display: flex;
   justify-content: center;
   align-items: center;

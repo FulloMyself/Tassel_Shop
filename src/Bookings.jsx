@@ -109,11 +109,15 @@ export default function Bookings() {
   );
 
   const addService = (service) => {
-    if (!services.find((s) => s.name === service.name)) {
-      setServices([...services, service]);
-    }
-    setShowServiceSelector(false);
-  };
+  if (!services.find((s) => s.name === service.name)) {
+    setServices([...services, service]);
+    showToast(`✅ ${service.name} has been added to your booking.`);
+  } else {
+    showToast(`⚠️ ${service.name} is already in your booking.`);
+  }
+  setShowServiceSelector(false);
+};
+
 
   const removeService = (name) => {
     setServices(services.filter((s) => s.name !== name));
