@@ -14,6 +14,7 @@ const categories = [
   { key: "chemical_peel", label: "Chemical Peels"},
   { key: "skin_tag_removals", label: "Skin Tag Removals"},
   { key: "add_on_treatments", label: "Add On Treatments"},
+  { key: "body", label: "Body Contouring"},
 ];
 
 export default function Bookings() {

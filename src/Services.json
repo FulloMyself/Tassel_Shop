@@ -128,22 +128,6 @@
     "description": "Heated stones are used to relax muscles and improve circulation."
   },
   {
-    "name": "Gel Nails",
-    "category": "nail",
-    "duration": 60,
-    "price": 350,
-    "image": "images/services/Nails.jpg",
-    "description": "Long-lasting gel polish for beautiful, shiny nails."
-  },
-  {
-    "name": "Acrylic Nails",
-    "category": "nail",
-    "duration": 75,
-    "price": 400,
-    "image": "images/services/Nails.jpg",
-    "description": "Durable acrylic extensions for added length and strength."
-  },
-  {
     "name": "Tassel Deep Cleanse Facial ",
     "category": "facial",
     "duration": 60,
@@ -574,5 +558,69 @@
     "price": 200,
     "image": "images/services/Facials.jpg",
     "description": "A thorough facial treatment to cleanse, exfoliate, and rejuvenate your skin."
+  },
+  {
+    "name": "Medi Heel Peel",
+    "category": "add_on_treatments",
+    "duration": 30,
+    "price": 300,
+    "image": "images/services/Waxes.jpg",
+    "description": "A high level buff, shine and polish nail service."
+  },
+  {
+    "name": "Red Bottoms",
+    "category": "add_on_treatments",
+    "duration": 20,
+    "price": 100,
+    "image": "images/services/Waxes.jpg",
+    "description": "A high level buff, shine and polish nail service."
+  },
+  {
+    "name": "Gel Soak Off",
+    "category": "add_on_treatments",
+    "duration": 20,
+    "price": 100,
+    "image": "images/services/Nails.jpg",
+    "description": "A high level buff, shine and polish nail service."
+  },
+  {
+    "name": "Acrylic Soak Off",
+    "category": "add_on_treatments",
+    "duration": 20,
+    "price": 150,
+    "image": "images/services/Nails.jpg",
+    "description": "A high level buff, shine and polish nail service."
+  },
+  {
+    "name": "Foreign Soak Off",
+    "category": "add_on_treatments",
+    "duration": 20,
+    "price": 200,
+    "image": "images/services/Nails.jpg",
+    "description": "A high level buff, shine and polish nail service."
+  },
+  {
+    "name": "Nail Art per Hand",
+    "category": "add_on_treatments",
+    "duration": 20,
+    "price": 100,
+    "image": "images/services/Nails.jpg",
+    "description": "A high level buff, shine and polish nail service."
+  },
+  {
+    "name": "Nail Art 3D",
+    "category": "add_on_treatments",
+    "duration": 20,
+    "price": 100,
+    "image": "images/services/Nails.jpg",
+    "description": "A high level buff, shine and polish nail service."
+  },
+  {
+    "name": "Nail Repair",
+    "category": "add_on_treatments",
+    "duration": 20,
+    "price": 40,
+    "image": "images/services/Nails.jpg",
+    "description": "A high level buff, shine and polish nail service."
   }
 ]
