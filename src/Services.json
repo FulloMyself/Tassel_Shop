@@ -622,5 +622,77 @@
     "price": 40,
     "image": "images/services/Nails.jpg",
     "description": "A high level buff, shine and polish nail service."
+  },
+  {
+    "name": "Full Body - Body Contouring Wrap",
+    "category": "body",
+    "duration": 90,
+    "price": 1250,
+    "image": "images/services/Waxes.jpg",
+    "description": "A natural body sculpting service."
+  },
+  {
+    "name": "Targeted Areas - Body Contouring Wrap",
+    "category": "body",
+    "duration": 60,
+    "price": 620,
+    "image": "images/services/Waxes.jpg",
+    "description": "A natural body sculpting service."
+  },
+  {
+    "name": "Full Body - Chilli Body Wrap",
+    "category": "body",
+    "duration": 90,
+    "price": 980,
+    "image": "images/services/Waxes.jpg",
+    "description": "A natural body sculpting service."
+  },
+  {
+    "name": "Targeted Areas - Chilli Body Wrap",
+    "category": "body",
+    "duration": 90,
+    "price": 500,
+    "image": "images/services/Waxes.jpg",
+    "description": "A natural body sculpting service."
+  },
+  {
+    "name": "Full Body - Wood Therapy",
+    "category": "body",
+    "duration": 90,
+    "price": 920,
+    "image": "images/services/Waxes.jpg",
+    "description": "A natural body sculpting service."
+  },
+  {
+    "name": "Targeted Areas - Wood Therapy",
+    "category": "body",
+    "duration": 60,
+    "price": 650,
+    "image": "images/services/Waxes.jpg",
+    "description": "A natural body sculpting service."
+  },
+  {
+    "name": "Targeted Areas - Wood Therapy",
+    "category": "body",
+    "duration": 60,
+    "price": 650,
+    "image": "images/services/Waxes.jpg",
+    "description": "A natural body sculpting service."
+  },
+  {
+    "name": "G5 Contouring - 1 Session",
+    "category": "body",
+    "duration": 60,
+    "price": 650,
+    "image": "images/services/Waxes.jpg",
+    "description": "A natural body sculpting service."
+  },
+  {
+    "name": "G5 Contouring - 6 Sessions",
+    "category": "body",
+    "duration": 300,
+    "price": 3850,
+    "image": "images/services/Waxes.jpg",
+    "description": "A technological body sculpting service. Can be taken within 3 weeks or 6 weeks."
   }
 ]
