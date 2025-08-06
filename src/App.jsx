@@ -1,6 +1,5 @@
-import React, { useState, useEffect, useRef } from "react";
-import { HashRouter as Router, Routes, Route } from "react-router-dom";
-import gsap from "gsap";
+import React, { useState, useEffect } from "react";
+import { HashRouter as Router, Routes, Route, useLocation } from "react-router-dom";
 import Header from "./Header";
 import HeroSection from "./HeroSection";
 import Products from "./Products";
@@ -9,24 +8,26 @@ import Footer from "./Footer";
 import Gifts from "./Gifts";
 import Bookings from "./Bookings";
 import "./styles.css";
+import gsap from "gsap";
+
+function AppHeader({ cartItems, toggleCart }) {
+  const location = useLocation();
+  const hideCart = location.pathname === "/gifts" || location.pathname === "/bookings";
+
+  return (
+    <Header
+      cartCount={hideCart ? 0 : cartItems.reduce((sum, item) => sum + item.quantity, 0)}
+      toggleCart={hideCart ? null : toggleCart}
+      hideCart={hideCart} // Pass as a prop to Header
+    />
+  );
+}
 
 function App() {
   const [cartOpen, setCartOpen] = useState(false);
   const [cartItems, setCartItems] = useState([]);
-  const cartRef = useRef(null);
 
-  const toggleCart = () => {
-    setCartOpen((open) => {
-      if (!open) {
-        // Opening cart
-        gsap.to(cartRef.current, { x: 0, duration: 0.5, ease: "power3.out" });
-      } else {
-        // Closing cart
-        gsap.to(cartRef.current, { x: "100%", duration: 0.5, ease: "power3.in" });
-      }
-      return !open;
-    });
-  };
+  const toggleCart = () => setCartOpen((open) => !open);
 
   useEffect(() => {
     const savedCart = localStorage.getItem("cart");
@@ -71,10 +72,7 @@ function App() {
 
   return (
     <Router>
-      <Header
-        cartCount={cartItems.reduce((sum, item) => sum + item.quantity, 0)}
-        toggleCart={toggleCart}
-      />
+      <AppHeader cartItems={cartItems} toggleCart={toggleCart} />
       <main>
         <Routes>
           <Route
@@ -83,25 +81,17 @@ function App() {
               <>
                 <HeroSection />
                 <Products onAddToCart={handleAddToCart} />
-                <div
-                  ref={cartRef}
-                  style={{
-                    position: "fixed",
-                    top: 0,
-                    right: 0,
-                    height: "100%",
-                    transform: "translateX(100%)",
-                    zIndex: 9999
-                  }}
-                >
+              {cartOpen && (
+                            <>
                   <Cart
+                    className="open"
                     items={cartItems}
                     onIncrement={handleIncrement}
                     onDecrement={handleDecrement}
                     onClose={toggleCart}
                     setCartItems={setCartItems}
-                  />
-                </div>
+                    />
+                </>)}
               </>
             }
           />

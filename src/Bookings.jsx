@@ -112,11 +112,6 @@ useEffect(() => {
   }
 }, [showServiceSelector]);
 
-useEffect(() => {
-  if (showServiceSelector) {
-    gsap.fromTo(".drawer-overlay", { opacity: 0 }, { opacity: 1, duration: 0.3 });
-  }
-}, [showServiceSelector]);
 
 
   useEffect(() => {
@@ -486,13 +481,13 @@ useEffect(() => {
     </button>
                 <h4>Select a Service</h4>
                 <div className="filter-bar">
-                <select
+              <select
                     value={selectedCategory}
                     onChange={(e) => {
                       setSelectedCategory(e.target.value);
                       setCurrentPage(1);
                     }}
-                >
+                  >
                     {categories.map((cat) => (
                       <option key={cat.key} value={cat.key}>
                         {cat.label}
