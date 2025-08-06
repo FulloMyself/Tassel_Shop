@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useRef } from "react";
+import React, { useState, useEffect } from "react";
 import { HashRouter as Router, Routes, Route, useLocation } from "react-router-dom";
 import Header from "./Header";
 import HeroSection from "./HeroSection";
@@ -18,7 +18,7 @@ function AppHeader({ cartItems, toggleCart }) {
     <Header
       cartCount={hideCart ? 0 : cartItems.reduce((sum, item) => sum + item.quantity, 0)}
       toggleCart={hideCart ? null : toggleCart}
-      hideCart={hideCart}
+      hideCart={hideCart} // Pass as a prop to Header
     />
   );
 }
@@ -26,26 +26,14 @@ function AppHeader({ cartItems, toggleCart }) {
 function App() {
   const [cartOpen, setCartOpen] = useState(false);
   const [cartItems, setCartItems] = useState([]);
-  const cartRef = useRef(null);
 
-  const toggleCart = () => {
-    setCartOpen((open) => {
-      if (!open) {
-        gsap.to(cartRef.current, { x: 0, duration: 0.4, ease: "power3.out" });
-      } else {
-        gsap.to(cartRef.current, { x: "100%", duration: 0.4, ease: "power3.in" });
-      }
-      return !open;
-    });
-  };
+  const toggleCart = () => setCartOpen((open) => !open);
 
-  // Load from LocalStorage
   useEffect(() => {
     const savedCart = localStorage.getItem("cart");
     if (savedCart) setCartItems(JSON.parse(savedCart));
   }, []);
 
-  // Save to LocalStorage
   useEffect(() => {
     localStorage.setItem("cart", JSON.stringify(cartItems));
   }, [cartItems]);
@@ -93,27 +81,17 @@ function App() {
               <>
                 <HeroSection />
                 <Products onAddToCart={handleAddToCart} />
-                <div
-                  ref={cartRef}
-                  style={{
-                    position: "fixed",
-                    top: 0,
-                    right: 0,
-                    height: "100%",
-                    background: "#fff",
-                    boxShadow: "-4px 0 15px rgba(0,0,0,0.15)",
-                    transform: "translateX(100%)",
-                    zIndex: 9999,
-                  }}
-                >
+              {cartOpen && (
+                            <>
                   <Cart
+                    className="open"
                     items={cartItems}
                     onIncrement={handleIncrement}
                     onDecrement={handleDecrement}
                     onClose={toggleCart}
                     setCartItems={setCartItems}
-                  />
-                </div>
+                    />
+                </>)}
               </>
             }
           />
