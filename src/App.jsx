@@ -37,6 +37,13 @@ function App() {
     localStorage.setItem("cart", JSON.stringify(cartItems));
   }, [cartItems]);
 
+  useEffect(() => {
+  if (cartOpen) {
+    gsap.fromTo(".drawer-overlay", { opacity: 0 }, { opacity: 1, duration: 0.3 });
+  }
+}, [cartOpen]);
+
+
   const handleAddToCart = (product) => {
     setCartItems((prev) => {
       const existing = prev.find((item) => item.id === product.id);
@@ -81,6 +88,7 @@ function App() {
                 <HeroSection />
                 <Products onAddToCart={handleAddToCart} />
                 {cartOpen && (
+                    <>
                   <Cart
                     className="open"
                     items={cartItems}
@@ -88,8 +96,9 @@ function App() {
                     onDecrement={handleDecrement}
                     onClose={toggleCart}
                     setCartItems={setCartItems}
-                  />
-                )}
+                    />
+                  <div className="drawer-overlay" onClick={toggleCart}></div>
+                </>)}
               </>
             }
           />

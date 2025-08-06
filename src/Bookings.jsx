@@ -112,6 +112,11 @@ useEffect(() => {
   }
 }, [showServiceSelector]);
 
+useEffect(() => {
+  if (showServiceSelector) {
+    gsap.fromTo(".drawer-overlay", { opacity: 0 }, { opacity: 1, duration: 0.3 });
+  }
+}, [showServiceSelector]);
 
 
   useEffect(() => {
@@ -467,25 +472,27 @@ useEffect(() => {
             {success && <div className="success">{success}</div>}
 
             {/* Service Selector */}
-            {showServiceSelector && (
+          {showServiceSelector && (
 
               <div className={`service-selector ${showServiceSelector ? "open" : ""}`} ref={selectorRef}>
+              {/* Overlay */}
+            <div className="drawer-overlay" onClick={() => setShowServiceSelector(false)}></div>
+
                 {/* Mobile close button */}
     <button
       className="close-selector-btn"
-      onClick={() => setShowServiceSelector(false)}
-    >
+      onClick={() => setShowServiceSelector(false)}>
       ✖
     </button>
                 <h4>Select a Service</h4>
                 <div className="filter-bar">
-                  <select
+                <select
                     value={selectedCategory}
                     onChange={(e) => {
                       setSelectedCategory(e.target.value);
                       setCurrentPage(1);
                     }}
-                  >
+                >
                     {categories.map((cat) => (
                       <option key={cat.key} value={cat.key}>
                         {cat.label}
