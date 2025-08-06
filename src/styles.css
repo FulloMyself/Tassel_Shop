@@ -1670,4 +1670,47 @@ header {
   filter: drop-shadow(0 4px 6px rgba(0,0,0,0.15));
 }
 
+/* Mobile Optimizations */
+@media (max-width: 768px) {
+  .contact-card {
+    padding: 0.8rem;
+    margin-top: 1.5rem;
+  }
+
+  .contact-card h4 {
+    font-size: 1rem;
+    margin-bottom: 0.8rem;
+  }
+
+  .social-icons {
+    flex-wrap: wrap;
+    gap: 0.6rem;
+  }
+
+  .social-icon svg {
+    width: 28px;
+    height: 28px;
+  }
+}
+
+@media (max-width: 480px) {
+  .contact-card {
+    padding: 0.6rem;
+    margin-top: 1rem;
+  }
+
+  .contact-card h4 {
+    font-size: 0.9rem;
+  }
+
+  .social-icons {
+    gap: 0.5rem;
+  }
+
+  .social-icon svg {
+    width: 24px;
+    height: 24px;
+  }
+}
+
 
