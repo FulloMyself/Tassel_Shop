@@ -297,6 +297,15 @@ const products = [
     image: `${import.meta.env.BASE_URL}images/products/BioDermal_UV_Fusion.jpg`,
     description: "Relax and unwind with our soothing aromatic massage oil.",
   },
+  {
+    id: 34,
+    name: "ResaK Collagen + Free Shaker",
+    price: 1150,
+    salePrice: 850,
+    category: "skincare",
+    image: `${import.meta.env.BASE_URL}images/products/ResaK_Collagen.jpg`,
+    description: "Buy the Collagen, get the shaker for free for a limited time only.",
+  },
 ];
 
 export default function Products({ onAddToCart }) {
