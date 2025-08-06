@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from "react";
+import gsap from "gsap";
 import { HashRouter as Router, Routes, Route, useLocation } from "react-router-dom";
 import Header from "./Header";
 import HeroSection from "./HeroSection";
