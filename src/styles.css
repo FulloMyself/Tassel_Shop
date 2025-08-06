@@ -901,11 +901,11 @@ header {
   position: fixed;
   top: 15px;
   right: 20px;
-  z-index: 2000; /* stays above everything */
+  z-index: 2000;
 }
 
 .cart-icon {
-  background: black;
+  background: white;
   border: none;
   padding: 10px;
   border-radius: 50%;
@@ -920,13 +920,14 @@ header {
 }
 
 .cart-count {
-  background: #a67c52;
+  background: #bfa18c;
   color: white;
   font-size: 0.75rem;
   padding: 2px 6px;
   border-radius: 10px;
   margin-left: 5px;
 }
+
 
 .cart-header {
   display: flex;
