@@ -905,7 +905,7 @@ header {
 }
 
 .cart-icon {
-  background: white;
+  background: black;
   border: none;
   padding: 10px;
   border-radius: 50%;
@@ -920,7 +920,7 @@ header {
 }
 
 .cart-count {
-  background: #ff4d6d;
+  background: #a67c52;
   color: white;
   font-size: 0.75rem;
   padding: 2px 6px;
