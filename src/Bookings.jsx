@@ -562,29 +562,36 @@ useEffect(() => {
     <h4>Connect With Us</h4>
     <div className="social-icons">
       {/* Facebook */}
-      <a href="https://facebook.com/tasselbeauty" target="_blank" rel="noopener noreferrer" className="social-icon">
-        <svg xmlns="http://www.w3.org/2000/svg" fill="#88a8d0" viewBox="0 0 24 24">
+      <a href="https://facebook.com/tasselbeautyandwellnessstudio" target="_blank" rel="noopener noreferrer" className="social-icon">
+        <svg xmlns="http://www.w3.org/2000/svg" fill="#a67c52" viewBox="0 0 24 24">
           <path d="M22.675 0h-21.35C.597 0 0 .6 0 1.333v21.333C0 23.4.597 24 1.325 24H12.82v-9.294H9.692v-3.622h3.128V8.413c0-3.1 1.893-4.788 4.657-4.788 1.324 0 2.463.097 2.795.141v3.24l-1.918.001c-1.504 0-1.797.716-1.797 1.764v2.314h3.587l-.467 3.622h-3.12V24h6.116C23.403 24 24 23.4 24 22.667V1.333C24 .6 23.403 0 22.675 0z"/>
         </svg>
       </a>
 
       {/* Instagram */}
-      <a href="https://instagram.com/tasselbeauty" target="_blank" rel="noopener noreferrer" className="social-icon">
-        <svg xmlns="http://www.w3.org/2000/svg" fill="#d48aa0" viewBox="0 0 24 24">
+      <a href="https://instagram.com/tasselbeautyandwellnessstudio" target="_blank" rel="noopener noreferrer" className="social-icon">
+        <svg xmlns="http://www.w3.org/2000/svg" fill="#a67c52" viewBox="0 0 24 24">
           <path d="M7.75 2h8.5A5.75 5.75 0 0 1 22 7.75v8.5A5.75 5.75 0 0 1 16.25 22h-8.5A5.75 5.75 0 0 1 2 16.25v-8.5A5.75 5.75 0 0 1 7.75 2Zm0 1.5A4.25 4.25 0 0 0 3.5 7.75v8.5A4.25 4.25 0 0 0 7.75 20.5h8.5a4.25 4.25 0 0 0 4.25-4.25v-8.5A4.25 4.25 0 0 0 16.25 3.5h-8.5ZM12 7a5 5 0 1 1 0 10 5 5 0 0 1 0-10Zm0 1.5a3.5 3.5 0 1 0 0 7 3.5 3.5 0 0 0 0-7Zm5.75-.88a.88.88 0 1 1-1.76 0 .88.88 0 0 1 1.76 0Z"/>
         </svg>
       </a>
 
       {/* WhatsApp */}
-      <a href="https://wa.me/27830081064" target="_blank" rel="noopener noreferrer" className="social-icon">
-        <svg xmlns="http://www.w3.org/2000/svg" fill="#8fd1a5" viewBox="0 0 24 24">
+      <a href="https://wa.me/27729605153" target="_blank" rel="noopener noreferrer" className="social-icon">
+        <svg xmlns="http://www.w3.org/2000/svg" fill="#a67c52" viewBox="0 0 24 24">
           <path d="M20.52 3.48a11.91 11.91 0 0 0-16.9 0c-4.66 4.66-4.66 12.24 0 16.9A11.91 11.91 0 0 0 12 24c2.02 0 4-.5 5.76-1.46l3.58 1.06a1 1 0 0 0 1.25-1.25l-1.06-3.58A11.91 11.91 0 0 0 24 12c0-3.18-1.24-6.17-3.48-8.52ZM12 21.5c-1.86 0-3.64-.48-5.21-1.39a1 1 0 0 0-.88-.08l-2.63.78.78-2.63a1 1 0 0 0-.08-.88A9.92 9.92 0 0 1 2 12C2 6.48 6.48 2 12 2c2.66 0 5.17 1.04 7.07 2.93A9.93 9.93 0 0 1 22 12c0 5.52-4.48 10-10 10Zm4.3-6.7c-.24-.12-1.4-.7-1.62-.78s-.37-.12-.53.12-.62.78-.76.94-.28.18-.52.06a8.1 8.1 0 0 1-2.4-1.48 9.03 9.03 0 0 1-1.68-2.07c-.18-.3 0-.46.12-.58.12-.12.24-.3.36-.46.12-.18.18-.3.3-.5s.06-.36 0-.5c-.06-.12-.53-1.28-.72-1.76-.18-.44-.36-.38-.53-.38h-.44c-.14 0-.38.06-.58.28s-.76.74-.76 1.8.78 2.08.9 2.22c.12.18 1.54 2.36 3.72 3.3.52.22.92.34 1.24.44.52.16 1 .14 1.38.08.42-.06 1.3-.54 1.48-1.06.18-.54.18-.98.12-1.06-.06-.08-.22-.14-.46-.26Z"/>
         </svg>
       </a>
 
+      {/* TikTok */}
+    <a href="https://tiktok.com/@tasselgroup" target="_blank" rel="noopener noreferrer" className="social-icon">
+      <svg xmlns="http://www.w3.org/2000/svg" fill="#a67c52" viewBox="0 0 24 24">
+        <path d="M12.75 2v13.5a3.75 3.75 0 1 1-3.75-3.75h.75V8.25H9a7.5 7.5 0 1 0 7.5 7.5V9.75a6.75 6.75 0 0 0 3.75 1.125V8.25a3 3 0 0 1-3-3V2h-4.5Z"/>
+      </svg>
+    </a>
+
       {/* Email */}
-      <a href="mailto:info@tasselbeauty.co.za" className="social-icon">
-        <svg xmlns="http://www.w3.org/2000/svg" fill="#d4b483" viewBox="0 0 24 24">
+      <a href="mailto:info@tasselgroup.co.za" className="social-icon">
+        <svg xmlns="http://www.w3.org/2000/svg" fill="#a67c52" viewBox="0 0 24 24">
           <path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4a2 2 0 0 1-2-2V6c0-1.1.9-2 2-2Zm0 2v.01L12 13l8-6.99V6H4Zm0 2.2V18h16V8.2l-8 7-8-7Z"/>
         </svg>
       </a>
