@@ -90,6 +90,29 @@ useEffect(() => {
   }
 }, []);
 
+// Slide-in animation for service selector
+useEffect(() => {
+  if (selectorRef.current) {
+    if (showServiceSelector) {
+      gsap.fromTo(
+        selectorRef.current,
+        { x: window.innerWidth > 768 ? 400 : 0, opacity: 0 },
+        { x: 0, opacity: 1, duration: 0.4, ease: "power2.out" }
+      );
+    } else {
+      if (window.innerWidth > 768) {
+        gsap.to(selectorRef.current, {
+          x: 400,
+          opacity: 0,
+          duration: 0.3,
+          ease: "power2.in"
+        });
+      }
+    }
+  }
+}, [showServiceSelector]);
+
+
 
   useEffect(() => {
     if (showServiceSelector && selectorRef.current) {
@@ -445,7 +468,8 @@ useEffect(() => {
 
             {/* Service Selector */}
             {showServiceSelector && (
-              <div className="service-selector" ref={selectorRef}>
+
+              <div className={`service-selector ${showServiceSelector ? "open" : ""}`} ref={selectorRef}>
                 {/* Mobile close button */}
     <button
       className="close-selector-btn"
