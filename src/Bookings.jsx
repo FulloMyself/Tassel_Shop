@@ -169,7 +169,7 @@ useEffect(() => {
         toast.info(`➕ Increased quantity for ${service.name}.`);
       } else {
         setServices([...services, { ...service, quantity: 1 }]);
-        toast.success(`✅ ${service.name} has been added to your booking.`);
+        toast.success(`${service.name} has been added to your booking.`);
       }
     }
     setShowServiceSelector(false);
