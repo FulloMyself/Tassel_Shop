@@ -1641,19 +1641,41 @@ header {
 /* Default desktop/tablet look stays the same */
 
 /* Mobile full-screen service selector */
+
+/* Right-side drawer for desktop */
+.service-selector {
+  position: fixed;
+  top: 0;
+  right: -400px;
+  width: 400px;
+  height: 100%;
+  background: #fff;
+  box-shadow: -4px 0 10px rgba(0, 0, 0, 0.1);
+  overflow-y: auto;
+  z-index: 3000;
+  padding: 1rem;
+  transition: right 0.4s ease-in-out;
+}
+
+.service-selector.open {
+  right: 0;
+}
+
+/* Mobile - keep bottom drawer behavior */
 @media (max-width: 768px) {
   .service-selector {
-    position: fixed;
-    top: 0;
-    left: 0;
+    top: auto;
+    bottom: -100%;
+    right: 0;
     width: 100%;
-    height: 100%;
-    background: white;
-    z-index: 1000;
-    overflow-y: auto;
-    padding: 1rem;
-    animation: slideUp 0.3s ease-out;
+    height: 80%;
+    border-radius: 12px 12px 0 0;
+    transition: bottom 0.4s ease-in-out;
   }
+  .service-selector.open {
+    bottom: 0;
+  }
+}
 
   @keyframes slideUp {
     from {
@@ -1686,7 +1708,6 @@ header {
     cursor: pointer;
     z-index: 1001;
   }
-}
 
 .contact-card {
   margin-top: 2rem;
@@ -1764,22 +1785,6 @@ header {
     width: 24px;
     height: 24px;
   }
-}
-
-.drawer-overlay {
-  position: fixed;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 100%;
-  background: rgba(0, 0, 0, 0.4);
-  z-index: 2500;
-  animation: fadeIn 0.3s ease forwards;
-}
-
-@keyframes fadeIn {
-  from { opacity: 0; }
-  to { opacity: 1; }
 }
 
 
