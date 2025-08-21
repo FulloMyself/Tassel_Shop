@@ -57,20 +57,20 @@ description: "This thick, heel wax helps repair painful cracked feet with natura
   },
   {
     id: 7,
-    name: "Tassel Menthol Body Rub",
+    name: "Tassel Menth Body Rub",
     price: 150,
     salePrice: 0,
     category: "bodycare",
     image: `${import.meta.env.BASE_URL}images/products/Tassel_Menthol_Body_Rub.jpg`,
-    description: "Deep relief muscle rub delivers targeted cooling relief for sore, stiff, and overworked muscles. This lightweight, fast-absorbing gel penetrates deep into the tissue, easing tension and promoting recovery. Perfect for post-workout use or everyday muscle support, it provides instant comfort with a refreshing, non-greasy finish.",
+    description: "Refreshing Mint Body Scrub invigorates and renews the skin with a cooling burst of minty freshness. Formulated with natural exfoliants, it gently buffs away dead skin cells, leaving the skin smooth, polished, and glowing. The refreshing mint infusion awakens the senses, making it the perfect scrub for an energizing self-care ritual.",
   },
   {
     id: 8,
     name: "Tassel Muscle Rub",
-    price: 199,
+    price: 150,
     category: "bodycare",
     image: `${import.meta.env.BASE_URL}images/products/Tassel_Muscle_Rub.jpg`,
-    description: "Relax and unwind with our soothing aromatic massage oil.",
+    description: "Deep relief muscle rub delivers targeted cooling relief for sore, stiff, and overworked muscles. This lightweight, fast-absorbing gel penetrates deep into the tissue, easing tension and promoting recovery. Perfect for post-workout use or everyday muscle support, it provides instant comfort with a refreshing, non-greasy finish.",
   },
   {
     id: 9,
@@ -88,7 +88,7 @@ description: "This thick, heel wax helps repair painful cracked feet with natura
     salePrice: 100,
     category: "skincare",
     image: `${import.meta.env.BASE_URL}images/products/Tassel_Sensitive_Milk_Cleanser_&_Make_Up_Remover.jpg`,
-description: "Cleansing milk is a soothing and mild cleanser which removes impurities, excess oil and makeup from the skin without irritation or drying out the skin.",
+    description: "Cleansing milk is a soothing and mild cleanser which removes impurities, excess oil and makeup from the skin without irritation or drying out the skin.",
   },
   {
     id: 11,
@@ -102,11 +102,11 @@ description: "Our skin brightening gel contains arbutin and vitamin C. Alpha arb
   {
     id: 12,
     name: "Tassel Therapeutic Muscle Soothing Cream",
-    price: 199,
+    price: 150,
     salePrice: 0,
     category: "bodycare",
     image: `${import.meta.env.BASE_URL}images/products/Tassel_Therapeutic_Muscle_Soothing_Cream.jpg`,
-    description: "Relax and unwind with our soothing aromatic massage oil.",
+    description: " Therapeutic Muscle Cream provides fast acting relief for tired, tense, and overworked muscles. Enriched with a blend of soothing botanicals and warming agents, this intensive cream helps ease discomfort, improve circulation, and promote relaxation. Ideal for post-workout recovery or daily muscle care, it leaves the body feeling refreshed, relaxed, and revitalised.",
   },
   {
     id: 13,
