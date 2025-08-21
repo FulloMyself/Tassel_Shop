@@ -106,7 +106,7 @@ description: "Our skin brightening gel contains arbutin and vitamin C. Alpha arb
     salePrice: 0,
     category: "bodycare",
     image: `${import.meta.env.BASE_URL}images/products/Tassel_Therapeutic_Muscle_Soothing_Cream.jpg`,
-    description: " Therapeutic Muscle Cream provides fast acting relief for tired, tense, and overworked muscles. Enriched with a blend of soothing botanicals and warming agents, this intensive cream helps ease discomfort, improve circulation, and promote relaxation. Ideal for post-workout recovery or daily muscle care, it leaves the body feeling refreshed, relaxed, and revitalised.",
+    description: "Therapeutic Muscle Cream provides fast acting relief for tired, tense, and overworked muscles. Enriched with a blend of soothing botanicals and warming agents, this intensive cream helps ease discomfort, improve circulation, and promote relaxation. Ideal for post-workout recovery or daily muscle care, it leaves the body feeling refreshed, relaxed, and revitalised.",
   },
   {
     id: 13,
