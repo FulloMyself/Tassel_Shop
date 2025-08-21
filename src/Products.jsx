@@ -304,7 +304,7 @@ const products = [
     salePrice: 850,
     category: "skincare",
     image: `${import.meta.env.BASE_URL}images/products/ResaK_Collagen.jpg`,
-    description: "Buy the Collagen, get the shaker for free for a limited time only.",
+    description: "Beauty Supplements: Collagen Skin Rejuvenation • Hair & Nail Health • Gut, Bone, Joint Health • Female Health ElixHer is expertly formulated to address the prominent concerns of feminine beauty and physical health. With collagen decreasing from the age of 18, and a yearly loss of 1% after 40 years of age, supplementing with Collagen is essential. Collagen is integral in maintaining optimum hydration levels in the skin, which promotes elasticity and supports essential cellular processes. This Beauty Blend utilises skillfully selected ingredients of the highest quality to ensure optimum bioavailability of its actives. Beauty Benefits include the softening and smoothing of fine lines and wrinkles, boosting of skin hydration levels, improvement of skin texture, firmness and cellulite reduction, building nail strength and promoting the health and growth of hair. Health Benefits include the promotion of wound healing, gut health, nutritional absorption, metabolic functions, antioxidant defenses, iron formation, resilient bones and connective tissues, immune support as well as symptomatic relief of menopause. Buy the Collagen, get the shaker for free for a limited time only.",
   },
 ];
 
