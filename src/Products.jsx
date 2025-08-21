@@ -4,11 +4,11 @@ const products = [
   {
     id: 1,
     name: "Tassel 12 Hour Concentrated Skin Balm",
-    price: 299,
-    salePrice: 249,
+    price: 199,
+    salePrice: 120,
     category: "skincare",
     image: `${import.meta.env.BASE_URL}images/products/Tassel_12_Hour_Concentrated_Skin_Balm.jpg`,
-    description: "Nourish your skin with our signature spa facial cream.",
+description: "12-Hour Concentrated Skin Balm delivers deep, long-lasting hydration while soothing and restoring the skin’s natural balance. Its rich, intensive formula locks in moisture for up to 12 hours, helping to strengthen the skin’s protective barrier. This product will give you skin that feels deeply nourished, supple, and beautifully radiant.",
   },
   {
     id: 2,
@@ -31,20 +31,20 @@ description: "A rich face wash that deeply cleanses the skin, refreshes pores, a
   {
     id: 4,
     name: "Tassel Eye Serum",
-    price: 199,
-    salePrice: 159,
+    price: 250,
+    salePrice: 0,
     category: "skincare",
     image: `${import.meta.env.BASE_URL}images/products/Tassel_Eye_Serum.jpg`,
-    description: "Relax and unwind with our soothing aromatic massage oil.",
+    description: "Serum 4 Eyes with Caffeine, Co Enzyme Q10, Nutri Peptide & Hyaluronic Acid is a smooth serum that can be used on face and below eyes to target dark circles under eyes, hyperpigmentation, fine lines, skin elasticity and aging. Caffeine is known to target dark circles under eyes, hyperpigmentation and blemishes while smoothing skin and reducing fine lines and wrinkles. Co Enzyme Q10 is known to support collagen and elastin production in skin, enhance hydration and skin regeneration.",
   },
   {
     id: 5,
     name: "Tassel Hand Made Heel Wax",
-    price: 299,
+    price: 150,
     salePrice: 0,
     category: "bodycare",
     image: `${import.meta.env.BASE_URL}images/products/Tassel_Hand_Made_Heel_Wax.jpg`,
-    description: "Nourish your skin with our signature spa facial cream.",
+description: "This thick, heel wax helps repair painful cracked feet with natural oils. Nourishing and moisturizing oils and butters soothe and help heal even the roughest, driest, cracked heels and feet.",
   },
   {
     id: 6,
@@ -58,11 +58,11 @@ description: "A rich face wash that deeply cleanses the skin, refreshes pores, a
   {
     id: 7,
     name: "Tassel Menthol Body Rub",
-    price: 299,
+    price: 150,
     salePrice: 0,
     category: "bodycare",
     image: `${import.meta.env.BASE_URL}images/products/Tassel_Menthol_Body_Rub.jpg`,
-    description: "Nourish your skin with our signature spa facial cream.",
+    description: "Deep relief muscle rub delivers targeted cooling relief for sore, stiff, and overworked muscles. This lightweight, fast-absorbing gel penetrates deep into the tissue, easing tension and promoting recovery. Perfect for post-workout use or everyday muscle support, it provides instant comfort with a refreshing, non-greasy finish.",
   },
   {
     id: 8,
@@ -75,7 +75,7 @@ description: "A rich face wash that deeply cleanses the skin, refreshes pores, a
   {
     id: 9,
     name: "Tassel Retinol A & E Night Cream Anti-Wrinkle",
-    price: 150,
+    price: 200,
     salePrice: 0,
     category: "skincare",
     image: `${import.meta.env.BASE_URL}images/products/Tassel_Retinol_A_&E_Night_Cream_Anti_Wrinkle.jpg`,
@@ -111,11 +111,11 @@ description: "Our skin brightening gel contains arbutin and vitamin C. Alpha arb
   {
     id: 13,
     name: "Tassel Vitamin E Day Moisturising Cream",
-    price: 299,
-    salePrice: 0,
+    price: 199,
+    salePrice: 150,
     category: "skincare",
     image: `${import.meta.env.BASE_URL}images/products/Tassel_Vitamin_E_Day_Moisturising_Cream.jpg`,
-    description: "Nourish your skin with our signature spa facial cream.",
+    description: "A soothing, moisturising and softening cream. Vitamin E is known to repair skin and reduce the appearance of scars creating supple and youthful looking skin",
   },
   {
     id: 14,
