@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from "react";
+import { motion, AnimatePresence } from "framer-motion";
 
 const products = [
   {
@@ -524,7 +525,27 @@ export default function Products({ onAddToCart }) {
         </div>
       )}
 
-      
+      <AnimatePresence>
+  {isModalOpen && (
+    <motion.div 
+      className="product-popup-overlay"
+      initial={{ opacity: 0 }}
+      animate={{ opacity: 1 }}
+      exit={{ opacity: 0 }}
+    >
+      <motion.div 
+        className="product-popup"
+        initial={{ scale: 0.85, opacity: 0 }}
+        animate={{ scale: 1, opacity: 1 }}
+        exit={{ scale: 0.85, opacity: 0 }}
+        transition={{ duration: 0.3, ease: "easeOut" }}
+      >
+        <button className="popup-close" onClick={closeModal}>×</button>
+        {/* Product details here */}
+      </motion.div>
+    </motion.div>
+  )}
+</AnimatePresence>
 
       {/* ✅ Popup Overlay */}
       {selectedProduct && (
