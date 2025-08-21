@@ -511,6 +511,7 @@ header {
   overflow-y: auto;          /* allow scroll inside */
   padding: 20px;
   position: relative;
+  align-items: center;
   animation: scaleIn 0.35s ease-in-out;
   box-shadow: 0 8px 30px rgba(0, 0, 0, 0.2);
 }
