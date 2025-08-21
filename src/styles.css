@@ -402,7 +402,7 @@ header {
 .see-more-btn {
   background: none;
   border: none;
-  color: #0077cc;
+  color: #5a3e36;
   cursor: pointer;
   font-size: 0.85rem;
   padding: 0;
@@ -417,16 +417,31 @@ header {
   margin: 0.5rem 0;
 }
 
-.product-price {
+.product-footer {
+  display: flex;
+  flex-direction: column; /* stack vertically */
+  align-items: center;   /* center horizontally */
+  margin-top: 10px;
+}
+
+.product-price-container {
   text-align: center;
-  margin: 0.5rem 0;
+  margin-bottom: 8px;
+}
+
+.product-price {
+  font-size: 1.1rem;
+  font-weight: bold;
+  display: block;
 }
 
 .original-price {
   text-decoration: line-through;
   color: #888;
+  font-size: 0.9rem;
   margin-right: 5px;
 }
+
 
 .final-price {
   text-align: center;

@@ -470,24 +470,27 @@ export default function Products({ onAddToCart }) {
   </button>
 )}
               <div className="product-footer">
-                {onSale && (
-                  <span className="original-price">
-                    R{product.price.toFixed(2)}
-                  </span>
-                )}
-                <span className="product-price">
-                  R{displayPrice.toFixed(2)}
-                </span>
-                <button
-                  className="add-to-cart-btn"
-                  onClick={(e) => {
-                    e.stopPropagation();
-                    onAddToCart(product);
-                  }}
-                >
-                  Add to Cart
-                </button>
-              </div>
+  <div className="product-price-container">
+    {onSale && (
+      <span className="original-price">
+        R{product.price.toFixed(2)}
+      </span>
+    )}
+    <span className="product-price">
+      R{displayPrice.toFixed(2)}
+    </span>
+  </div>
+
+  <button
+    className="add-to-cart-btn"
+    onClick={(e) => {
+      e.stopPropagation();
+      onAddToCart(product);
+    }}
+  >
+    Add to Cart
+  </button>
+</div>
               {onSale && <div className="sale-badge">SALE</div>}
             </div>
           );
