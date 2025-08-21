@@ -393,6 +393,25 @@ header {
   border-radius: 4px;
 }
 
+.product-desc {
+  font-size: 0.9rem;
+  color: #555;
+  margin-bottom: 5px;
+}
+
+.see-more-btn {
+  background: none;
+  border: none;
+  color: #0077cc;
+  cursor: pointer;
+  font-size: 0.85rem;
+  padding: 0;
+}
+.see-more-btn:hover {
+  text-decoration: underline;
+}
+
+
 .product-info h3 {
   text-align: center;
   margin: 0.5rem 0;

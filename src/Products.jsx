@@ -315,6 +315,7 @@ export default function Products({ onAddToCart }) {
   const [maxPrice, setMaxPrice] = useState("");
   const [sortBy, setSortBy] = useState("");
   const [filteredProducts, setFilteredProducts] = useState(products);
+  const [expandedProduct, setExpandedProduct] = useState(null);
   const [selectedProduct, setSelectedProduct] = useState(null);
 
   // ✅ Pagination State
@@ -372,6 +373,11 @@ export default function Products({ onAddToCart }) {
 
     setFilteredProducts(filtered);
   };
+
+  const truncateText = (text, maxLength = 80) => {
+  if (text.length <= maxLength) return text;
+  return text.slice(0, maxLength) + "...";
+};
 
   // ✅ Pagination Logic
   const totalPages = Math.ceil(filteredProducts.length / itemsPerPage);
@@ -445,7 +451,24 @@ export default function Products({ onAddToCart }) {
                 className="product-image"
               />
               <h3>{product.name}</h3>
-              <p className="product-desc">{product.description}</p>
+<p className="product-desc">
+  {expandedProduct === product.id
+    ? product.description
+    : truncateText(product.description, 80)}
+</p>
+{product.description.length > 80 && (
+  <button
+    className="see-more-btn"
+    onClick={(e) => {
+      e.stopPropagation(); // don’t open popup
+      setExpandedProduct(
+        expandedProduct === product.id ? null : product.id
+      );
+    }}
+  >
+    {expandedProduct === product.id ? "See Less" : "See More"}
+  </button>
+)}
               <div className="product-footer">
                 {onSale && (
                   <span className="original-price">
