@@ -524,6 +524,8 @@ export default function Products({ onAddToCart }) {
         </div>
       )}
 
+      
+
       {/* ✅ Popup Overlay */}
       {selectedProduct && (
         <div
