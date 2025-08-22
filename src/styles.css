@@ -556,6 +556,7 @@ header {
   text-decoration: line-through;
   color: #888;
   margin-right: 5px;
+  text-align: center;
 }
 
 .pagination {
