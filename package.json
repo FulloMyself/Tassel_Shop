@@ -2,6 +2,7 @@
   "name": "shop",
   "private": true,
   "version": "0.0.0",
+  "homepage": "/shop",
   "type": "module",
   "scripts": {
     "dev": "vite",
