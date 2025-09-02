@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import { HashRouter as Router, Routes, Route, useLocation } from "react-router-dom";
+import { BrowserRouter as Router, Routes, Route, useLocation } from "react-router-dom";
 import Header from "./Header";
 import HeroSection from "./HeroSection";
 import Products from "./Products";
@@ -71,7 +71,7 @@ function App() {
   };
 
   return (
-    <Router>
+    <Router basename="/shop">
       <AppHeader cartItems={cartItems} toggleCart={toggleCart} />
       <main>
         <Routes>
@@ -81,8 +81,7 @@ function App() {
               <>
                 <HeroSection />
                 <Products onAddToCart={handleAddToCart} />
-              {cartOpen && (
-                            <>
+                {cartOpen && (
                   <Cart
                     className="open"
                     items={cartItems}
@@ -90,8 +89,8 @@ function App() {
                     onDecrement={handleDecrement}
                     onClose={toggleCart}
                     setCartItems={setCartItems}
-                    />
-                </>)}
+                  />
+                )}
               </>
             }
           />
