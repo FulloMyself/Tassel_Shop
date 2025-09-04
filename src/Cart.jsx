@@ -16,7 +16,13 @@ export default function Cart({
   const emailServer = import.meta.env.VITE_EMAIL_SERVER_URL;
   const paymentPortal = import.meta.env.VITE_PAYMENT_PORTAL_URL;
 
-  const total = items.reduce((sum, item) => sum + item.price * item.quantity, 0);
+  const total = items.reduce((sum, item) => {
+    const itemPrice =
+      item.salePrice && item.salePrice > 0 && item.salePrice < item.price
+        ? item.salePrice
+        : item.price;
+    return sum + itemPrice * item.quantity;
+  }, 0);
 
   // ✅ Persist cart on every update
   useEffect(() => {
