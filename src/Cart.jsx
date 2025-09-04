@@ -154,7 +154,11 @@ export default function Cart({
                   </div>
                 </div>
                 <span className="cart-item-price">
-                  R{(item.price * item.quantity).toFixed(2)}
+                  R{(
+                    ((item.salePrice && item.salePrice > 0 && item.salePrice < item.price)
+                      ? item.salePrice
+                      : item.price) * item.quantity
+                  ).toFixed(2)}
                 </span>
               </li>
             ))}
