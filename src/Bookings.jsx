@@ -343,32 +343,53 @@ export default function Bookings() {
   const emailServer = import.meta.env.VITE_EMAIL_SERVER_URL;
   const paymentPortal = import.meta.env.VITE_PAYMENT_PORTAL_URL;
 
-  const handleBookNow = async () => {
-    if (!selectedTime) return toast.warn("⏰ Please choose a time slot.");
-    if (!email) return toast.warn("📧 Please enter your email address.");
-    if (services.length === 0)
-      return toast.error("💆‍♀️ Please select at least one service.");
+  const handleBookNow = () => {
+  if (!selectedTime) return toast.warn("⏰ Please choose a time slot.");
+  if (!email) return toast.warn("📧 Please enter your email address.");
+  if (services.length === 0)
+    return toast.error("💆‍♀️ Please select at least one service.");
 
-    setLoading(true);
-    setError("");
-    setSuccess("");
+  setLoading(true);
+  setError("");
+  setSuccess("");
 
-    try {
-      await axios.post(`${emailServer}/send-massage-booking`, {
-        forWhom,
-        services,
-        selectedTime,
-        email,
-      });
-      setSuccess("Booking request sent successfully!");
-      toast.success("📩 Booking request sent successfully!");
-    } catch (err) {
-      setError("Error sending booking. Try again.");
-      toast.error("❌ Error sending booking. Try again.");
-    } finally {
-      setLoading(false);
-    }
-  };
+  try {
+    // 1️⃣ Format services
+    const servicesText = services
+      .map((s) => `- ${s.name} (R${s.price}) - ${s.duration} mins`)
+      .join("\n");
+
+    // 2️⃣ Construct WhatsApp message
+    const message = encodeURIComponent(`Hello Tassel Beauty 🌸,
+
+I’d like to confirm my booking:
+
+Name / For Whom: ${forWhom === "others" ? "Myself & others" : "Just myself"}
+Email: ${email}
+Selected Time: ${selectedTime}
+Services:
+${servicesText}
+
+I understand and accept Tassel Beauty's booking terms.
+`);
+
+    // 3️⃣ WhatsApp link (Tassel Business number)
+    const waLink = `https://wa.me/27836016909?text=${message}`;
+
+    // 4️⃣ Open WhatsApp
+    window.open(waLink, "_blank");
+
+    setSuccess("Booking details opened in WhatsApp!");
+    toast.success("📲 Your booking message is ready in WhatsApp!");
+  } catch (err) {
+    console.error("Booking WhatsApp error:", err);
+    setError("❌ Failed to open WhatsApp. Try again.");
+    toast.error("❌ Failed to open WhatsApp. Try again.");
+  } finally {
+    setLoading(false);
+  }
+};
+
 
   const handlePayNow = async () => {
     if (!selectedTime) return toast.warn("⏰ Please choose a time slot.");
