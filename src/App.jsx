@@ -71,7 +71,7 @@ function App() {
   };
 
   return (
-    <Router basename="/shop">
+    <Router basename="/Tassel_Shop">
       <AppHeader cartItems={cartItems} toggleCart={toggleCart} />
       <main>
         <Routes>

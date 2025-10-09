@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from "react";
+import axios from "axios";
 
 export default function Cart({
   items = [],
@@ -6,23 +7,32 @@ export default function Cart({
   onDecrement,
   onClose,
   className = "",
-  setCartItems, // ✅ new: we'll pass this from App.jsx for Clear Cart
+  setCartItems, // ✅ clear cart handler
 }) {
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState("");
   const [success, setSuccess] = useState("");
   const [email, setEmail] = useState("");
+  const [voucherCode, setVoucherCode] = useState("");
+  const [discount, setDiscount] = useState(0);
+  const [voucherMessage, setVoucherMessage] = useState("");
+  const [accepted, setAccepted] = useState(false);
 
   const emailServer = import.meta.env.VITE_EMAIL_SERVER_URL;
   const paymentPortal = import.meta.env.VITE_PAYMENT_PORTAL_URL;
+  const backendUrl = import.meta.env.VITE_BACKEND_URL; // ✅ Add your backend API (Render or Afrihost)
 
-  const total = items.reduce((sum, item) => {
+  // ✅ Calculate subtotal
+  const subtotal = items.reduce((sum, item) => {
     const itemPrice =
       item.salePrice && item.salePrice > 0 && item.salePrice < item.price
         ? item.salePrice
         : item.price;
     return sum + itemPrice * item.quantity;
   }, 0);
+
+  // ✅ Apply discount
+  const total = Math.max(subtotal - discount, 0);
 
   // ✅ Persist cart on every update
   useEffect(() => {
@@ -32,12 +42,50 @@ export default function Cart({
   // ✅ Clear Cart handler
   const handleClearCart = () => {
     if (window.confirm("Are you sure you want to remove all items?")) {
-      setCartItems([]); // Clears from App state
+      setCartItems([]);
       localStorage.removeItem("cart");
+      setDiscount(0);
+      setVoucherCode("");
+      setVoucherMessage("");
     }
   };
 
+ const handleApplyVoucher = async () => {
+  if (!voucherCode.trim()) return setVoucherMessage("Enter a voucher code first.");
+
+  setLoading(true);
+  setVoucherMessage("");
+
+  try {
+    const res = await axios.post(`${emailServer}/api/validate-voucher`, { code: voucherCode });
+    const voucher = res.data.voucher;
+    if (!voucher) throw new Error("Voucher data missing from server.");
+
+    let discountValue = 0;
+    if (voucher.type === "percent") discountValue = (subtotal * voucher.value) / 100;
+    if (voucher.type === "fixed") discountValue = voucher.value;
+    discountValue = Math.min(discountValue, subtotal);
+
+    setDiscount(discountValue);
+    setVoucherMessage(`✅ ${voucher.description} applied!`);
+  } catch (err) {
+    if (err.response && err.response.status === 404) {
+      setVoucherMessage("❌ Invalid or expired voucher code.");
+    } else {
+      setVoucherMessage("❌ Could not validate voucher. Try again.");
+    }
+    setDiscount(0);
+  } finally {
+    setLoading(false);
+  }
+};
+
+  // ✅ Send order via email
   const handleOrderNow = async () => {
+    if (!accepted) {
+      return setError("Please acknowledge the disclaimer before ordering.");
+    }
+
     setLoading(true);
     setError("");
     setSuccess("");
@@ -58,7 +106,12 @@ export default function Cart({
     }
   };
 
+  // ✅ PayFast payment handler
   const handleBuyNow = async () => {
+    if (!accepted) {
+      return setError("Please acknowledge the disclaimer before continuing to payment.");
+    }
+
     setLoading(true);
     setError("");
     setSuccess("");
@@ -80,6 +133,7 @@ export default function Cart({
     }
   };
 
+  // ✅ PayFast auto-submit form
   function submitPayFastForm(fields) {
     const form = document.createElement("form");
     form.method = "POST";
@@ -122,6 +176,7 @@ export default function Cart({
         </button>
       </div>
 
+      {/* Items */}
       <div className="cart-items">
         {items.length === 0 ? (
           <p className="cart-empty">
@@ -155,9 +210,12 @@ export default function Cart({
                 </div>
                 <span className="cart-item-price">
                   R{(
-                    ((item.salePrice && item.salePrice > 0 && item.salePrice < item.price)
+                    ((item.salePrice &&
+                      item.salePrice > 0 &&
+                      item.salePrice < item.price
                       ? item.salePrice
-                      : item.price) * item.quantity
+                      : item.price) *
+                      item.quantity)
                   ).toFixed(2)}
                 </span>
               </li>
@@ -166,10 +224,57 @@ export default function Cart({
         )}
       </div>
 
+      {/* Footer */}
       <div className="cart-footer">
+        {/* Voucher Section */}
+        {items.length > 0 && (
+          <div className="voucher-section" style={{ marginBottom: "1rem" }}>
+            <input
+              type="text"
+              placeholder="Enter voucher code"
+              value={voucherCode}
+              onChange={(e) => setVoucherCode(e.target.value)}
+              disabled={loading}
+              style={{
+                width: "70%",
+                padding: "0.5rem",
+                border: "1px solid #e9cfc3",
+                borderRadius: "6px 0 0 6px",
+              }}
+            />
+            <button
+              onClick={handleApplyVoucher}
+              disabled={loading}
+              style={{
+                padding: "0.5rem 1rem",
+                background: "#bfa18c",
+                color: "#fff",
+                border: "none",
+                borderRadius: "0 6px 6px 0",
+                cursor: "pointer",
+              }}
+            >
+              Apply
+            </button>
+            {voucherMessage && (
+              <p style={{ marginTop: "0.5rem", fontSize: "0.9rem" }}>
+                {voucherMessage}
+              </p>
+            )}
+          </div>
+        )}
+
+        {/* Total */}
         <div className="cart-total">
           <span>Total:</span>
-          <span className="cart-total-amount">R{total.toFixed(2)}</span>
+          <span className="cart-total-amount">
+            R{total.toFixed(2)}{" "}
+            {discount > 0 && (
+              <small style={{ color: "#888" }}>
+                (Saved R{discount.toFixed(2)})
+              </small>
+            )}
+          </span>
         </div>
 
         {items.length > 0 && (
@@ -193,12 +298,39 @@ export default function Cart({
               }}
             />
 
+            {/* Disclaimer Section */}
+            <div
+              className="disclaimer"
+              style={{
+                marginTop: "0.5rem",
+                padding: "0.75rem",
+                border: "1px solid #e0b000",
+                borderRadius: "6px",
+                background: "#fffbe6",
+                fontSize: "0.85rem",
+                lineHeight: "1.4",
+              }}
+            >
+              <label style={{ display: "flex", alignItems: "center", gap: "0.5rem" }}>
+                <input
+                  type="checkbox"
+                  checked={accepted}
+                  onChange={() => setAccepted(!accepted)}
+                />
+                {window.location.pathname.includes("bookings")
+                  ? "I understand that a 50% non-refundable booking fee is required to confirm my booking."
+                  : "I understand that delivery will be charged separately by courier."}
+              </label>
+            </div>
+
+            {/* Clear Cart */}
             <button
               type="button"
               className="checkout-btn"
               style={{
                 background: "#eee",
                 color: "#333",
+                marginTop: "1rem",
                 marginBottom: "0.5rem",
               }}
               onClick={handleClearCart}
@@ -209,9 +341,11 @@ export default function Cart({
           </>
         )}
 
+        {/* Status */}
         {error && <div className="cart-error" role="alert">{error}</div>}
         {success && <div className="cart-success" role="status">{success}</div>}
 
+        {/* Payment */}
         <div className="payment-options">
           <button
             type="button"
@@ -228,7 +362,11 @@ export default function Cart({
             style={{ background: "#bfa18c", marginTop: 8 }}
             onClick={handleBuyNow}
             disabled={
-              items.length === 0 || loading || !email || !email.includes("@")
+              items.length === 0 ||
+              loading ||
+              !email ||
+              !email.includes("@") ||
+              !accepted
             }
             aria-label="Buy now using PayFast"
           >

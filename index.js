@@ -1,7 +1,7 @@
 const express = require("express");
 const cors = require("cors");
 const nodemailer = require("nodemailer");
-import { vouchers } from "./vouchers.js";
+const { vouchers } = require("./vouchers.js");
 
 
 require("dotenv").config();
@@ -59,15 +59,35 @@ app.post("/send-order", async (req, res) => {
   }
 });
 
-// Validate voucher endpoint
+// ✅ Secure Voucher Validation Endpoint
 app.post("/api/validate-voucher", (req, res) => {
   const { code } = req.body;
-  const voucher = vouchers.find(v => v.code.toUpperCase() === code.toUpperCase());
+
+  if (!code || typeof code !== "string") {
+    return res.status(400).json({ valid: false, message: "Invalid request." });
+  }
+
+  // Find active voucher
+  const voucher = vouchers.find(
+    (v) => v.code.toUpperCase() === code.toUpperCase() && v.active
+  );
+
   if (!voucher) {
     return res.status(404).json({ valid: false, message: "Invalid or expired code." });
   }
-  return res.json({ valid: true, voucher });
+
+  // Only send safe voucher info (no need to expose backend logic)
+  return res.json({
+    valid: true,
+    voucher: {
+      code: voucher.code,
+      type: voucher.type,
+      value: voucher.value,
+      description: voucher.description,
+    },
+  });
 });
+
 
 const PORT = process.env.PORT || 3001;
 app.listen(PORT, () => console.log(`Email server running on ${PORT}`));
