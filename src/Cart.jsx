@@ -109,35 +109,49 @@ export default function Cart({
 
   // ✅ Send order via email
   const handleOrderNow = async () => {
-    if (!accepted) {
-      return setError("Please acknowledge the disclaimer before ordering.");
+  if (!accepted) {
+    return setError("Please acknowledge the disclaimer before ordering.");
+  }
+
+  if (!email || !email.includes("@")) {
+    return setError("Please enter a valid email address.");
+  }
+
+  setLoading(true);
+  setError("");
+  setSuccess("");
+
+  try {
+    const res = await fetch(`${emailServer}/send-order`, {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({
+        items,
+        total: totalWithDelivery ?? total, // ✅ fallback safety
+        email,
+        deliveryOption: deliveryOption || "collection", // ✅ default to collection
+        deliveryDetails:
+          deliveryOption === "delivery" && deliveryDetails
+            ? deliveryDetails
+            : null,
+      }),
+    });
+
+    if (!res.ok) {
+      const errorData = await res.json();
+      throw new Error(errorData.error || "Failed to send order email.");
     }
 
-    setLoading(true);
-    setError("");
-    setSuccess("");
+    setSuccess("✅ Order sent successfully! We'll contact you soon.");
+    setCartItems([]); // optional — clear cart after success
+  } catch (err) {
+    console.error("Order error:", err);
+    setError("Could not send order. Please try again.");
+  } finally {
+    setLoading(false);
+  }
+};
 
-    try {
-      const res = await fetch(`${emailServer}/send-order`, {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({
-          items,
-          total: totalWithDelivery,
-          email,
-          deliveryOption,
-          deliveryDetails: deliveryOption === "delivery" ? deliveryDetails : null
-        }),
-      });
-
-      if (!res.ok) throw new Error("Failed to send order email.");
-      setSuccess("Order sent! We'll contact you soon.");
-    } catch (err) {
-      setError("Could not send order. Please try again.");
-    } finally {
-      setLoading(false);
-    }
-  };
 
   // ✅ PayFast payment handler
   const handleBuyNow = async () => {
