@@ -17,6 +17,8 @@ export default function Cart({
   const [discount, setDiscount] = useState(0);
   const [voucherMessage, setVoucherMessage] = useState("");
   const [accepted, setAccepted] = useState(false);
+  const [appliedVoucher, setAppliedVoucher] = useState(null);
+
 
   const emailServer = import.meta.env.VITE_EMAIL_SERVER_URL;
   const paymentPortal = import.meta.env.VITE_PAYMENT_PORTAL_URL;
@@ -39,16 +41,28 @@ export default function Cart({
     localStorage.setItem("cart", JSON.stringify(items));
   }, [items]);
 
-  // ✅ Clear Cart handler
+  useEffect(() => {
+  if (!appliedVoucher) return setDiscount(0);
+
+  let discountValue = 0;
+  if (appliedVoucher.type === "percent") discountValue = (subtotal * appliedVoucher.value) / 100;
+  if (appliedVoucher.type === "fixed") discountValue = appliedVoucher.value;
+
+  setDiscount(Math.min(discountValue, subtotal));
+}, [items, appliedVoucher, subtotal]);
+
+
   const handleClearCart = () => {
-    if (window.confirm("Are you sure you want to remove all items?")) {
-      setCartItems([]);
-      localStorage.removeItem("cart");
-      setDiscount(0);
-      setVoucherCode("");
-      setVoucherMessage("");
-    }
-  };
+  if (window.confirm("Are you sure you want to remove all items?")) {
+    setCartItems([]);
+    localStorage.removeItem("cart");
+    setDiscount(0);
+    setVoucherCode("");
+    setVoucherMessage("");
+    setAppliedVoucher(null); // ✅ clear applied voucher
+  }
+};
+
 
  const handleApplyVoucher = async () => {
   if (!voucherCode.trim()) return setVoucherMessage("Enter a voucher code first.");
@@ -61,12 +75,12 @@ export default function Cart({
     const voucher = res.data.voucher;
     if (!voucher) throw new Error("Voucher data missing from server.");
 
-    let discountValue = 0;
-    if (voucher.type === "percent") discountValue = (subtotal * voucher.value) / 100;
-    if (voucher.type === "fixed") discountValue = voucher.value;
-    discountValue = Math.min(discountValue, subtotal);
+    setAppliedVoucher(voucher); // ✅ store voucher
 
-    setDiscount(discountValue);
+    // Calculate discount
+    const discountValue =
+      voucher.type === "percent" ? (subtotal * voucher.value) / 100 : voucher.value;
+    setDiscount(Math.min(discountValue, subtotal));
     setVoucherMessage(`✅ ${voucher.description} applied!`);
   } catch (err) {
     if (err.response && err.response.status === 404) {
@@ -75,6 +89,7 @@ export default function Cart({
       setVoucherMessage("❌ Could not validate voucher. Try again.");
     }
     setDiscount(0);
+    setAppliedVoucher(null); // remove applied voucher on fail
   } finally {
     setLoading(false);
   }
