@@ -1,8 +1,8 @@
 {
-  "name": "Tassel_Shop",
+  "name": "shop",
   "private": true,
   "version": "0.0.0",
-  "homepage": "/Tassel_Shop",
+  "homepage": "/shop",
   "type": "module",
   "scripts": {
     "dev": "vite",
