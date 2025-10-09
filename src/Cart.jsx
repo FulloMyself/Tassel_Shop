@@ -107,50 +107,26 @@ export default function Cart({
     }
   };
 
-  // ✅ Send order via email
-  const handleOrderNow = async () => {
-  if (!accepted) {
-    return setError("Please acknowledge the disclaimer before ordering.");
-  }
+  const handleOrderNow = () => {
+  if (!accepted) return setError("Please acknowledge the disclaimer.");
+  if (!email || !email.includes("@")) return setError("Please enter a valid email address.");
 
-  if (!email || !email.includes("@")) {
-    return setError("Please enter a valid email address.");
-  }
+  const itemsList = items
+    .map(i => `${i.name} x${i.quantity} (R${i.price * i.quantity})`)
+    .join("%0A"); // line breaks for WhatsApp
 
-  setLoading(true);
-  setError("");
-  setSuccess("");
+  const deliveryText = deliveryOption === "delivery" && deliveryDetails
+    ? `%0A%0ADelivery Details:%0AName: ${deliveryDetails.name}%0APhone: ${deliveryDetails.phone}%0AEmail: ${deliveryDetails.email}%0AAddress: ${deliveryDetails.address}`
+    : "%0A%0ACollection: Customer will collect in-store.";
 
-  try {
-    const res = await fetch(`${emailServer}/send-order`, {
-      method: "POST",
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({
-        items,
-        total: totalWithDelivery ?? total, // ✅ fallback safety
-        email,
-        deliveryOption: deliveryOption || "collection", // ✅ default to collection
-        deliveryDetails:
-          deliveryOption === "delivery" && deliveryDetails
-            ? deliveryDetails
-            : null,
-      }),
-    });
+  const message = `Hello Tassel Beauty! I'd like to place an order:%0A${itemsList}%0A%0ATotal: R${totalWithDelivery ?? total}${deliveryText}%0A%0A(Powered by tasselgroup.co.za/shop)`;
 
-    if (!res.ok) {
-      const errorData = await res.json();
-      throw new Error(errorData.error || "Failed to send order email.");
-    }
+  const whatsappNumber = "27632462802"; // Tassel Business WhatsApp
+  const whatsappLink = `https://wa.me/${whatsappNumber}?text=${message}`;
 
-    setSuccess("✅ Order sent successfully! We'll contact you soon.");
-    setCartItems([]); // optional — clear cart after success
-  } catch (err) {
-    console.error("Order error:", err);
-    setError("Could not send order. Please try again.");
-  } finally {
-    setLoading(false);
-  }
+  window.open(whatsappLink, "_blank");
 };
+
 
 
   // ✅ PayFast payment handler
