@@ -47,7 +47,7 @@ export default function Bookings() {
   useEffect(() => {
     setAvailableServices(servicesData);
   }, []);
-  
+
 
   const totalRef = useRef(null);
 
@@ -129,6 +129,50 @@ export default function Bookings() {
       });
     }
   }, [showServiceSelector, selectedCategory, currentPage]);
+
+  useEffect(() => {
+    if (!appliedVoucher) {
+      setDiscount(0);
+      setVoucherMessage("");
+      return;
+    }
+
+    // Calculate total before discount
+    const totalBeforeDiscount = services.reduce(
+      (sum, s) => sum + s.price * (s.quantity || 1),
+      0
+    );
+
+    // Calculate discount amount safely
+    let discountAmount = 0;
+    if (appliedVoucher.type === "percent") {
+      // Normalize percentage values like 10 → 0.1
+      const percentValue =
+        appliedVoucher.value > 1 ? appliedVoucher.value / 100 : appliedVoucher.value;
+      discountAmount = totalBeforeDiscount * percentValue;
+    } else if (appliedVoucher.type === "fixed") {
+      discountAmount = appliedVoucher.value;
+    }
+
+    // Prevent over-discounting
+    const finalDiscount = Math.min(discountAmount, totalBeforeDiscount);
+    setDiscount(finalDiscount);
+
+    // Update the message dynamically
+    const formattedDiscount = finalDiscount.toFixed(2);
+    const percentText =
+      appliedVoucher.type === "percent"
+        ? `${appliedVoucher.value > 1 ? appliedVoucher.value : appliedVoucher.value * 100}%`
+        : "";
+
+    const message =
+      appliedVoucher.type === "percent"
+        ? `✅ ${appliedVoucher.description} applied! You saved R${formattedDiscount} (${percentText} off).`
+        : `✅ ${appliedVoucher.description} applied! You saved R${formattedDiscount}.`;
+
+    setVoucherMessage(message);
+  }, [services, appliedVoucher]);
+
 
   const businessHours = {
     Monday: { start: "09:00", end: "17:00" },
@@ -235,61 +279,64 @@ export default function Bookings() {
   };
 
   // Total calculation:
-const totalBeforeDiscount = services.reduce((sum, s) => sum + s.price * (s.quantity || 1), 0);
+  const totalBeforeDiscount = services.reduce((sum, s) => sum + s.price * (s.quantity || 1), 0);
 
-const total = appliedVoucher
-  ? appliedVoucher.type === "percent"
-    ? Math.max(0, totalBeforeDiscount * (1 - appliedVoucher.value)) // value like 0.1
-    : Math.max(0, totalBeforeDiscount - appliedVoucher.value)
-  : totalBeforeDiscount;
+  const total = appliedVoucher
+    ? appliedVoucher.type === "percent"
+      ? Math.max(0, totalBeforeDiscount * (1 - appliedVoucher.value)) // value like 0.1
+      : Math.max(0, totalBeforeDiscount - appliedVoucher.value)
+    : totalBeforeDiscount;
+
+  const halfPayment = (total * 0.5).toFixed(2);
+
 
   const handleApplyVoucher = async () => {
-  if (!voucherCode.trim()) return toast.warn("⚠️ Please enter a voucher code.");
+    if (!voucherCode.trim()) return toast.warn("⚠️ Please enter a voucher code.");
 
-  try {
-    const res = await axios.post(
-      `${import.meta.env.VITE_EMAIL_SERVER_URL}/api/validate-voucher`,
-      { code: voucherCode }
-    );
-    const voucher = res.data.voucher;
-    if (!voucher) throw new Error("Voucher data missing from server.");
+    try {
+      const res = await axios.post(
+        `${import.meta.env.VITE_EMAIL_SERVER_URL}/api/validate-voucher`,
+        { code: voucherCode }
+      );
+      const voucher = res.data.voucher;
+      if (!voucher) throw new Error("Voucher data missing from server.");
 
-    // Normalize percent values
-    if (voucher.type === "percent") voucher.value = voucher.value / 100;
+      // Normalize percent values
+      if (voucher.type === "percent") voucher.value = voucher.value / 100;
 
-    setAppliedVoucher(voucher);
+      setAppliedVoucher(voucher);
 
-    // Calculate total before discount
-    const totalBeforeDiscount = services.reduce(
-      (sum, s) => sum + s.price * (s.quantity || 1),
-      0
-    );
+      // Calculate total before discount
+      const totalBeforeDiscount = services.reduce(
+        (sum, s) => sum + s.price * (s.quantity || 1),
+        0
+      );
 
-    // Calculate discount in rands
-    const discountAmount =
-      voucher.type === "percent"
-        ? totalBeforeDiscount * voucher.value
-        : voucher.value;
+      // Calculate discount in rands
+      const discountAmount =
+        voucher.type === "percent"
+          ? totalBeforeDiscount * voucher.value
+          : voucher.value;
 
-    setDiscount(Math.min(discountAmount, totalBeforeDiscount));
+      setDiscount(Math.min(discountAmount, totalBeforeDiscount));
 
-    // Craft success message
-    const formattedDiscount = discountAmount.toFixed(2);
-    const discountMessage =
-      voucher.type === "percent"
-        ? `✅ ${voucher.description} applied! You saved R${formattedDiscount} (${voucher.value * 100}% off).`
-        : `✅ ${voucher.description} applied! You saved R${formattedDiscount}.`;
+      // Craft success message
+      const formattedDiscount = discountAmount.toFixed(2);
+      const discountMessage =
+        voucher.type === "percent"
+          ? `✅ ${voucher.description} applied! You saved R${formattedDiscount} (${voucher.value * 100}% off).`
+          : `✅ ${voucher.description} applied! You saved R${formattedDiscount}.`;
 
-    setVoucherMessage(discountMessage);
-    toast.success("Voucher applied!");
-  } catch (err) {
-    console.error(err);
-    setAppliedVoucher(null);
-    setDiscount(0);
-    setVoucherMessage("❌ Invalid or expired voucher.");
-    toast.error("Invalid voucher.");
-  }
-};
+      setVoucherMessage(discountMessage);
+      toast.success("Voucher applied!");
+    } catch (err) {
+      console.error(err);
+      setAppliedVoucher(null);
+      setDiscount(0);
+      setVoucherMessage("❌ Invalid or expired voucher.");
+      toast.error("Invalid voucher.");
+    }
+  };
 
 
 
@@ -419,17 +466,7 @@ const total = appliedVoucher
 
             {/* Voucher Section */}
             <div className="voucher-section">
-              <input
-                type="text"
-                placeholder="Enter voucher code"
-                value={voucherCode}
-                onChange={(e) => setVoucherCode(e.target.value)}
-                className="voucher-input"
-              />
-              <button className="spa-btn" onClick={handleApplyVoucher}>
-                Apply
-              </button>
-              {voucherMessage && <p className="voucher-message">{voucherMessage}</p>}
+              <p className="voucher-message"></p>
             </div>
 
 
@@ -440,6 +477,23 @@ const total = appliedVoucher
             </div>
             {voucherMessage && <p className="voucher-message">{voucherMessage}</p>}
 
+            {total > 0 && (
+              <p
+                style={{
+                  marginTop: "0.5rem",
+                  fontSize: "0.9rem",
+                  color: "#6a4e3b",
+                  background: "#f8f5f3",
+                  borderRadius: "8px",
+                  padding: "0.75rem 1rem",
+                  border: "1px solid #e5dad3",
+                }}
+              >
+                💳 <strong>Booking Disclaimer:</strong> A 50% deposit (R{halfPayment}) is
+                required to secure your appointment. You’ll receive a confirmation and
+                payment instructions from Tassel shortly after placing your booking.
+              </p>
+            )}
 
 
 
@@ -496,6 +550,22 @@ const total = appliedVoucher
             >
               ➕ Add Service
             </button>
+
+            <div className="voucher-wrapper">
+              <input
+                type="text"
+                value={voucherCode}
+                onChange={(e) => setVoucherCode(e.target.value)}
+                placeholder="Enter voucher code"
+              />
+              <button onClick={handleApplyVoucher}>Apply</button>
+
+              {/* Voucher message (success / error) */}
+              {voucherMessage && (
+                <p className="voucher-message">{voucherMessage}</p>
+              )}
+            </div>
+
 
             {/* Time Picker */}
             <div className="time-picker">
