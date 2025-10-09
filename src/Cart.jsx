@@ -18,11 +18,19 @@ export default function Cart({
   const [voucherMessage, setVoucherMessage] = useState("");
   const [accepted, setAccepted] = useState(false);
   const [appliedVoucher, setAppliedVoucher] = useState(null);
+  const [deliveryOption, setDeliveryOption] = useState("collect"); // collect or delivery
+  const [deliveryDetails, setDeliveryDetails] = useState({
+    name: "",
+    phone: "",
+    email: "",
+    address: "",
+  });
+  const [showDeliveryModal, setShowDeliveryModal] = useState(false);
 
+  const DELIVERY_FEE = 200; // flat rate for delivery
 
   const emailServer = import.meta.env.VITE_EMAIL_SERVER_URL;
   const paymentPortal = import.meta.env.VITE_PAYMENT_PORTAL_URL;
-  const backendUrl = import.meta.env.VITE_BACKEND_URL; // ✅ Add your backend API (Render or Afrihost)
 
   // ✅ Calculate subtotal
   const subtotal = items.reduce((sum, item) => {
@@ -33,8 +41,12 @@ export default function Cart({
     return sum + itemPrice * item.quantity;
   }, 0);
 
+
   // ✅ Apply discount
   const total = Math.max(subtotal - discount, 0);
+
+  const totalWithDelivery =
+    deliveryOption === "delivery" ? total + DELIVERY_FEE : total;
 
   // ✅ Persist cart on every update
   useEffect(() => {
@@ -42,58 +54,58 @@ export default function Cart({
   }, [items]);
 
   useEffect(() => {
-  if (!appliedVoucher) return setDiscount(0);
+    if (!appliedVoucher) return setDiscount(0);
 
-  let discountValue = 0;
-  if (appliedVoucher.type === "percent") discountValue = (subtotal * appliedVoucher.value) / 100;
-  if (appliedVoucher.type === "fixed") discountValue = appliedVoucher.value;
+    let discountValue = 0;
+    if (appliedVoucher.type === "percent") discountValue = (subtotal * appliedVoucher.value) / 100;
+    if (appliedVoucher.type === "fixed") discountValue = appliedVoucher.value;
 
-  setDiscount(Math.min(discountValue, subtotal));
-}, [items, appliedVoucher, subtotal]);
+    setDiscount(Math.min(discountValue, subtotal));
+  }, [items, appliedVoucher, subtotal]);
 
 
   const handleClearCart = () => {
-  if (window.confirm("Are you sure you want to remove all items?")) {
-    setCartItems([]);
-    localStorage.removeItem("cart");
-    setDiscount(0);
-    setVoucherCode("");
-    setVoucherMessage("");
-    setAppliedVoucher(null); // ✅ clear applied voucher
-  }
-};
-
-
- const handleApplyVoucher = async () => {
-  if (!voucherCode.trim()) return setVoucherMessage("Enter a voucher code first.");
-
-  setLoading(true);
-  setVoucherMessage("");
-
-  try {
-    const res = await axios.post(`${emailServer}/api/validate-voucher`, { code: voucherCode });
-    const voucher = res.data.voucher;
-    if (!voucher) throw new Error("Voucher data missing from server.");
-
-    setAppliedVoucher(voucher); // ✅ store voucher
-
-    // Calculate discount
-    const discountValue =
-      voucher.type === "percent" ? (subtotal * voucher.value) / 100 : voucher.value;
-    setDiscount(Math.min(discountValue, subtotal));
-    setVoucherMessage(`✅ ${voucher.description} applied!`);
-  } catch (err) {
-    if (err.response && err.response.status === 404) {
-      setVoucherMessage("❌ Invalid or expired voucher code.");
-    } else {
-      setVoucherMessage("❌ Could not validate voucher. Try again.");
+    if (window.confirm("Are you sure you want to remove all items?")) {
+      setCartItems([]);
+      localStorage.removeItem("cart");
+      setDiscount(0);
+      setVoucherCode("");
+      setVoucherMessage("");
+      setAppliedVoucher(null); // ✅ clear applied voucher
     }
-    setDiscount(0);
-    setAppliedVoucher(null); // remove applied voucher on fail
-  } finally {
-    setLoading(false);
-  }
-};
+  };
+
+
+  const handleApplyVoucher = async () => {
+    if (!voucherCode.trim()) return setVoucherMessage("Enter a voucher code first.");
+
+    setLoading(true);
+    setVoucherMessage("");
+
+    try {
+      const res = await axios.post(`${emailServer}/api/validate-voucher`, { code: voucherCode });
+      const voucher = res.data.voucher;
+      if (!voucher) throw new Error("Voucher data missing from server.");
+
+      setAppliedVoucher(voucher); // ✅ store voucher
+
+      // Calculate discount
+      const discountValue =
+        voucher.type === "percent" ? (subtotal * voucher.value) / 100 : voucher.value;
+      setDiscount(Math.min(discountValue, subtotal));
+      setVoucherMessage(`✅ ${voucher.description} applied!`);
+    } catch (err) {
+      if (err.response && err.response.status === 404) {
+        setVoucherMessage("❌ Invalid or expired voucher code.");
+      } else {
+        setVoucherMessage("❌ Could not validate voucher. Try again.");
+      }
+      setDiscount(0);
+      setAppliedVoucher(null); // remove applied voucher on fail
+    } finally {
+      setLoading(false);
+    }
+  };
 
   // ✅ Send order via email
   const handleOrderNow = async () => {
@@ -109,7 +121,13 @@ export default function Cart({
       const res = await fetch(`${emailServer}/send-order`, {
         method: "POST",
         headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ items, total, email }),
+        body: JSON.stringify({
+          items,
+          total: totalWithDelivery,
+          email,
+          deliveryOption,
+          deliveryDetails: deliveryOption === "delivery" ? deliveryDetails : null
+        }),
       });
 
       if (!res.ok) throw new Error("Failed to send order email.");
@@ -135,8 +153,15 @@ export default function Cart({
       const res = await fetch(`${paymentPortal}/create-order`, {
         method: "POST",
         headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ items, total, email }),
+        body: JSON.stringify({
+          items,
+          total: totalWithDelivery,
+          email,
+          deliveryOption,
+          deliveryDetails: deliveryOption === "delivery" ? deliveryDetails : null
+        }),
       });
+
 
       if (!res.ok) throw new Error("Failed to initiate payment.");
       const payfastFields = await res.json();
@@ -283,13 +308,41 @@ export default function Cart({
         <div className="cart-total">
           <span>Total:</span>
           <span className="cart-total-amount">
-            R{total.toFixed(2)}{" "}
+            R{totalWithDelivery.toFixed(2)}
             {discount > 0 && (
               <small style={{ color: "#888" }}>
                 (Saved R{discount.toFixed(2)})
               </small>
             )}
           </span>
+        </div>
+
+
+        <div className="delivery-options" style={{ marginBottom: "1rem" }}>
+          <h4 style={{ marginBottom: "0.5rem" }}>Delivery Options</h4>
+          <label style={{ display: "block", marginBottom: "0.25rem" }}>
+            <input
+              type="radio"
+              name="deliveryOption"
+              value="collect"
+              checked={deliveryOption === "collect"}
+              onChange={(e) => setDeliveryOption(e.target.value)}
+            />
+            Collect in store (Free)
+          </label>
+          <label style={{ display: "block" }}>
+            <input
+              type="radio"
+              name="deliveryOption"
+              value="delivery"
+              checked={deliveryOption === "delivery"}
+              onChange={(e) => {
+                setDeliveryOption(e.target.value);
+                setShowDeliveryModal(true);
+              }}
+            />
+            Delivery (R{DELIVERY_FEE})
+          </label>
         </div>
 
         {items.length > 0 && (
@@ -356,6 +409,57 @@ export default function Cart({
           </>
         )}
 
+        {showDeliveryModal && (
+          <div className="modal-overlay">
+            <div className="modal">
+              <h4>Delivery Details</h4>
+              <input
+                type="text"
+                placeholder="Full Name"
+                value={deliveryDetails.name}
+                onChange={(e) =>
+                  setDeliveryDetails({ ...deliveryDetails, name: e.target.value })
+                }
+              />
+              <input
+                type="text"
+                placeholder="Phone Number"
+                value={deliveryDetails.phone}
+                onChange={(e) =>
+                  setDeliveryDetails({ ...deliveryDetails, phone: e.target.value })
+                }
+              />
+              <input
+                type="email"
+                placeholder="Email"
+                value={deliveryDetails.email}
+                onChange={(e) =>
+                  setDeliveryDetails({ ...deliveryDetails, email: e.target.value })
+                }
+              />
+              <textarea
+                placeholder="Delivery Address"
+                value={deliveryDetails.address}
+                onChange={(e) =>
+                  setDeliveryDetails({ ...deliveryDetails, address: e.target.value })
+                }
+              />
+              <p style={{ fontSize: "0.75rem", color: "#555" }}>
+                ⚠️ By submitting your details, you agree to Tassel Beauty & Wellness storing
+                and processing your personal information in compliance with the POPI Act.
+              </p>
+              <button
+                className="checkout-btn"
+                onClick={() => setShowDeliveryModal(false)}
+                style={{ marginTop: "0.5rem" }}
+              >
+                Save Details
+              </button>
+            </div>
+          </div>
+        )}
+
+
         {/* Status */}
         {error && <div className="cart-error" role="alert">{error}</div>}
         {success && <div className="cart-success" role="status">{success}</div>}
@@ -390,5 +494,6 @@ export default function Cart({
         </div>
       </div>
     </aside>
+
   );
 }
