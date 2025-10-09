@@ -1,6 +1,8 @@
 const express = require("express");
 const cors = require("cors");
 const nodemailer = require("nodemailer");
+import { vouchers } from "./vouchers.js";
+
 
 require("dotenv").config();
 
@@ -55,6 +57,16 @@ app.post("/send-order", async (req, res) => {
   } catch (err) {
     res.status(500).json({ error: "Failed to send email" });
   }
+});
+
+// Validate voucher endpoint
+app.post("/api/validate-voucher", (req, res) => {
+  const { code } = req.body;
+  const voucher = vouchers.find(v => v.code.toUpperCase() === code.toUpperCase());
+  if (!voucher) {
+    return res.status(404).json({ valid: false, message: "Invalid or expired code." });
+  }
+  return res.json({ valid: true, voucher });
 });
 
 const PORT = process.env.PORT || 3001;
