@@ -1,7 +1,8 @@
 const express = require("express");
 const cors = require("cors");
 const nodemailer = require("nodemailer");
-const { vouchers } = require("./vouchers.js");
+const { vouchers } = require("./vouchers");
+
 
 
 require("dotenv").config();
