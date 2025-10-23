@@ -13,8 +13,8 @@ description: "12-Hour Concentrated Skin Balm delivers deep, long-lasting hydrati
   {
     id: 2,
     name: "Tassel Beard & Hair Oil",
-    price: 199,
-    salePrice: 150,
+    price: 299,
+    salePrice: 0,
     category: "wellness",
     image: `${import.meta.env.BASE_URL}images/products/Tassel_Beard_&_Hair_Oil.jpg`,
     description: "This oil has specifically been formulated to encourage beard growth. This top quality beard oil has the following benefits: Stimulates hair growth and may even encourage regrowth. Fortifies your beard and slows aging of facial hair. Acts as insect repellent. Has calming and stress relieving properties. Stops that beard itch. Provides a shine but without greasiness. Hydrates, conditions, soothes and calms your skin. Moisturises and conditions beard. Contains magnesium, biotin and vitamin E, known to strengthen facial hair and prevent loss. Increases blood flow and circulation. Helps prevent dandruff.",
@@ -330,7 +330,7 @@ description: "Our skin brightening gel contains arbutin and vitamin C. Alpha arb
     price: 200,
     salePrice: 0,
     category: "skincare",
-    image: `${import.meta.env.BASE_URL}images/products/Tassel_Coconut_Bathh_Salts.jpg`,
+    image: `${import.meta.env.BASE_URL}images/products/Tassel_Coconut_Bath_Salts.jpg`,
     description: "",
   },
   {
