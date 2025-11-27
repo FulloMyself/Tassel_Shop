@@ -272,6 +272,9 @@ export default function Cart({
                 borderRadius: "6px 0 0 6px",
               }}
             />
+            <p className="voucher-message" style={{ fontSize: "0.8rem", margin: "0.5rem 0" }}>
+              USE 'BLACKFRIDAY28' For Tassel's 50% OFF CART TOTAL Black Friday Special
+            </p>
             <button
               onClick={handleApplyVoucher}
               disabled={loading}

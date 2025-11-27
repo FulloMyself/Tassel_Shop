@@ -579,6 +579,7 @@ I understand and accept Tassel Beauty's booking terms.
                 onChange={(e) => setVoucherCode(e.target.value)}
                 placeholder="Enter voucher code"
               />
+              <p className="voucher-message">USE 'BLACKFRIDAY28' For Tassel's 50% OFF CART TOTAL Black Friday Special</p>
               <button onClick={handleApplyVoucher}>Apply</button>
 
               {/* Voucher message (success / error) */}
